@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 30-10-2022 a las 05:31:39
+-- Tiempo de generación: 30-10-2022 a las 07:55:05
 -- Versión del servidor: 8.0.17
 -- Versión de PHP: 7.3.10
 
@@ -184,6 +184,18 @@ CREATE TABLE `producto` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `sessions`
+--
+
+CREATE TABLE `sessions` (
+  `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `expires` int(11) UNSIGNED NOT NULL,
+  `data` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tipo_usuario`
 --
 
@@ -277,8 +289,8 @@ ALTER TABLE `modalidad`
 --
 ALTER TABLE `pago`
   ADD PRIMARY KEY (`ID_PAGO`),
-  ADD KEY `ID_MPAGO` (`ID_MPAGO`),
-  ADD KEY `ID_PED` (`ID_PED`);
+  ADD UNIQUE KEY `unico` (`ID_PED`),
+  ADD KEY `ID_MPAGO` (`ID_MPAGO`);
 
 --
 -- Indices de la tabla `pedido`
@@ -302,6 +314,12 @@ ALTER TABLE `piso`
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`ID_PROD`),
   ADD KEY `ID_CATEGORIA` (`ID_CATEGORIA`);
+
+--
+-- Indices de la tabla `sessions`
+--
+ALTER TABLE `sessions`
+  ADD PRIMARY KEY (`session_id`);
 
 --
 -- Indices de la tabla `tipo_usuario`
