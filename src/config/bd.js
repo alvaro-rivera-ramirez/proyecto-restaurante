@@ -1,16 +1,17 @@
 
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const options = require('./options')
+const promisify=require('util').promisify;
+const connection = mysql.createConnection(options);
 
-const mysqlConnection = mysql.createConnection(options);
-
-mysqlConnection.connect(function (err){
+connection.connect((err)=>{
     if(err){
         console.log(err);
         return;
     }else{
-        console.log('RSE CONECTO')
+        console.log('CONECTADO A LA BASE DE DATOS')
     }
 });
 
-module.exports = mysqlConnection;
+connection.query=promisify(connection.query)
+module.exports = connection;
