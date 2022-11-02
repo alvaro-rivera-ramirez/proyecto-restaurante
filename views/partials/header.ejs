@@ -1,19 +1,26 @@
 <header class="header body-pd" id="header">
-    <div class="header__toggle">
-      <i class="bx bx-menu" id="header-toggle"></i>
+    <div class="header__start">
+        <div class="header__toggle">
+            <i class='fa-solid fa-bars' id="header-toggle"></i>
+        </div>
+        <div class="header__logo">
+            <img src="/public/img/logo.png">
+        </div>
     </div>
-    <div class="header__notify">
-      <a href="#" class="nav-link">
-        <i class="bx bxs-bell icon"></i>
-        <span class="badge">5</span>
-      </a>
+    <div class="header__end">
+        <div class="header__list">
+            <a href="#" class="header__link">
+                <i class='fa-solid fa-bell header__icon'></i>
+            </a>
+        </div>
+        <div class="header__card">
+            <div class="header__card-img">
+                <img src="/public/img/user.png">
+            </div>
+            <div class="header__card-body">
+                <p class="header__card-title"><%= nom_tipousu %></p>
+                <p class="header__card-text"><%= nom_usu %></p>
+            </div>
+        </div>
     </div>
-    <div class="header__profile">
-      <div class="header__name">
-        <p id="name_profile"><%= nom_usu%></p>
-      </div>
-      <div class="header__img">
-        <img src="/public/img/perfil2.png" />
-      </div>
-    </div>
-  </header>
+</header> 
