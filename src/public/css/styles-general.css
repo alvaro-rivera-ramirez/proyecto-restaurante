@@ -1,0 +1,38 @@
+/*===== GOOGLE FONTS =====*/
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+
+/*===== DEFAULT =====*/
+*{
+	margin: 0;
+	padding: 0;
+}
+
+:root{	
+	/*===== Font and typography =====*/
+	--body-font: 'Nunito', sans-serif;
+	--normal-font-size: 1rem;
+	  
+	/*===== z index =====*/
+	--z-fixed: 100;
+}
+
+/*===== CLASSES =====*/
+.d-flex {
+	display: flex !important;
+}
+
+.justify-content-start {
+	justify-content: flex-start !important;
+}
+  
+.justify-content-end {
+	justify-content: flex-end !important;
+}
+  
+.justify-content-center {
+	justify-content: center !important;
+}
+  
+.justify-content-between {
+	justify-content: space-between !important;
+}

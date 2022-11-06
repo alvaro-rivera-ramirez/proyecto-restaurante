@@ -1,17 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ===== BOX ICONS ===== -->
+    <link rel="stylesheet" href="/public/icon/css/all.min.css">
+
+    <!-- ===== CSS GENERAL ===== -->
+    <link rel="stylesheet" href="/public/css/styles-general.css">
+    <link rel="stylesheet" href="/public/css/header-nav.css">
+
     <title>Restaurante</title>
-</head>
-<body>
-    <%- include('../partials/header'); %> 
-    <%- include('../partials/nav'); %> 
-    <%- body %>
+  </head>
+  <body id="body-pd" class="body-pd overflow-auto">
+      <%- include('../partials/header'); %> 
+      <% switch(nom_tipousu) { 
+        case 'Administrador': %> 
+            <%- include('../partials/nav-administrador'); %>
+        <% break; %> 
+        <% case 'Mesero': %>
+            <%- include('../partials/nav-mesero'); %> 
+        <% break; %> 
+        <% case 'Cajero': %>
+            <%- include('../partials/nav-cajero'); %> 
+        <% break; %> 
+        <% case 'Chef': %>
+            <%- include('../partials/nav-cocinero'); %> 
+        <% break; %> 
+        <% } %> 
+      
+    
+    <main>
+
+        <%- body %>
+    </main>
     <%- include('../partials/footer'); %> 
     <%- include('../partials/script'); %> 
     <%- script %>
-</body>
+    
+  </body>
 </html>
