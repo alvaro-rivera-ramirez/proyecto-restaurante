@@ -5,7 +5,6 @@ const getUsers = async (req, res) => {
     const users=await userServices.getUsers();
     return res.status(201).send(users);
   } catch (error) {
-    console.log(error);
     return res.status(401);
   }
 };

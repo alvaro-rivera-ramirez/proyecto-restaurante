@@ -14,13 +14,13 @@ const signIn = async (req, res) => {
   
   //Si no existes estos campos
   if (!email || !pass) {
-    console.log(req.body);
+    //console.log(req.body);
     handleErrorResponse(res, "USER_INVALID", 401);
     return;
   }
   try {
     //Buscar al usuario por su correo y obtenemos el id de usuario o un error
-    console.log(req.body);
+    //console.log(req.body);
     const { id_usu} = await authByEmail(email, pass);
    
     //Creamos el objeto usuario
@@ -41,7 +41,7 @@ const signIn = async (req, res) => {
 
     //Guardamos la cookie en el navegador
     res.cookie("jwt", jwt, cookiesOptions);
-    return res.status(201).send({ ruta: "/home"});
+    return res.status(201).send({ ruta: "/registroUsuarios"});
   } catch (err) {
     handleErrorResponse(res, "USER_INVALID", 401);
     console.log(err)
