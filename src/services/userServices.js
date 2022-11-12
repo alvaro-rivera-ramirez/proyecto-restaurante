@@ -15,7 +15,11 @@ const getUsers = async () => {
   };
   
   const deleteUser = async (id) => {
-   
+    console.log("entre en deleteuser: ",id);
+    const users = await conn.query("DELETE FROM usuario WHERE id_usu=?;",id);
+  
+    if (!users) throw new Error();
+    return users;
   };
 
 module.exports={

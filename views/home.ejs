@@ -1,24 +1,134 @@
 <div class="container-fluid">
 
   <h1>Responsive Sidebar Menu</h1>
+	<div>
+		
+		<table class="table table-light table-striped table-bordered mb-3" style="max-width:100%;" id="datatable">
+			<thead>
+				
+				<tr >
+					
+					<th scope="col">Nombre</th>
+					<th scope="col">Apellido Paterno</th>
+					<th scope="col">Apellido materno</th>
+					<th scope="col">Correo</th>
+					<th scope="col" class="text-center"><i class="fa-solid fa-gears"></i></th>
+				</tr>
+				
+			</thead>
+			<tbody id="data" >
+				
+			</tbody>
+		</table>
 
-  <table class="table table-light table-striped table-bordered mb-3" style="max-width:100%;" id="datatable">
-    <thead>
-        
-        <tr >
-            
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido Paterno</th>
-            <th scope="col">Apellido materno</th>
-            <th scope="col">Correo</th>
-            <th scope="col" class="text-center"><i class="fa-solid fa-gears"></i></th>
-        </tr>
-        
-    </thead>
-    <tbody id="data" >
-        
-    </tbody>
-</table>
+
+	</div>
+	    <!--modal -->
+		<div class="modal" tabindex="-1" role="modal1" id="modal">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title">DATOS DEL USUARIO</h5>
+				  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-0">
+						<div class="row">
+							<div class="col">
+								<label class="form-label">Nombres</label>
+							</div>
+						</div>
+					</div>
+					<div class="mb-3">
+						<div class="row">
+							<div class="col">
+								<input  id="nombre"name="nombre" type="text" class="form-control" required>
+							</div>
+						</div>
+					</div>
+					<div class="mb-0">
+						<div class="row">
+							<div class="col">
+								<label class="form-label">Apellido paterno</label>
+							</div>
+					
+							<div class="col">
+								<label class="form-label">Apellido materno</label>
+							</div>
+						</div>
+					</div>
+					
+					<div class="mb-3">
+						<div class="row">
+							<div class="col">
+								<input id="apellido1" name="apellido1" type="text" class="form-control" required>
+							</div>
+
+							<div class="col">
+								<input id="apellido2" name="apellido2" type="text" class="form-control"  required>
+							</div>
+						</div>
+					</div>
+
+					<div class="mb-0">
+						<div class="row">
+							<div class="col">
+								<label class="form-label">Direccion</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="mb-3">
+						<div class="row">
+
+							<div class="col">
+								<div >
+									<div class="col-10"><input id="celular" name="celular" class="form-control mr-sm-2"style="border-radius: 3px 0 0 3px;" type="text" ></div>
+								</div>
+							</div>
+						</div>      
+					</div>
+					
+					<div class="mb-0">
+						<div class="row">
+							<div class="col-12 col-lg-12">
+								<label class="form-label">N° Documento de identidad</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="mb-3">
+						<div class="col">
+							<div class="col-12 col-lg-12">
+								<input id="nro_ddi" name="nro_ddi" type="text" class="form-control" required>
+							</div>
+						</div>
+					</div>
+					<div class="col" id="grupo__exampleInputEmail1">
+						<div class="mb-2" style="width:100%">
+							<div class="col-12 col-lg-12">
+								<label class="form-label">Dirección de correo electrónico</label>
+							</div>
+			
+							<div class="col-12 col-lg-12">
+								<input  id="email" name="email" type="email" class="form-control" aria-describedby="emailHelp" required>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-primary">Save changes</button>
+				  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		<!--termina modal-->
+
+
+
   <script>
     fetch('api/user')
     .then( response => response.json() )
@@ -91,11 +201,41 @@
             usuario.forEach(usuario => {
                 
                 listHTML+=`<tr><td>${usuario.nom_usu}</td><td>${usuario.ape1_usu}</td><td>${usuario.ape2_usu}</td><td>${usuario.email_usu}</td>
-                <td><center><a type="button"  data-bs-toggle="modal" data-bs-target="#modal1" onclick="detallado(${usuario.id_usu})"><i class="fa-solid fa-id-card"></i>
-                    </a></td></tr>`
+                <td><a type="button"  data-bs-toggle="modal" data-bs-target="#modal" onclick="detallado(${usuario.id_usu})"><i class="fa-solid fa-id-card"></i>
+                    </a>
+					
+					<a type="button"  data-bs-toggle="modal" data-bs-target="#modal" onclick="deleteUsuario(${usuario.id_usu})"><i class="fa-solid fa-id-card"></i>
+                    </a>
+				</td></tr>`
             });
             tablaList.innerHTML=listHTML;
             
         }
+		const detallado=(id)=>{
+			let _usuario={};
+			usuario.filter(usu=>{
+						if(usu.id_usu==id)
+						{
+							_usuario=usu
+						}
+					});
+					console.log(_usuario);
+					document.querySelector('#nombre').value=_usuario.nom_usu;
+					document.querySelector('#apellido1').value=_usuario.ape1_usu;
+					document.querySelector('#apellido2').value=_usuario.ape2_usu;
+					document.querySelector('#celular').value=_usuario.dir_usu;
+					document.querySelector('#nro_ddi').value=_usuario.dni_usu;
+					document.querySelector('#email').value=_usuario.email_usu;
+		}
+
+		function deleteUsuario(id){
+			fetch ( `/api/user/${id}`, {
+				method: 'DELETE',
+				body: '',
+				headers: {
+					'Content-type': 'application/json'
+				}
+			}).then( response => { location.reload(); } );
+		}
 </script>
 </div>

@@ -9,12 +9,13 @@ const validationToken = async (req, res, next) => {
   try {
 
     const token = jwt.split(" ")[1];
-
+    console.log(jwt);
     if (!token){
+      console.log("no tengo credencial2");
       handleErrorResponse(res,"NO_CREDENTIALS",401)
       return;
     }
-
+    
     const { payload } = await verifyToken(token);
     req.id = payload.user.id_usu;
 

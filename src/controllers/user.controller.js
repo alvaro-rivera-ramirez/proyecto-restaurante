@@ -17,7 +17,16 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
- 
+  
+  try {
+    console.log("en el controlador:",id);
+    const users=await userServices.deleteUser();
+
+    return res.status(201).send(users);
+  } catch (error) {
+    
+    return res.status(401);
+  }
 };
 
 
