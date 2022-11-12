@@ -23,7 +23,7 @@ a{
 } 
 
 /*===== Estilos navegacion =====*/
-.nav__list a{
+.nav__list a,.log-out{
   margin-left: 1rem;
   margin-right: 1rem;
   border: 1.5px solid var(--first-color-light);
@@ -37,7 +37,7 @@ a{
 }
 
 .log-out{
-  width: 100%;
+  width: 73%;
 }
 
 /*===== Estilos header =====*/
@@ -181,7 +181,7 @@ i, span{
   color: var(--white-color);
 }
 
-.nav__list .nav__link:hover{
+.nav__list .nav__link:hover,.log-out:hover{
   background-color: var(--first-color-select);
 }
 
@@ -216,13 +216,16 @@ i, span{
   background-color: var(--first-color);
 }
 
-.responsive .nav__list .nav__link:hover{
+.responsive .nav__list .nav__link:hover,.responsive .log-out:hover{
   background-color: var(--first-color);
 }
 
 .responsive .nav__list a{
   margin-left: 0rem;
   margin-right: 0rem;
+  border: none;
+}
+.responsive .log-out{
   border: none;
 }
 
@@ -270,6 +273,7 @@ i, span{
 }
 
 @media screen and (max-width:768px){
+  
   .nav__list .active{
     background-color: var(--first-color);
   }
@@ -278,12 +282,11 @@ i, span{
     background-color: var(--first-color);
   }
   
-  .nav__list a{
+  .nav__list a,.log-out{
     margin-left: 0rem;
     margin-right: 0rem;
     border: none;
   }
-  
   .nav__logo-icon, .nav__icon{
     margin-left: 0rem;
     font-size: 1.25rem;
@@ -322,10 +325,16 @@ i, span{
   .header__card{
     display: none;
   }
+  
 }
 
 @media screen and (max-width:360px){
   .header__logo{
     display: none;
+  }
+  
+  .log-out{
+    background: red;
+    border: none;
   }
 }
