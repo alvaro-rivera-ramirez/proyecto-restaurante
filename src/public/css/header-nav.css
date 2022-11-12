@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 /*===== VARIABLES CSS =====*/
 :root{
   --header-height: 4rem;
   --nav-width: 68px;
+  --fuente1: 'Abel', sans-serif;
 }
 
 /*===== BASE =====*/
@@ -25,7 +27,13 @@ a{
   margin-left: 1rem;
   margin-right: 1rem;
   border: 1.5px solid var(--first-color-light);
-  border-radius: 7.5px;
+  border-radius: 3px;
+  width: 73%;
+  margin:auto;
+  margin-bottom: 15px;
+  font-family: var(--fuente1);
+  font-size: 15px;
+  font-weight: 100;
 }
 
 .log-out{
@@ -143,16 +151,19 @@ i, span{
 
 .nav__logo{
   margin-bottom: 1.5rem;
+  margin-top: .75rem;
 }
 
 .nav__logo-icon{
   margin-left: .25rem;
-  font-size: 3rem;
+  font-size: 4rem;
   color: var(--white-color);
   text-align: center;
 }
 
 .nav__logo-name{
+  font-family: var(--fuente1);
+  font-size: 24px;
   font-weight: 700;
   color: var(--white-color);
   text-align: center;
@@ -161,6 +172,7 @@ i, span{
 .nav__link{
   position: relative;
   color: var(--first-color-light);
+  padding: 20px;
   margin-bottom: 1.5rem;
   transition: .3s;
 }
