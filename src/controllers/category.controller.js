@@ -13,7 +13,7 @@ const getCategories = async (req, res) => {
   }
 };
 const getOneCategory = async (req, res) => {
-
+  const { id } = req.params;
   try {
     const category = await CategoryServices.getOneCategory(id);
     return res.status(201).send(category);
