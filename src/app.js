@@ -23,6 +23,9 @@ app.use('/api/user',require("./routes/user.routes"))
 app.use('/api/auth',require("./routes/auth.routes"))
 app.use('/api/category',require("./routes/category.routes"))
 app.use('/api/table',require("./routes/tables.routes"))
+app.use('/api/producto',require("./routes/producto.routes"))
+app.use('/api/pisos',require("./routes/pisos.routes"))
+
 app.use(require("./routes/interface/indexInterface"))
 
 app.listen(app.get("port"), () => {

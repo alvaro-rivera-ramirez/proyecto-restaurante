@@ -14,8 +14,17 @@ body {
   background-image: url(/public/img/bg.jpg);
   background-size: cover;
   background-position: top;
+  position: relative;
 }
-
+body:before{
+  content: "";
+  background:rgba(0, 0, 0, 0.1);
+  position:absolute;
+  top:0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
 .form {
   background-color: rgba(131, 131, 131, 0.5);
   width: 90%;
@@ -24,6 +33,7 @@ body {
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0px 5px 10px -5px #0003;
+  z-index: 100;
 }
 
 .form__header {

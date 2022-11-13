@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 /*===== VARIABLES CSS =====*/
 :root{
   --header-height: 4rem;
   --nav-width: 68px;
+  --fuente1: 'Abel', sans-serif;
 }
 
 /*===== BASE =====*/
@@ -21,15 +23,21 @@ a{
 } 
 
 /*===== Estilos navegacion =====*/
-.nav__list a{
+.nav__list a,.log-out{
   margin-left: 1rem;
   margin-right: 1rem;
   border: 1.5px solid var(--first-color-light);
-  border-radius: 7.5px;
+  border-radius: 3px;
+  width: 73%;
+  margin:auto;
+  margin-bottom: 15px;
+  font-family: var(--fuente1);
+  font-size: 15px;
+  font-weight: 100;
 }
 
 .log-out{
-  width: 100%;
+  width: 73%;
 }
 
 /*===== Estilos header =====*/
@@ -143,16 +151,19 @@ i, span{
 
 .nav__logo{
   margin-bottom: 1.5rem;
+  margin-top: .75rem;
 }
 
 .nav__logo-icon{
   margin-left: .25rem;
-  font-size: 3rem;
+  font-size: 4rem;
   color: var(--white-color);
   text-align: center;
 }
 
 .nav__logo-name{
+  font-family: var(--fuente1);
+  font-size: 24px;
   font-weight: 700;
   color: var(--white-color);
   text-align: center;
@@ -161,6 +172,7 @@ i, span{
 .nav__link{
   position: relative;
   color: var(--first-color-light);
+  padding: 20px;
   margin-bottom: 1.5rem;
   transition: .3s;
 }
@@ -169,7 +181,7 @@ i, span{
   color: var(--white-color);
 }
 
-.nav__list .nav__link:hover{
+.nav__list .nav__link:hover,.log-out:hover{
   background-color: var(--first-color-select);
 }
 
@@ -204,13 +216,16 @@ i, span{
   background-color: var(--first-color);
 }
 
-.responsive .nav__list .nav__link:hover{
+.responsive .nav__list .nav__link:hover,.responsive .log-out:hover{
   background-color: var(--first-color);
 }
 
 .responsive .nav__list a{
   margin-left: 0rem;
   margin-right: 0rem;
+  border: none;
+}
+.responsive .log-out{
   border: none;
 }
 
@@ -258,6 +273,7 @@ i, span{
 }
 
 @media screen and (max-width:768px){
+  
   .nav__list .active{
     background-color: var(--first-color);
   }
@@ -266,12 +282,11 @@ i, span{
     background-color: var(--first-color);
   }
   
-  .nav__list a{
+  .nav__list a,.log-out{
     margin-left: 0rem;
     margin-right: 0rem;
     border: none;
   }
-  
   .nav__logo-icon, .nav__icon{
     margin-left: 0rem;
     font-size: 1.25rem;
@@ -310,10 +325,16 @@ i, span{
   .header__card{
     display: none;
   }
+  
 }
 
 @media screen and (max-width:360px){
   .header__logo{
     display: none;
+  }
+  
+  .log-out{
+    background: red;
+    border: none;
   }
 }
