@@ -1,4 +1,5 @@
 /*===== SHOW NAVBAR  =====*/
+
 const showNavbar = (toggleId, navId, bodyId, headerId) => {
     const toggle = document.getElementById(toggleId),
     nav = document.getElementById(navId),
@@ -8,11 +9,8 @@ const showNavbar = (toggleId, navId, bodyId, headerId) => {
     if(toggle && nav && bodypd && headerpd) {
         toggle.addEventListener('click', () =>{
             nav.classList.toggle('show')
-
             nav.classList.toggle('responsive')
-
             bodypd.classList.toggle('body-pd')
-
             headerpd.classList.toggle('body-pd')
         })
     }
@@ -27,5 +25,6 @@ function colorLink(){
         linkColor.forEach(l=> l.classList.remove('active'))
         this.classList.add('active')
     }
-} 
+}
+
 linkColor.forEach(l=> l.addEventListener('click', colorLink))
