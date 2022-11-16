@@ -1,8 +1,11 @@
 <style type="text/css">
     *{
-        --first-color: #181B18;
-        --first-color-select: #f8f8f813;
-        --first-color-light: #fff;
+        --first-color: #181E24;
+        --first-color-select: #242E3E;
+        --first-color-text: #FFF;
+        --second-color: #FF5024;
+        --second-color-select: #EE4004;
+        --second-color-text: #FFF;
         --gray-color: #303030;
         --white-color: #F6F6F6;
     }
@@ -13,11 +16,11 @@
     <nav class="nav">
         <div>
             <a href="#" class="nav__logo">
-                <i class='fa-solid fa-user-gear nav__logo-icon'></i>
+                <i class='fa-solid fa-user nav__logo-icon'></i>
                 <span class="nav__logo-name">ADMINISTRADOR</span>
             </a>
             <div class="nav__list">
-                <a href="#" class="nav__link active">
+                <a href="/home" class="nav__link active">
                     <i class='fa-solid fa-house nav__icon'></i>
                     <span class="nav__name">Inicio</span>
                 </a>
@@ -32,7 +35,8 @@
             </div>
         </div>
         
-        <a href="/logOut" class="nav__link log-out">
+        <a href="/logOut" class="nav__link nav__out">
+
             <i class='fa-solid fa-arrow-right-from-bracket nav__icon' ></i>
             <span class="nav__name">Salir</span>
         </a>

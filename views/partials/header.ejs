@@ -3,9 +3,6 @@
         <div class="header__toggle">
             <i class='fa-solid fa-bars' id="header-toggle"></i>
         </div>
-        <div class="header__logo">
-            <img src="/public/img/logo.png">
-        </div>
     </div>
     <div class="header__end">
         <div class="header__list">
@@ -13,14 +10,20 @@
                 <i class='fa-solid fa-bell header__icon'></i>
             </a>
         </div>
-        <div class="header__card">
-            <div class="header__card-img">
-                <img src="/public/img/user.png">
+        <div class="header__card desplegable">
+            <div class="header__card-content desplegable-toggle">
+                <div class="header__card-img">
+                    <img src="/public/img/icon-user.png">
+                </div>
+                <div class="header__card-text">
+                    <p><%= nom_usu %></p>
+                </div>
+                <div class="caret"></div>
             </div>
-            <div class="header__card-body">
-                <p class="header__card-title"><%= nom_tipousu %></p>
-                <p class="header__card-text"><%= nom_usu %></p>
-            </div>
+            <ul class="desplegable-menu">
+                <li><a class="desplegable-item" href="/change-password"><i class="fa-solid fa-clipboard-list"></i> Cambiar contraseña</a></li>
+                <li><a class="desplegable-item" href="/logOut"><i class="fa-solid fa-clipboard-list"></i> Salir</a></li>
+            </ul>
         </div>
     </div>
-</header> 
+</header>

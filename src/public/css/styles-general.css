@@ -1,39 +1,89 @@
 /*===== GOOGLE FONTS =====*/
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
-/*===== DEFAULT =====*/
-*{
-	margin: 0;
-	padding: 0;
-}
 
+/*===== DEFAULT =====*/
 :root{	
 	/*===== Font and typography =====*/
 	--body-font: 'Nunito', sans-serif;
-	--fuente1: 'Abel', sans-serif;
+	--font-one: 'Abel', sans-serif;
 	--normal-font-size: 1rem;
 	  
 	/*===== z index =====*/
 	--z-fixed: 100;
 }
 
-/*===== CLASSES =====*/
-.d-flex {
-	display: flex !important;
+body *{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-.justify-content-start {
-	justify-content: flex-start !important;
+/*===== COMPONENT DEFINED AS BOTON =====*/
+.boton{
+	padding: .25rem;
+	color: var(--second-color-text);
+	background-color: var(--second-color);
+	border: 1px solid var(--second-color);
+	border-radius: 4px;
 }
-  
-.justify-content-end {
-	justify-content: flex-end !important;
+.boton:hover{
+	color: var(--second-color-text);
+	background-color: var(--second-color-select);
+	border-radius: 4px;
 }
-  
-.justify-content-center {
-	justify-content: center !important;
+
+/*===== COMPONENT DEFINED AS DESPLEGABLE =====*/
+.desplegable{
+	position: relative;
 }
-  
-.justify-content-between {
-	justify-content: space-between !important;
+
+.desplegable-toggle{
+	cursor: pointer;
+}
+
+.desplegable .caret{
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 6px solid var(--color-oscuro);
+	transition: .3s;
+}
+
+.desplegable .caret-rotate{
+	transform: rotate(-180deg);
+}
+
+.desplegable-menu{
+	position: absolute;
+	top: 3rem;
+	right: 0;
+	display: none;
+	width: max-content;
+	background-color: white;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 2px 4px rgba(0, 0, 0, .1);
+	list-style: none;
+	opacity: 0;
+	translate: .3s;
+	z-index: 1;
+}
+
+.desplegable-menu li{
+	cursor: pointer;
+	padding: .5rem 1rem;
+}
+
+.desplegable-menu li *{
+	color: var(--color-oscuro);
+}
+
+.desplegable-menu li:hover{
+	background-color: var(--white-color);
+}
+
+.desplegable .menu-open{
+	display: block;
+	opacity: 1;
 }
