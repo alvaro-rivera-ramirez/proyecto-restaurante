@@ -5,8 +5,8 @@ const UserRouter=Router();
 
 UserRouter.get('/',userController.getUsers);
 UserRouter.get('/:id',validationToken, userController.getUser);
-UserRouter.put('/:id',validationToken, userController.updateUser);
-UserRouter.delete('/:id',validationToken, userController.deleteUser);
+UserRouter.put('/',userController.updateUser);
+UserRouter.delete('/:id',userController.deleteUser);
 
 
 

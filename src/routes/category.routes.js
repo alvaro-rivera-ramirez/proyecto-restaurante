@@ -1,12 +1,20 @@
-const {Router}=require("express");
-const CategoryController=require("../controllers/category.controller.js");
-const CategoryRouter=Router();
+const { Router } = require("express");
+const CategoryController = require("../controllers/category.controller.js");
+const {
+  validateId,
+  validateDataCreate,
+  validateDataUpdate,
+} = require("../middleware/validators/category");
+const CategoryRouter = Router();
 
+CategoryRouter.get("/", CategoryController.getCategories);
+CategoryRouter.get("/:id", validateId, CategoryController.getOneCategory);
+CategoryRouter.post("/", validateDataCreate, CategoryController.createCategory);
+CategoryRouter.put("/:id", validateDataUpdate,CategoryController.updateCategory);
+CategoryRouter.delete("/:id", validateId, CategoryController.deleteCategory);
 
-CategoryRouter.get("/",CategoryController.getCategories);
-CategoryRouter.get("/:id",CategoryController.getOneCategory);
-CategoryRouter.post("/",CategoryController.createCategory);
-CategoryRouter.put("/",CategoryController.updateCategory);
-CategoryRouter.delete("/",CategoryController.deleteCategory);
+CategoryRouter.get("/*",(req,res)=>{
+  res.status(404).json({msg:"NOT FOUND PAGE"});
+})
 
-module.exports=CategoryRouter;
+module.exports = CategoryRouter;

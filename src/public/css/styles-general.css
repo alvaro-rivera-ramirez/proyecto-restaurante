@@ -1,6 +1,6 @@
 /*===== GOOGLE FONTS =====*/
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 /*===== DEFAULT =====*/
 *{
 	margin: 0;
@@ -10,6 +10,7 @@
 :root{	
 	/*===== Font and typography =====*/
 	--body-font: 'Nunito', sans-serif;
+	--fuente1: 'Abel', sans-serif;
 	--normal-font-size: 1rem;
 	  
 	/*===== z index =====*/

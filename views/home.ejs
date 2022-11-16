@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
-  <h1>Responsive Sidebar Menu</h1>
-	<div>
+  <br><br><br>
+  	<div class="modal-content" id="form">
 		
 		<table class="table table-light table-striped table-bordered mb-3" style="max-width:100%;" id="datatable">
 			<thead>
@@ -119,7 +119,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-				  <button type="button" class="btn btn-primary">Save changes</button>
+					<button type="button" class="btn btn-dark btn-primary mx-2" onclick="updateCliente()"><i class="fa-solid fa-gears"></i> Realizar</button>
+				  <button type="button" class="btn btn-primary" onclick="updateCliente()">Save changes</button>
 				  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 				</div>
 			  </div>
@@ -130,7 +131,10 @@
 
 
   <script>
-    fetch('api/user')
+	window.onload =getUsuarios;
+    
+		function getUsuarios(){
+			fetch('api/user')
     .then( response => response.json() )
     .then( data =>{
         usuario=data;
@@ -143,7 +147,7 @@
             $(usuario).ready( function () {
                 $('#datatable').DataTable(
                     {
-                        lengthMenu: [[1, 15, 50, 100, 200], [5, 15, 50, 100, 200],],
+                        lengthMenu: [[5, 15, 50, 100, 200], [5, 15, 50, 100, 200],],
                         language: {
 					"processing": '<div class="d-flex align-items-center"><div class="spinner-border" role="status" aria-hidden="true"></div>&nbsp;&nbsp;<strong>Procesando...</strong></div>',
 					"lengthMenu": "Mostrar usuario: _MENU_",
@@ -158,8 +162,8 @@
 					"paginate": {
 						"first": "Primero",
 						"last": "Último",
-						"next": "Siguiente",
-						"previous": "Anterior"
+						"next": " ",
+						"previous": " "
 					},
 					"aria": {
 						"sortAscending": ": Activar para ordenar la columna de manera ascendente",
@@ -211,6 +215,7 @@
             tablaList.innerHTML=listHTML;
             
         }
+	}
 		const detallado=(id)=>{
 			let _usuario={};
 			usuario.filter(usu=>{
@@ -227,7 +232,6 @@
 					document.querySelector('#nro_ddi').value=_usuario.dni_usu;
 					document.querySelector('#email').value=_usuario.email_usu;
 		}
-
 		function deleteUsuario(id){
 			fetch ( `/api/user/${id}`, {
 				method: 'DELETE',
@@ -237,5 +241,29 @@
 				}
 			}).then( response => { location.reload(); } );
 		}
+		const updateCliente=()=>{
+            const _cliente={
+                Nombre: document.querySelector('#nombre').value,
+                apellido1: document.querySelector('#apellido1').value,
+                apellido2: document.querySelector('#apellido2').value,
+                cel: document.querySelector('#celular').value,
+				nroDdi: document.querySelector('#nro_ddi').value,
+                email: document.querySelector('#email').value,
+               
+            }
+            document.querySelector('#form').innerHTML='';
+            fetch('/api/user',{
+                method: 'PUT',
+                body:JSON.stringify(_cliente),
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res=>res.json())
+            .catch(error=>{
+            })
+            .then(response=>{
+                location.reload();
+            });
+       }
 </script>
-</div>

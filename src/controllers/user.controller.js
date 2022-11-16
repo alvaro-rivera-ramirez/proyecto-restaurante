@@ -13,14 +13,23 @@ const getUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
- 
+  console.log(Object.values(req.body))
+  const values=Object.values(req.body);
+  try {
+    console.log("oe que")
+    const users=await userServices.updateUser(values);
+    return res.status(201).send(users);
+  } catch (error) {
+    return res.status(401);
+  }
+      
 };
 
 const deleteUser = async (req, res) => {
   
   try {
-    console.log("en el controlador:",id);
-    const users=await userServices.deleteUser();
+  const { params: {id},}=req;
+    const users=await userServices.deleteUser(id);
 
     return res.status(201).send(users);
   } catch (error) {
