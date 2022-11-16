@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const { body } = require("express-validator");
 const conn = require("../config/bd.js");
 const { authTokenById, authByEmail } = require("../services/authServices");
 const {
@@ -10,16 +11,18 @@ const { tokenSign, verifyToken } = require("../utils/handleToken");
 
 const signIn = async (req, res) => {
   const { email, pass } = req.body;
-
+  
   //Si no existes estos campos
   if (!email || !pass) {
+    //console.log(req.body);
     handleErrorResponse(res, "USER_INVALID", 401);
     return;
   }
   try {
     //Buscar al usuario por su correo y obtenemos el id de usuario o un error
+    //console.log(req.body);
     const { id_usu} = await authByEmail(email, pass);
-
+   
     //Creamos el objeto usuario
     const User = {
       id_usu
@@ -38,7 +41,7 @@ const signIn = async (req, res) => {
 
     //Guardamos la cookie en el navegador
     res.cookie("jwt", jwt, cookiesOptions);
-    return res.status(201).send({ ruta: "/home"});
+    return res.status(201).send({ ruta: "/registroUsuarios"});
   } catch (err) {
     handleErrorResponse(res, "USER_INVALID", 401);
     console.log(err)
@@ -47,7 +50,9 @@ const signIn = async (req, res) => {
 
 const register = async (req, res) => {
   const { name, email, pass, idRol } = req.body;
+  console.log(req.body);
   if (!name || !email || !pass) {
+    
     handleErrorResponse(res, "USER_INVALID", 401);
     return;
   }
@@ -60,10 +65,10 @@ const register = async (req, res) => {
   };
   const passEncrypt = await encrypt(pass);
   newUser.psw_usu = passEncrypt;
-
-  conn.query("INSERT INTO usuario SET ?", [newUser], (err, result) => {
+  conn.query("INSERT INTO usuario SET ?", [newUser], (err, res) => {
     if (err) {
       handleErrorResponse(res, "Ocurrio un error", 401);
+      
     } else {
       res.status(201).send("Usuario registrado");
     }

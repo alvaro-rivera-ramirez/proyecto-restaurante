@@ -2,8 +2,8 @@
 
 /*===== VARIABLES CSS =====*/
 :root{
-  --header-height: 3.5rem;
-  --nav-width: 3.5rem;
+  --header-height: 4rem;
+  --nav-width: 68px;
   --font-one: 'Abel', sans-serif;
 }
 
@@ -18,12 +18,26 @@ body{
   transition: .5s;
 }
 
-main{
-  font-family: var(--body-font);
-}
-
 a{
   text-decoration: none;
+} 
+
+/*===== Estilos navegacion =====*/
+.nav__list a,.log-out{
+  margin-left: 1rem;
+  margin-right: 1rem;
+  border: 1.5px solid var(--first-color-light);
+  border-radius: 3px;
+  width: 73%;
+  margin:auto;
+  margin-bottom: 15px;
+  font-family: var(--fuente1);
+  font-size: 15px;
+  font-weight: 100;
+}
+
+.log-out{
+  width: 73%;
 }
 
 /*===== ESTILOS HEADER =====*/
@@ -126,6 +140,24 @@ a{
 }
 
 .nav__logo{
+  margin-bottom: 1.5rem;
+  margin-top: .75rem;
+}
+
+.nav__logo-icon{
+  margin-left: .25rem;
+  font-size: 4rem;
+  color: var(--white-color);
+  text-align: center;
+}
+
+.nav__logo-name{
+  font-family: var(--fuente1);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--white-color);
+  text-align: center;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -133,6 +165,10 @@ a{
 
 .nav__link{
   position: relative;
+  color: var(--first-color-light);
+  padding: 20px;
+  margin-bottom: 1.5rem;
+
   margin-left: 2rem;
   margin-right: 2rem;
   border: 2px solid var(--first-color-text);
@@ -140,6 +176,7 @@ a{
   font-family: var(--font-one);
   font-size: 15px;
   font-weight: 100;
+
   transition: .3s;
 }
 
@@ -147,6 +184,9 @@ a{
   background-color: var(--first-color-select);
 }
 
+
+.nav__list .nav__link:hover,.log-out:hover{
+  background-color: var(--first-color-select);
 .nav__logo-icon, .nav__icon{
   margin-bottom: .5rem;
 }
@@ -196,11 +236,15 @@ a{
 
 .responsive .nav__logo, .responsive .nav__link{
   padding: 0;
+
 }
 
 .responsive .nav__link{
   margin-left: 0;
   margin-right: 0;
+  border: none;
+}
+.responsive .log-out{
   border: none;
 }
 
@@ -251,6 +295,7 @@ a{
 }
 
 @media screen and (max-width:768px){
+  
   .nav__list .active{
     background-color: var(--first-color);
   }
@@ -263,10 +308,6 @@ a{
     margin-left: 0rem;
     margin-right: 0rem;
     border: none;
-  }
-
-  .nav__link:hover{
-    background-color: var(--first-color);
   }
   
   .nav__logo-icon, .nav__icon{
@@ -283,5 +324,7 @@ a{
 }
 
 @media screen and (max-width:576px){
+
+
 
 }
