@@ -4,5 +4,4 @@ const options = {
   password: process.env.DB_PASS || "usuario",
   database: process.env.DB_DATABASE || "restaurante",
 };
-
 module.exports = options;
