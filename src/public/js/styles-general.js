@@ -11,7 +11,7 @@ desplegables.forEach(desplegable => {
     const caret = desplegable.querySelector('.caret');
     const menu = desplegable.querySelector('.desplegable-menu');
     const options = desplegable.querySelector('.desplegable-menu li');
-
+    console.log(options)
     select.addEventListener('click', () => {
         caret.classList.toggle('caret-rotate');
         menu.classList.toggle('menu-open');
