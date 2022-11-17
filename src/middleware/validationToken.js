@@ -2,6 +2,8 @@ const {verifyToken} = require("../utils/handleToken");
 const {handleErrorResponse,handleHttpError}=require("../utils/handleError")
 const validationToken = async (req, res, next) => {
   try {
+
+=======
     const { jwt } = req.cookies;
     if (!jwt){
       handleErrorResponse(res,"NO_CREDENTIALS",401)

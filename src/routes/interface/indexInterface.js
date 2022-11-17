@@ -10,7 +10,8 @@ router.get('/',verifyLoggedIn,(req,res)=>{
 
 // Inicio
 router.get('/home',isLoggedIn,async(req,res)=>{
-    const {nom_usu,nom_tipousu} = await getProfileHeader(req.id);    
+    const {nom_usu,nom_tipousu}= await getProfileHeader(req.id);
+
     res.render('home',{nom_usu,nom_tipousu});
 })
 
