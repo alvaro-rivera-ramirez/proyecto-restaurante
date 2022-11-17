@@ -20,12 +20,12 @@ const signIn = async (req, res) => {
   }
   try {
     //Buscar al usuario por su correo y obtenemos el id de usuario o un error
-    //console.log(req.body);
-    const { id_usu} = await authByEmail(email, pass);
-   
+    const { id_usu,nom_tipousu,nom_usu} = await authByEmail(email, pass);
     //Creamos el objeto usuario
     const User = {
-      id_usu
+      id_usu,
+      nom_usu,
+      nom_tipousu
     };
 
     //Creamos el token

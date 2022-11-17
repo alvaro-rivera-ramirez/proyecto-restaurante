@@ -12,7 +12,7 @@ const validationToken = async (req, res, next) => {
     
     const { payload } = await verifyToken(token);
     req.id = payload.user.id_usu;
-
+    req.role=payload.user.nom_tipousu;
     next();
   } catch (err) {
      handleErrorResponse(res,"EXPIRED_CREDENTIALS",401)
