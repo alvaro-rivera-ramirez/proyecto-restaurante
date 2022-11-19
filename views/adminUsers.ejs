@@ -247,7 +247,7 @@
           }
           const updateCliente=()=>{
               const _cliente={
-                  Nombre: document.querySelector('#nombre').value,
+                    name: document.querySelector('#nombre').value,
                   apellido1: document.querySelector('#apellido1').value,
                   apellido2: document.querySelector('#apellido2').value,
                   cel: document.querySelector('#celular').value,
@@ -269,6 +269,6 @@
               .then(response=>{
                   location.reload();
               });
-         }
+            }  
   </script>
   

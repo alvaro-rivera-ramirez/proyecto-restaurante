@@ -1,2 +1,142 @@
 <br><br><br>
-registrousuario
+<div id="form">
+    <div class="mb-0">
+        <div class="row">
+            <div class="col">
+                <label class="form-label">Nombres</label>
+            </div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <div class="row">
+            <div class="col">
+                <input  id="nombre"name="nombre" type="text" class="form-control" required>
+            </div>
+        </div>
+    </div>
+    <div class="mb-0">
+        <div class="row">
+            <div class="col">
+                <label class="form-label">Apellido paterno</label>
+            </div>
+    
+            <div class="col">
+                <label class="form-label">Apellido materno</label>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mb-3">
+        <div class="row">
+            <div class="col">
+                <input id="apellido1" name="apellido1" type="text" class="form-control" required>
+            </div>
+
+            <div class="col">
+                <input id="apellido2" name="apellido2" type="text" class="form-control"  required>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-0">
+        <div class="row">
+            <div class="col">
+                <label class="form-label">Direccion</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <div class="row">
+
+            <div class="col">
+                <div >
+                    <div class="col-10"><input id="celular" name="celular" class="form-control mr-sm-2"style="border-radius: 3px 0 0 3px;" type="text" ></div>
+                </div>
+            </div>
+        </div>      
+    </div>
+    
+    <div class="mb-0">
+        <div class="row">
+            <div class="col-12 col-lg-12">
+                <label class="form-label">N° Documento de identidad</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <div class="col">
+            <div class="col-12 col-lg-12">
+                <input id="nro_ddi" name="nro_ddi" type="text" class="form-control" required>
+            </div>
+        </div>
+    </div>
+    <div class="col" id="grupo__exampleInputEmail1">
+        <div class="mb-2" style="width:100%">
+            <div class="col-12 col-lg-12">
+                <label class="form-label">Dirección de correo electrónico</label>
+            </div>
+            <div class="col-12 col-lg-12">
+                <input  id="email" name="email" type="email" class="form-control" aria-describedby="emailHelp" required>
+            </div>
+        </div>
+        <div>
+            <div class="col-12 col-lg-12">
+                <label class="form-label">contraseña</label>
+            </div>
+            <div class="col-12 col-lg-12">
+                <input ID="txtPassword" type="Password" Class="form-control" required>
+            </div>
+        </div>
+        <div>
+            <div class="col-12 col-lg-12">
+                <label class="form-label">rol</label>
+            </div>
+            <div class="col-12 col-lg-12">
+               <select name="selectRol" id="selectRol">
+                <option value="4">Cocinero</option>
+                <option value="1">Administrador</option>
+                <option value="2">Cajero</option>
+                <option value="3">Mesero</option>
+               </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-dark btn-primary mx-2" onclick="registerUser()"><i class="fa-solid fa-gears"></i> Realizar</button>
+
+</div>
+</div>
+</div>
+<script>
+    const registerUser=()=>{
+            const register_={
+                name: document.querySelector('#nombre').value,
+                //apellido1: document.querySelector('#apellido1').value,
+                //apellido2: document.querySelector('#apellido2').value,
+                //cel: document.querySelector('#celular').value,
+                //nroDdi: document.querySelector('#nro_ddi').value,
+                email: document.querySelector('#email').value,
+                pass: document.querySelector('#txtPassword').value,
+                idRol: document.querySelector('#selectRol').value,
+                
+               
+            }
+            document.querySelector('#form').innerHTML='';
+            fetch('/api/auth/register',{
+                method: 'POST',
+                body:JSON.stringify(register_),
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res=>res.json())
+            .catch(error=>{
+            })
+            .then(response=>{
+                
+            });     
+    }
+</script>

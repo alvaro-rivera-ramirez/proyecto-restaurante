@@ -49,10 +49,12 @@ const signIn = async (req, res) => {
 };
 
 const register = async (req, res) => {
+
   const { name, email, pass, idRol } = req.body;
-  console.log(req.body);
+  
   if (!name || !email || !pass) {
-    
+    console.log(req.body);
+    console.log("user invalid")
     handleErrorResponse(res, "USER_INVALID", 401);
     return;
   }
