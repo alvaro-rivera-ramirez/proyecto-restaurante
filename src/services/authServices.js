@@ -1,7 +1,7 @@
 const conn = require("../config/bd");
 const {encrypt,compare}=require("../utils/handlePass");
 const authByEmail = async (email, pass) => {
-  const result = await conn.query("SELECT * FROM usuario WHERE email_usu=?", [
+  const result = await conn.query("SELECT * FROM usuario u INNER JOIN tipo_usuario t ON u.tipo_usu=t.id_tipousu WHERE email_usu=?", [
     email
   ]);
   //No haya usuario o que la contraseña esta incorrecta
