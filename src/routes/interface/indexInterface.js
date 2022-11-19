@@ -27,5 +27,15 @@ router.get('/change-password',isLoggedIn,async(req,res)=>{
     const {nom_usu,nom_tipousu} = await getProfileHeader(req.id);
     res.render('change-password',{nom_usu,nom_tipousu});
 })
+//Interfaz registro usuarios
+router.get('/register-user',isLoggedIn,async(req,res)=>{
+    const {nom_usu,nom_tipousu}= await getProfileHeader(req.id);
+    res.render('registerUser',{nom_usu,nom_tipousu});
+})
+//Interfaz vista registro usuarios
+router.get('/Users',isLoggedIn,async(req,res)=>{
+    const {nom_usu,nom_tipousu}= await getProfileHeader(req.id);
+    res.render('adminUsers',{nom_usu,nom_tipousu});
+})
 
 module.exports=router;

@@ -6,20 +6,23 @@
 		
 		<table class="table table-light table-striped table-bordered mb-3" style="max-width:100%;" id="datatable">
 			<thead>
-				
+				<a class="btn btn-primary mx-1" href="registro-empleado" role="button">
+					<i class="fa-solid fa-file-pen"></i> Registrar
+				</a>
 				<tr >
-					
 					<th scope="col">Nombre</th>
 					<th scope="col">Apellido Paterno</th>
 					<th scope="col">Apellido materno</th>
 					<th scope="col">Correo</th>
 					<th scope="col" class="text-center"><i class="fa-solid fa-gears"></i></th>
+					
 				</tr>
 				
 			</thead>
 			<tbody id="data" >
 				
 			</tbody>
+			
 		</table>
 
 
@@ -151,7 +154,7 @@
                         lengthMenu: [[5, 15, 50, 100, 200], [5, 15, 50, 100, 200],],
                         language: {
 					"processing": '<div class="d-flex align-items-center"><div class="spinner-border" role="status" aria-hidden="true"></div>&nbsp;&nbsp;<strong>Procesando...</strong></div>',
-					"lengthMenu": "Mostrar usuario: _MENU_",
+					"lengthMenu": "",
 					"zeroRecords": '<div id="default-selector" class="py-5 text-center" style="width: 100%; color: #91949E;"><i style="font-size: 80pt" class="fa-solid fa-gears mb-3"></i><br><h3><b>No se encontró coincidencia con un producto registrado</b></h3></div>',
 					"emptyTable": '<div id="default-selector" class="py-5 text-center" style="width: 100%; color: #91949E;"><i style="font-size: 80pt" class="fa-solid fa-gears mb-3"></i><br><h3><b>No se encontró ningun producto registrado</b></h3></div>',
 					"info": " _START_ al _END_ de _TOTAL_ registros",
@@ -163,8 +166,8 @@
 					"paginate": {
 						"first": "Primero",
 						"last": "Último",
-						"next": " ",
-						"previous": " "
+						"next": " siguiente",
+						"previous": " atras"
 					},
 					"aria": {
 						"sortAscending": ": Activar para ordenar la columna de manera ascendente",
