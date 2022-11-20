@@ -1,4 +1,4 @@
-<div id="form" class="col-6">
+<div id="form" class="col-8 shadow p-3 mb-5 bg-body rounded pt-2" style="margin:0px auto">
     <center><h3>Registro de Usuario</h3></center>
     <div class="mb-0">
         <div class="row">
@@ -51,7 +51,7 @@
 
             <div class="col">
                 <div >
-                    <div class="col-10"><input id="celular" name="celular" class="form-control mr-sm-2"style="border-radius: 3px 0 0 3px;" type="text" ></div>
+                    <div class="col-10"><input id="dir" name="dir" class="form-control mr-sm-2"style="border-radius: 3px 0 0 3px;" type="text" ></div>
                 </div>
             </div>
         </div>      
@@ -110,17 +110,16 @@
             </center>
         </div>
     </div>
-    
 </div>
 
 <script>
     const registerUser=()=>{
             const register_={
+                nroDdi: document.querySelector('#nro_ddi').value,
                 name: document.querySelector('#nombre').value,
-                //apellido1: document.querySelector('#apellido1').value,
-                //apellido2: document.querySelector('#apellido2').value,
-                //cel: document.querySelector('#celular').value,
-                //nroDdi: document.querySelector('#nro_ddi').value,
+                apellido1: document.querySelector('#apellido1').value,
+                apellido2: document.querySelector('#apellido2').value,
+                dir: document.querySelector('#dir').value,
                 email: document.querySelector('#email').value,
                 pass: document.querySelector('#txtPassword').value,
                 idRol: document.querySelector('#selectRol').value,

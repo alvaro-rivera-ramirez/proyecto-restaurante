@@ -1,8 +1,9 @@
 
 <div id="contenido">
-    <div id="formUser">
+    <center><h1>Usuarios</h1></center>
+    <div id="formUser" class="shadow p-3 mb-5 bg-body rounded">
           
-        <table class="table table-light table-striped table-bordered mb-3" style="max-width:100%;" id="datatable">
+        <table class="table table-light table-striped table-bordered mb-3 pt-2" style="max-width:100%;" id="datatable">
             <thead>
                 <div class="row">
                     <div class="col-3">
@@ -207,11 +208,10 @@
               usuario.forEach(usuario => {
                   
                   listHTML+=`<tr><td>${usuario.nom_usu}</td><td>${usuario.ape1_usu}</td><td>${usuario.ape2_usu}</td><td>${usuario.email_usu}</td>
-                  <td><center><a type="button"  data-bs-toggle="modal" data-bs-target="#modalUser" onclick="detallado(${usuario.id_usu})"><i class="fa-sharp fa-solid fa-pen-nib"></i>
-                      </a>
-                      //
-                      <a type="button"  data-bs-toggle="modal" data-bs-target="#modal" onclick="deleteUsuario(${usuario.id_usu})"><i class="fa-sharp fa-solid fa-trash"></i>
-                      </a></center>
+                  <td><center><a type="button" class='btn btn-warning btnEdit me-3'  data-bs-toggle="modal" data-bs-target="#modalUser" onclick="detallado(${usuario.id_usu})"><i class="fa-solid fa-pen-to-square"></i>
+                  </a>
+                  <a type="button" class='btn btn-danger btnBorrar' data-bs-toggle="modal" data-bs-target="#modal" onclick="deleteUsuario(${usuario.id_usu})"><i class="fa-solid fa-trash"></i>
+                  </a></center>
                   </td></tr>`
               });
               tablaList.innerHTML=listHTML;

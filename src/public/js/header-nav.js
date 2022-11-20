@@ -8,7 +8,7 @@ const showNavbar = (toggleId, navId, bodyId, headerId) => {
 
     if(toggle && nav && bodypd && headerpd) {
         toggle.addEventListener('click', () =>{
-            nav.classList.toggle('show')
+            nav.classList.toggle('show-nav')
             nav.classList.toggle('responsive')
             bodypd.classList.toggle('body-pd')
             headerpd.classList.toggle('body-pd')
