@@ -48,7 +48,7 @@ const signIn = async (req, res) => {
 };
 
 const register = async (req, res) => {
-  const { name, email, pass, idRol } = req.body;
+  const { name, email, pass, idRol,nroDdi,apellido1,apellido2,dir } = req.body;
   console.log(req.body);
   if (!name || !email || !pass) {
     
@@ -57,10 +57,14 @@ const register = async (req, res) => {
   }
 
   const newUser = {
+    dni_usu: nroDdi,
     nom_usu: name,
+    ape1_usu: apellido1,
+    ape2_usu: apellido2,
     email_usu: email,
     psw_usu: pass,
     tipo_usu: idRol,
+    dir_usu: dir,
   };
   const passEncrypt = await encrypt(pass);
   newUser.psw_usu = passEncrypt;
