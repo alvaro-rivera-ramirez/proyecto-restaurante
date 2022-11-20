@@ -1,13 +1,13 @@
-/* const multer = require('multer')
+const multer = require('multer')
 const path = require('path')
 
 const storage = multer.diskStorage({
     destination: function(req,file,cd){
         cb(null,path.join(__dirname,'../public/img/productos'))
     },
-    filename: function(req,dile,cb){
+    filename: function(req,file,cb){
         cb(null,`image${Date.now()}.${file.mimetype.split('/')[1]}`)
     }
 })
 
-module.exports = storage */
+module.exports = storage 

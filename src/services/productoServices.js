@@ -1,7 +1,7 @@
 const con = require("../config/bd");
 
 const getProducto = async() => {
-    const producto=await con.query("SELECT * FROM producto");
+    const producto=await con.query("SELECT * FROM producto P, categoria C WHERE P.id_categoria=C.id_categoria");
     if(!producto) throw new Error();
     console.log(producto);
     return producto;

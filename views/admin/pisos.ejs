@@ -1,0 +1,140 @@
+<div class="container-fluid">
+    <h2>Registros / pisos</h2>
+    <button id="btnCrear" type="button" class="btn btn-dark mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Agregar
+      </button>
+    <div class="row shadow-lg p-3 mb-5">
+        <div class="col">
+            <table id="tablaPisos" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Número Piso</th>                 
+                    <th class="text-center">Operaciones</th>                      
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            </table> 
+        </div>
+    </div>
+</div>
+
+<!--Modal para CRUD-->
+<div class="modal fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Producto</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="formArticulos">    
+                <div class="modal-body"> 
+                    <input id="id" hidden>               
+                        <label for="" class="col-form-label">Número Piso:</label>
+                        <input type="text" class="form-control" id="pisos" name="name">                              
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Cancelar</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+    
+    $(document).ready(function() {   
+    let url = 'http://localhost:3000/api/pisos/';
+    let opcion = null;
+    let id, pisos;
+    //MOSTRAR
+    let tablaPisos = $('#tablaPisos').DataTable({            
+        "ajax":{
+            "url": url,
+            "dataSrc":""
+        },
+        "columns":[
+                {"data":"id_piso"},
+                {"data":"nro_piso"},
+            {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-warning btnEditar me-2'><i class='fa-solid fa-pen-to-square'></i></button> <button class='btn btn-danger btnBorrar'><i class='fa-solid fa-trash'></i></button></div></div>"}
+            ]              
+    });
+    //CREAR
+    $("#btnCrear").click(function(){
+        opcion='crear';            
+        id=null;
+        $("#formArticulos").trigger("reset");
+        $(".modal-title").text("Crear Artículo");
+        $('#modalCRUD').modal('show');	    
+    });    
+    //EDITAR        
+    $(document).on("click", ".btnEditar", function(){		            
+        opcion='editar';
+        fila = $(this).closest("tr");	        
+        id = parseInt(fila.find('td:eq(0)').text());
+        pisos = fila.find('td:eq(1)').text();          
+        $("#id").val(id);
+        $("#pisos").val(pisos);           
+        $(".modal-title").text("Editar Artículo");		
+        $('#exampleModal').modal('show');		   
+    });
+
+     //BORRAR
+    $(document).on("click", ".btnBorrar", function(){
+        fila = $(this);           
+        id = parseInt($(this).closest('tr').find('td:eq(0)').text());            
+        Swal.fire({
+            title: '¿Confirma eliminar el registro?',                
+            showCancelButton: true,
+            confirmButtonText: `Confirmar`,                
+            }).then((result) => {               
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: url+id,
+                    method: 'delete',                        
+                    data:  {id:id},    
+                    success: function() {
+                        tablaPisos.row(fila.parents('tr')).remove().draw();                  
+                    }
+                });
+                Swal.fire('¡Registro Eliminado!', '', 'success')
+            } 
+            })
+    });     
+    //submit para el CREAR y EDITAR
+    $('#formArticulos').submit(function(e){                                     
+        e.preventDefault();
+        id = $.trim($('#id').val());    
+        pisos = $.trim($('#pisos').val());               
+        if(opcion=='crear'){                
+            $.ajax({                    
+                url: url,
+                method: 'post',                                                         
+                contentType: 'application/json',  
+                data:  JSON.stringify({name:pisos}),                       
+                success: function(data) {                       
+                    tablaPisos.ajax.reload(null, false);                        
+                }
+            });	
+        }
+        if(opcion=='editar'){
+            console.log(id);
+            $.ajax({                    
+                url: url+id,
+                method: 'put',                                        
+                contentType: 'application/json',  
+                data:  JSON.stringify({id:id, name:pisos}),                       
+                success: function(data) {                       
+                    tablaPisos.ajax.reload(null, false);                        
+                }
+            });	
+        }        		        
+        $('#exampleModal').modal('hide');											     			
+    });
+});
+    
+</script>
