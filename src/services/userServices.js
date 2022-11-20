@@ -41,10 +41,17 @@ const { encrypt, compare } = require("../utils/handlePass");
     }
   };
 
+  const getCountUsers = async () => {
+    const countUsers = await conn.query("SELECT COUNT(*) AS count_users FROM usuario");
+  
+    return countUsers[0];
+  };
+
 module.exports={
     getUsers,
     getUser,
     updateUser,
     deleteUser,
-    changePassword
+    changePassword,
+    getCountUsers
 }

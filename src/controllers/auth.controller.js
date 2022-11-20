@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const { body } = require("express-validator");
 const conn = require("../config/bd.js");
 const { authTokenById, authByEmail } = require("../services/authServices");
 const {
