@@ -1,0 +1,273 @@
+
+<div id="contenido">
+    <center><h1>Usuarios</h1></center>
+    <div id="formUser" class="shadow p-3 mb-5 bg-body rounded">
+          
+        <table class="table table-light table-striped table-bordered mb-3 pt-2" style="max-width:100%;" id="datatable">
+            <thead>
+                <div class="row">
+                    <div class="col-3">
+                        <a class="btn btn-primary mx-1" href="register-user" role="button"><i class="fa-solid fa-file-pen"></i> Registrar</a>
+                    </div>
+                </div>
+                </a>
+                <tr >
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido Paterno</th>
+                    <th scope="col">Apellido materno</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col" class="text-center"><i class="fa-solid fa-gears"></i></th>
+                      
+                </tr>
+                  
+            </thead>
+            <tbody id="data" >
+
+            </tbody>
+              
+        </table>
+          <!--modal -->
+          <div class="modal" tabindex="-1" role="modal1" id="modalUser">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">DATOS DEL USUARIO</h5>
+                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-0">
+                        <div class="row">
+                            <div class="col">
+                                <label class="form-label">Nombres</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col">
+                                <input  id="nombre"name="nombre" type="text" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-0">
+                        <div class="row">
+                            <div class="col">
+                                <label class="form-label">Apellido paterno</label>
+                            </div>
+                    
+                            <div class="col">
+                                <label class="form-label">Apellido materno</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col">
+                                <input id="apellido1" name="apellido1" type="text" class="form-control" required>
+                            </div>
+
+                            <div class="col">
+                                <input id="apellido2" name="apellido2" type="text" class="form-control"  required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-0">
+                        <div class="row">
+                            <div class="col">
+                                <label class="form-label">Direccion</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="row">
+
+                            <div class="col">
+                                <div >
+                                    <div class="col-10"><input id="celular" name="celular" class="form-control mr-sm-2"style="border-radius: 3px 0 0 3px;" type="text" ></div>
+                                </div>
+                            </div>
+                        </div>      
+                    </div>
+                    
+                    <div class="mb-0">
+                        <div class="row">
+                            <div class="col-12 col-lg-12">
+                                <label class="form-label">N° Documento de identidad</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="col">
+                            <div class="col-12 col-lg-12">
+                                <input id="nro_ddi" name="nro_ddi" type="text" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col" id="grupo__exampleInputEmail1">
+                        <div class="mb-2" style="width:100%">
+                            <div class="col-12 col-lg-12">
+                                <label class="form-label">Dirección de correo electrónico</label>
+                            </div>
+            
+                            <div class="col-12 col-lg-12">
+                                <input  id="email" name="email" type="email" class="form-control" aria-describedby="emailHelp" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark btn-primary mx-2" onclick="updateCliente()"><i class="fa-solid"></i> Realizar</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <!--termina modal-->
+    </div>
+</div>  
+<script>
+      window.onload =getUsuarios;
+      
+          function getUsuarios(){
+              fetch('api/user')
+      .then( response => response.json() )
+      .then( data =>{
+          usuario=data;
+          console.log(data);
+          renderResult(usuario);
+          
+      })
+      const tablaList=document.querySelector('#data');
+          const renderResult=(usuario)=>{
+              $(usuario).ready( function () {
+                  $('#datatable').DataTable(
+                      {
+                          lengthMenu: [[5, 15, 50, 100, 200], [5, 15, 50, 100, 200],],
+                          language: {
+                      "processing": '<div class="d-flex align-items-center"><div class="spinner-border" role="status" aria-hidden="true"></div>&nbsp;&nbsp;<strong>Procesando...</strong></div>',
+                      "lengthMenu": "",
+                      "zeroRecords": '<div id="default-selector" class="py-5 text-center" style="width: 100%; color: #91949E;"><i style="font-size: 80pt" class="fa-solid fa-gears mb-3"></i><br><h3><b>No se encontró coincidencia con un producto registrado</b></h3></div>',
+                      "emptyTable": '<div id="default-selector" class="py-5 text-center" style="width: 100%; color: #91949E;"><i style="font-size: 80pt" class="fa-solid fa-gears mb-3"></i><br><h3><b>No se encontró ningun producto registrado</b></h3></div>',
+                      "info": " _START_ al _END_ de _TOTAL_ registros",
+                      "infoEmpty": " 0 al 0 de 0 registros",
+                      "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                      "search": "Buscar: ",
+                      "infoThousands": ",",
+                      "datatable_filter:":"<br>",
+                      "loadingRecords": '<div class="d-flex align-items-center"><div class="spinner-border" role="status" aria-hidden="true"></div>&nbsp;&nbsp;<strong>Cargando registros, espero por favor...</strong></div>',
+                      "paginate": {
+                          "first": "Primero",
+                          "last": "Último",
+                          "next": " siguiente",
+                          "previous": " atras"
+                      },
+                      "aria": {
+                          "sortAscending": ": Activar para ordenar la columna de manera ascendente",
+                          "sortDescending": ": Activar para ordenar la columna de manera descendente"
+                      },
+                      "buttons": {
+                          "copy": "Copiar",
+                          "colvis": "Visibilidad",
+                          "collection": "Colección",
+                          "colvisRestore": "Restaurar visibilidad",
+                          "copyKeys": "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                          "copySuccess": {
+                              "1": "Copiada 1 fila al portapapeles",
+                              "_": "Copiadas %ds fila al portapapeles"
+                          },
+                          "copyTitle": "Copiar al portapapeles",
+                          "csv": "CSV",
+                          "excel": "Excel",
+                          "pageLength": {
+                              "-1": "Mostrar todas las filas",
+                              "_": "Mostrar %d filas"
+                          },
+                          "pdf": "PDF",
+                          "print": "Imprimir",
+                          "renameState": "Cambiar nombre",
+                          "updateState": "Actualizar",
+                          "createState": "Crear Estado",
+                          "removeAllStates": "Remover Estados",
+                          "removeState": "Remover",
+                          "savedStates": "Estados Guardados",
+                          "stateRestore": "Estado %d"
+                      }
+                  }
+                      }
+                  );
+                  });
+              let listHTML="";
+              
+              usuario.forEach(usuario => {
+                  
+                  listHTML+=`<tr><td>${usuario.nom_usu}</td><td>${usuario.ape1_usu}</td><td>${usuario.ape2_usu}</td><td>${usuario.email_usu}</td>
+                  <td><center><a type="button" class='btn btn-warning btnEdit me-3'  data-bs-toggle="modal" data-bs-target="#modalUser" onclick="detallado(${usuario.id_usu})"><i class="fa-solid fa-pen-to-square"></i>
+                  </a>
+                  <a type="button" class='btn btn-danger btnBorrar' data-bs-toggle="modal" data-bs-target="#modal" onclick="deleteUsuario(${usuario.id_usu})"><i class="fa-solid fa-trash"></i>
+                  </a></center>
+                  </td></tr>`
+              });
+              tablaList.innerHTML=listHTML;
+              
+          }
+      }
+          const detallado=(id)=>{
+              let _usuario={};
+              usuario.filter(usu=>{
+                          if(usu.id_usu==id)
+                          {
+                              _usuario=usu
+                          }
+                      });
+                      //console.log(_usuario);
+                      document.querySelector('#nombre').value=_usuario.nom_usu;
+                      document.querySelector('#apellido1').value=_usuario.ape1_usu;
+                      document.querySelector('#apellido2').value=_usuario.ape2_usu;
+                      document.querySelector('#celular').value=_usuario.dir_usu;
+                      document.querySelector('#nro_ddi').value=_usuario.dni_usu;
+                      document.querySelector('#email').value=_usuario.email_usu;
+          }
+          function deleteUsuario(id){
+              fetch ( `/api/user/${id}`, {
+                  method: 'DELETE',
+                  body: '',
+                  headers: {
+                      'Content-type': 'application/json'
+                  }
+              }).then( response => { location.reload(); } );
+          }
+          const updateCliente=()=>{
+              const _cliente={
+                  name: document.querySelector('#nombre').value,
+                  apellido1: document.querySelector('#apellido1').value,
+                  apellido2: document.querySelector('#apellido2').value,
+                  cel: document.querySelector('#celular').value,
+                  nroDdi: document.querySelector('#nro_ddi').value,
+                  email: document.querySelector('#email').value,
+                 
+              }
+              document.querySelector('#formUser').innerHTML='';
+              fetch('/api/user',{
+                  method: 'PUT',
+                  body:JSON.stringify(_cliente),
+                  headers:{
+                      'Content-Type': 'application/json'
+                  }
+              })
+              .then(res=>res.json())
+              .catch(error=>{
+              })
+              .then(response=>{
+                  location.reload();
+              });
+            }  
+  </script>
+
+  
