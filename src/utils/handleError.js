@@ -6,7 +6,7 @@ const handleHttpError = (res, err) => {
 
 const handleErrorResponse = (res, message = "Algo ocurrio", code = 401) => {
   res.status(code);
-  res.send({ error: message });
+  res.send({ error: message,msg:false });
 };
 
 module.exports = { handleHttpError, handleErrorResponse };

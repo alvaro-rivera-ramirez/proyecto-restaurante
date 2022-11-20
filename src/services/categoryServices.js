@@ -14,7 +14,7 @@ const getOneCategory = async (id) => {
 
   if (!category || !category.length) throw new Error("CATEGORY_NOT_EXISTS");
 
-  return category;
+  return category[0];
 };
 const createCategory = async (category) => {
   try {

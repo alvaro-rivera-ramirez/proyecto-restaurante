@@ -23,5 +23,11 @@ router.get('/Users',isLoggedIn,async(req,res)=>{
 })
 
 
+router.get("/mesas", isLoggedIn,(req, res) => {
+    const nom_usu=req.name
+    const nom_tipousu=req.role
+    res.render("admin/mesas",{nom_usu,nom_tipousu});
+});
+
 
 module.exports=router
