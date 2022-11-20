@@ -27,23 +27,19 @@ const createCategory = async (req, res) => {
   const category = { nom_categoria };
   try {
     await CategoryServices.createCategory(category);
-    return res.status(201).send("CATEGORY_CREATED");
+    return res.status(201).send({msg:true});
   } catch (error) {
     console.log(error);
-    handleErrorResponse(res, "ERROR EN LA CONSULTA");
+    res.status(500).send({msg:false})
   }
 };
 const updateCategory = async (req, res) => {
   const { id } = req.params;
   const { nom_categoria } = req.body;
-  if (!nom_categoria) {
-    handleErrorResponse(res, "CAMPO INVALIDO", 400);
-    return;
-  }
   const category = { nom_categoria };
   try {
     await CategoryServices.updateCategory(id, category);
-    return res.status(201).send("CATEGORY_UPDATED");
+    return res.status(200).send({mensaje:"CATEGORY_UPDATED"});
   } catch (error) {
     handleErrorResponse(res, "ERROR EN LA CONSULTA");
     console.log(error);
@@ -53,7 +49,7 @@ const deleteCategory = async (req, res) => {
   const { id } = req.params;
   try {
     await CategoryServices.deleteCategory(id);
-    return res.status(201).send("CATEGORY_DELETED");
+    return res.status(200).send({msg:"CATEGORY_DELETED",ok:true});
   } catch (error) {
       handleErrorResponse(res, "ERROR EN LA CONSULTA");
     console.log(error);

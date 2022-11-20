@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const { body } = require("express-validator");
 const conn = require("../config/bd.js");
 const { authTokenById, authByEmail } = require("../services/authServices");
 const {
@@ -49,7 +48,7 @@ const signIn = async (req, res) => {
 };
 
 const register = async (req, res) => {
-  const { name, email, pass, idRol } = req.body;
+  const { name, email, pass, idRol,nroDdi,apellido1,apellido2,dir } = req.body;
   console.log(req.body);
   if (!name || !email || !pass) {
     
@@ -58,21 +57,33 @@ const register = async (req, res) => {
   }
 
   const newUser = {
+    dni_usu: nroDdi,
     nom_usu: name,
+    ape1_usu: apellido1,
+    ape2_usu: apellido2,
     email_usu: email,
     psw_usu: pass,
     tipo_usu: idRol,
+    dir_usu: dir,
   };
   const passEncrypt = await encrypt(pass);
   newUser.psw_usu = passEncrypt;
-  conn.query("INSERT INTO usuario SET ?", [newUser], (err, res) => {
-    if (err) {
-      handleErrorResponse(res, "Ocurrio un error", 401);
-      
-    } else {
-      res.status(201).send("Usuario registrado");
-    }
-  });
+  // conn.query("INSERT INTO usuario SET ?", [newUser], (err, res) => {
+    
+  //   if (err) {
+  //     handleErrorResponse(res, "Ocurrio un error", 401);
+  //   } else {
+  //     res.status(201);
+  //   }
+  // });
+
+  try {
+    const result = await conn.query("INSERT INTO usuario SET ?", [newUser])
+    return res.status(201).send("USUARIO CREADO")
+  } catch (error) {
+    console.log(error)
+    return res.status(500)
+  }
 };
 
 const home = async (req, res) => {

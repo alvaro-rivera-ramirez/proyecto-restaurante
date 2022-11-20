@@ -1,17 +1,66 @@
-<div class="container-fluid">
-  <div class="body__title">
+<div class="container">
+  <div class="body__title mb-2">
     <h2>Categorías</h2>
   </div>
-  <div class="table-responsive">
-    <table class="table table-striped">
+  <button id="btnAdd" class="btn btn-primary mt-2">
+    &nbsp;+ Nuevo Registro
+  </button>
+  <div class="table-responsive shadow p-3 mb-5 bg-body rounded mt-3">
+    <table
+      class="table table-striped pt-2"
+      id="tableCategory"
+      style="width: 100%"
+    >
       <thead class="table-dark">
         <tr>
-          <th>#</th>
-          <th>First</th>
-          <th>Last</th>
-          <th>Handle</th>
+          <th class="text-center">#</th>
+          <th class="text-center">Categoria</th>
+          <th class="text-center">Editar</th>
+          <th class="text-center">Eliminar</th>
         </tr>
       </thead>
+      <tbody class="text-center"></tbody>
     </table>
   </div>
 </div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="modalCategory"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form id="formCategory">
+        <div class="modal-body">
+          <label for="nom_categoria" class="col-form-label">Categoria:</label>
+          <input type="text" class="form-control" id="nom_categoria" name="nom_categoria"/>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Cancelar
+          </button>
+          <button type="submit" id="btnSave" class="btn btn-dark">
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="/public/js/categorias/listCategory.js"></script>
+<script src="/public/js/categorias/newCategory.js"></script>
+<script src="/public/js/categorias/editCategory.js"></script>
+<script src="/public/js/categorias/deleteCategory.js"></script>
