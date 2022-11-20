@@ -1,5 +1,5 @@
-<br><br><br>
-<div id="form">
+<div id="form" class="col-6">
+    <center><h3>Registro de Usuario</h3></center>
     <div class="mb-0">
         <div class="row">
             <div class="col">
@@ -93,23 +93,26 @@
             <div class="col-12 col-lg-12">
                 <label class="form-label">rol</label>
             </div>
-            <div class="col-12 col-lg-12">
-               <select name="selectRol" id="selectRol">
+            <div class="col-4">
+               <select name="selectRol" id="selectRol" class="form-select" aria-label="Default select example" required>
                 <option value="4">Cocinero</option>
                 <option value="1">Administrador</option>
                 <option value="2">Cajero</option>
                 <option value="3">Mesero</option>
                </select>
             </div>
+            <br>
+        </div>
+        <div class="col-12 col-lg-12">
+            <center>
+                <button type="button" class="btn btn-dark btn-primary mx-2" onclick="registerUser()"><i class="fa-solid fa-gears"></i> Registrar</button>
+                <a href="/Users" class="btn btn-dark btn-primary"><i class="fa-solid fa-circle-chevron-left"></i> Regresar</a>
+            </center>
         </div>
     </div>
+    
 </div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-dark btn-primary mx-2" onclick="registerUser()"><i class="fa-solid fa-gears"></i> Realizar</button>
 
-</div>
-</div>
-</div>
 <script>
     const registerUser=()=>{
             const register_={
