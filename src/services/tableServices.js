@@ -11,7 +11,7 @@ const getOneTable = async (id) => {
 
   if (!mesas || !mesas.length) throw new Error("MESA_VACIA");
 
-  return mesas;
+  return mesas[0];
 };
 const createTable = async (table) => {
   try {

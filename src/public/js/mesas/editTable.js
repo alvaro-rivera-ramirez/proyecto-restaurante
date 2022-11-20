@@ -16,28 +16,37 @@ document.addEventListener("click", async (e) => {
 
 const editCategory = async (id) => {
   let modalEdit = new bootstrap.Modal(
-    document.getElementById("modalCategory"),
+    document.getElementById("modalTable"),
     { keyboard: false, backdrop: true }
   );
   document.querySelector(".modal-title").innerHTML = "Editar Categoria";
-  document.querySelector(".modal-body").innerHTML +=`<label for="id_emesa" class="col-form-label">Piso</label>
+  document.querySelector(".modal-body").innerHTML =`${createModal()}<label for="id_emesa" class="col-form-label">Piso</label>
   <select name="id_emesa" id="id_emesa" class="form-select">
-    <option value="1">Piso 1</option>
-    <option value="2">Piso 2</option>
+    <option value="1">Disponible</option>
+    <option value="2">Ocupado</option>
+    <option value="3">Deshabilitado</option>
   </select>`
-  modalEdit.show();
   const btnSave = document.getElementById("btnSave");
-
+  
   fetch(`/api/table/${id}`)
-    .then((res) => res.json())
-    .then((res) => {
-      document.getElementById("nom_categoria").value = res.nom_categoria;
+  .then((res) => res.json())
+  .then((res) => {
+      console.log(res)
+      let select1=document.querySelector('#id_piso');
+      let opcion1=select1.querySelector('option[value="'+res.id_piso+'"]');
+      console.log(opcion1)
+      opcion1.setAttribute('selected',true);
+      let select=document.querySelector('#id_emesa');
+      let opcion=select.querySelector('option[value="'+res.id_emesa+'"]');
+      opcion.setAttribute('selected',true);
+      document.getElementById("numero_mesa").value = res.numero_mesa;
+      modalEdit.show();
     })
     .catch((err) => console.log(err));
-
-  btnSave.addEventListener("click", async (e) => {
+    
+    btnSave.addEventListener("click", async (e) => {
     e.preventDefault();
-    const form = new FormData(formCategory);
+    const form = new FormData(formTable);
     let data = {};
     form.forEach((value, key) => (data[key] = value));
     try {
@@ -50,7 +59,6 @@ const editCategory = async (id) => {
         body: JSON.stringify(data),
       });
 
-      const res = await response.json();
       console.log(response.ok);
       // Si el res. status es 200 o 201
       if (response.ok) {
@@ -64,6 +72,7 @@ const editCategory = async (id) => {
           window.location.reload();
         });
       } else {
+        const res = await response.json();
         Swal.fire({
           title: "Error",
           text: "Campos erróneos",
@@ -78,5 +87,8 @@ const editCategory = async (id) => {
     } catch (error) {
       console.log(error);
     }
+  });
+  modalEdit.addEventListener("hidden.bs.modal", (e) => {
+    closeModal();
   });
 };
