@@ -1,0 +1,88 @@
+.seccion-panel{
+    width: 65%;
+}
+
+.seccion-resumen{
+    width: 30%;
+}
+
+.panel__title{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: .5rem 1rem;
+    color: var(--first-color-text);
+    background-color: var(--first-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 2px 4px rgba(0, 0, 0, .1);
+}
+
+.panel__selection{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.panel__option{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 33.3%;
+    margin-bottom: .5rem;
+}
+
+.panel__option-end{
+    margin-right: 33.3%;
+}
+
+.panel__option-img{
+    display: block;
+    margin: 0 auto;
+    width: 40%;
+    max-width: 120px;
+    min-width: 30px;
+}
+
+.panel__option-name{
+    display: block;
+    margin-top: .5rem;
+    color: var(--first-color);
+    text-align: center;
+}
+
+.resumen__card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: .5rem 1rem;
+    color: var(--first-color-text);
+    background-color: var(--second-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 2px 4px rgba(0, 0, 0, .1);
+}
+
+.resumen__card-img{
+    margin-left: .5rem;
+    font-size: 1.5rem;
+}
+
+.resumen__card-body{
+    width: 70%;
+}
+
+@media screen and (max-width:768px){
+
+}
+
+@media screen and (max-width:576px){
+    .panel__option{
+        width: 50%;
+    }
+
+    .panel__option-end{
+        margin-right: 50%;
+    }
+
+    .section-panel *, .section-resumen *{
+        font-size: small;
+    }
+}
