@@ -13,9 +13,9 @@
                 </a>
                 <tr >
                     <th scope="col">Nombre</th>
-                    <th scope="col">Apellido Paterno</th>
-                    <th scope="col">Apellido materno</th>
-                    <th scope="col">Correo</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">DNI</th>
+                    <th scope="col">Rol</th>
                     <th scope="col" class="text-center"><i class="fa-solid fa-gears"></i></th>
                       
                 </tr>
@@ -207,7 +207,7 @@
               
               usuario.forEach(usuario => {
                   
-                  listHTML+=`<tr><td>${usuario.nom_usu}</td><td>${usuario.ape1_usu}</td><td>${usuario.ape2_usu}</td><td>${usuario.email_usu}</td>
+                  listHTML+=`<tr><td>${usuario.nom_usu}</td><td>${usuario.ape1_usu} ${usuario.ape2_usu}</td><td>${usuario.dni_usu}</td><td>${usuario.nom_tipousu}</td>
                   <td><center><a type="button" class='btn btn-warning btnEdit me-3'  data-bs-toggle="modal" data-bs-target="#modalUser" onclick="detallado(${usuario.id_usu})"><i class="fa-solid fa-pen-to-square"></i>
                   </a>
                   <a type="button" class='btn btn-danger btnBorrar' data-bs-toggle="modal" data-bs-target="#modal" onclick="deleteUsuario(${usuario.id_usu})"><i class="fa-solid fa-trash"></i>
