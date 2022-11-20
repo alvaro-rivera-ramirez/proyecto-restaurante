@@ -18,7 +18,7 @@ const updateUser = async (req, res) => {
   console.log(Object.values(req.body))
   const values=Object.values(req.body);
   try {
-    console.log("oe que")
+    console.log("oe que2")
     const users=await userServices.updateUser(values);
     return res.status(201).send(users);
   } catch (error) {
