@@ -43,7 +43,7 @@
       </div>
       <form id="formTable">
         <div class="modal-body">
-          <label for="numero_mesa" class="col-form-label">Número:</label>
+          <!-- <label for="numero_mesa" class="col-form-label">Número:</label>
           <input
             type="text"
             class="form-control"
@@ -54,12 +54,11 @@
           <select name="id_piso" id="id_piso" class="form-select">
             <option value="1">Piso 1</option>
             <option value="2">Piso 2</option>
-          </select>
+            <option value="3">Piso 3</option>
+          </select> -->
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Cancelar
-          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
           <button type="submit" id="btnSave" class="btn btn-dark">
             Guardar
           </button>
@@ -68,6 +67,7 @@
     </div>
   </div>
 </div>
+<script src="/public/js/mesas/modal.js"></script>
 <script src="/public/js/mesas/listTable.js"></script>
 <script src="/public/js/mesas/newTable.js"></script>
 <script src="/public/js/mesas/editTable.js"></script>
