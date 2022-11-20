@@ -181,7 +181,7 @@ a{
   padding-right: 1rem;
 }
 
-.show{
+.show-nav{
   left: 0;
 }
 
@@ -245,7 +245,7 @@ a{
     font-size: 1rem;
   }
 
-  .show{
+  .show-nav{
     width: calc(var(--nav-width) + 152px);
   }
 }

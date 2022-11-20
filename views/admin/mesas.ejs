@@ -1,20 +1,18 @@
 <div class="container">
   <div class="body__title mb-2">
-    <h2>Categorías</h2>
+    <h2>Mesas</h2>
   </div>
   <button id="btnAdd" class="btn btn-primary mt-2">
     &nbsp;+ Nuevo Registro
   </button>
-  <div class="table-responsive shadow p-3 mb-5 bg-body rounded mt-3">
-    <table
-      class="table table-striped pt-2"
-      id="tableCategory"
-      style="width: 100%"
-    >
+  <div class="table-responsive mt-3">
+    <table class="table table-striped pt-2" id="tableMesas" style="width: 100%">
       <thead class="table-dark">
         <tr>
           <th class="text-center">#</th>
-          <th class="text-center">Categoria</th>
+          <th class="text-center">Número</th>
+          <th class="text-center">Piso</th>
+          <th class="text-center">Estado</th>
           <th class="text-center">Editar</th>
           <th class="text-center">Eliminar</th>
         </tr>
@@ -27,7 +25,7 @@
 <!-- Modal -->
 <div
   class="modal fade"
-  id="modalCategory"
+  id="modalTable"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
@@ -43,10 +41,20 @@
           aria-label="Close"
         ></button>
       </div>
-      <form id="formCategory">
+      <form id="formTable">
         <div class="modal-body">
-          <label for="nom_categoria" class="col-form-label">Categoria:</label>
-          <input type="text" class="form-control" id="nom_categoria" name="nom_categoria"/>
+          <label for="numero_mesa" class="col-form-label">Número:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="numero_mesa"
+            name="numero_mesa"
+          />
+          <label for="id_piso" class="col-form-label">Piso</label>
+          <select name="id_piso" id="id_piso" class="form-select">
+            <option value="1">Piso 1</option>
+            <option value="2">Piso 2</option>
+          </select>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -60,7 +68,7 @@
     </div>
   </div>
 </div>
-<script src="/public/js/categorias/listCategory.js"></script>
-<script src="/public/js/categorias/newCategory.js"></script>
-<script src="/public/js/categorias/editCategory.js"></script>
-<script src="/public/js/categorias/deleteCategory.js"></script>
+<script src="/public/js/mesas/listTable.js"></script>
+<script src="/public/js/mesas/newTable.js"></script>
+<script src="/public/js/mesas/editTable.js"></script>
+<script src="/public/js/mesas/deleteTable.js"></script>

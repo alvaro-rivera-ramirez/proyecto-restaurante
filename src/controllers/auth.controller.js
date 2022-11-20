@@ -64,14 +64,22 @@ const register = async (req, res) => {
   };
   const passEncrypt = await encrypt(pass);
   newUser.psw_usu = passEncrypt;
-  conn.query("INSERT INTO usuario SET ?", [newUser], (err, res) => {
-    if (err) {
-      handleErrorResponse(res, "Ocurrio un error", 401);
-      
-    } else {
-      res.status(201).send("Usuario registrado");
-    }
-  });
+  // conn.query("INSERT INTO usuario SET ?", [newUser], (err, res) => {
+    
+  //   if (err) {
+  //     handleErrorResponse(res, "Ocurrio un error", 401);
+  //   } else {
+  //     res.status(201);
+  //   }
+  // });
+
+  try {
+    const result = await conn.query("INSERT INTO usuario SET ?", [newUser])
+    return res.status(201).send("USUARIO CREADO")
+  } catch (error) {
+    console.log(error)
+    return res.status(500)
+  }
 };
 
 const home = async (req, res) => {
