@@ -28,7 +28,8 @@ const eliminar= async (e)=>{
                         showConfirmButton: false,
                         timer: 800,
                     }).then(() => {
-                        window.location.reload()
+                        $("#tableMesas").dataTable().fnDestroy();
+                        listTable();
                     })
                 }else{
                     Swal.fire({

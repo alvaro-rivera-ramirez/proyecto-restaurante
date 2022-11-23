@@ -30,7 +30,10 @@ const newCategory = async () => {
             showConfirmButton: false,
             timer: 800,
           }).then(() => {
-            window.location.reload();
+            modalNew.hide();
+            window.location.reload()
+            // $('#tableCategory').dataTable().fnDestroy();
+            // listCategory()
           });
         } else {
           Swal.fire({
