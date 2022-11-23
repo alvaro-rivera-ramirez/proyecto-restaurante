@@ -3,6 +3,7 @@ const {
     handleErrorResponse,
     handleHttpError,
   } = require("../utils/handleError");
+
 const getProducto = async (req, res) => {
     try {
         const producto=await ProductoServices.getProducto();
@@ -12,6 +13,7 @@ const getProducto = async (req, res) => {
         return res.status(401);
     }
 };
+
 const getOneProducto = async(req, res) => {
     const {
         params: {id},
@@ -29,50 +31,52 @@ const getOneProducto = async(req, res) => {
         console.log(error)
     }
 };
+
 const createProducto = async (req, res) => {
     try {
-        const { idCat,name, descripcion, precioU } = req.body;
-        const {archivo}=req;
-        console.log(archivo.filename);
-        let imagenURL;
-        if(archivo){
-            imagenURL=`http://localhost:3000/public/img/productos/${archivo.filename}`;
-        }else{
-            imagenURL= null;
-        }
+        const { idCat, nomProd, descripcionProd, precio_uProd } = req.body;
+
+        console.log(req.body)
+        console.log(req.file)
+
         const newProducto = {
             id_categoria: idCat,
-            nom_prod: name,
-            descripcion_prod: descripcion,
-            precio_u_prod: precioU,
-            imagen_prod: imagenURL,
+            nom_prod: nomProd,
+            descripcion_prod: descripcionProd,
+            precio_u_prod: precio_uProd,
+            imagen_prod: req.file.filename,
           };
           
-          console.log(newProducto);
-        //const producto=await ProductoServices.createProducto(newProducto);
-        return res.status(201);
+        const producto = await ProductoServices.createProducto(newProducto);
+        return res.status(201).send(producto);
     } catch (error) {
         console.log(error);
         return res.status(401);
     }
 };
+
 const updateProducto = async (req, res) => {
-    const {idCat,name, descripcion, precioU, imagenURL } = req.body;
+    const {idCat, nomProd, descripcionProd, precio_uProd } = req.body;
+
+    console.log(req.body)
+    console.log(req.file)
+
     const {params:{id}} = req;
     const newProducto = {
         id_categoria: idCat,
-        nom_prod: name,
-        descripcion_prod: descripcion,
-        precio_u_prod: precioU,
-        imagen_prod: imagenURL,
-      };
-    if(!id){
+        nom_prod: nomProd,
+        descripcion_prod: descripcionProd,
+        precio_u_prod: precio_uProd,
+        imagen_prod: req.file.filename,
+    };
+    if (!id){
         handleErrorResponse(res,"CAMPOS VACIOS",401);
         return;
     }
-    const producto=await ProductoServices.updateProducto(id, newProducto);
+    const producto = await ProductoServices.updateProducto(id, newProducto);
     return res.status(201).send(producto);
 };
+
 const deleteProducto = async (req, res) => {
     const {
         params: {id},
