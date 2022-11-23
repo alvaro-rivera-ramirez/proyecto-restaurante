@@ -35,7 +35,7 @@ router.get("/pisos", isLoggedIn,(req, res) => {
   res.render("admin/pisos",{nom_usu,nom_tipousu});
 });
 
-router.get("/producto", isLoggedIn,(req, res) => {
+router.get("/productos", isLoggedIn,(req, res) => {
   const nom_usu=req.name
   const nom_tipousu=req.role
   res.render("admin/producto",{nom_usu,nom_tipousu});

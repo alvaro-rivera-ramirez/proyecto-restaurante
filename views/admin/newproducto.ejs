@@ -3,7 +3,7 @@
 <div class="p-3 pb-5 pl-5 shadow">
   <h2 class="mb-3 p-3 ps-0">Agregar Producto</h2> 
 <div class="row">
-<form id="formProducto" class="col-lg-7">
+<form id="formProducto" class="col-lg-7" enctype="multipart/form-data">
     <div class="form row">
       <div class="form-group col-md-12">
         <label for="inputEmail4">Nombre Producto</label>
@@ -27,10 +27,10 @@
       </div>
       <div class=" form-group custom-file col-md-12">
         <label class="custom-file-label" for="imagen">Archivo</label>
-        <input type="file" class="form-control" id="imagen" name="file">
+        <input type="file" class="form-control" id="imagen">
       </div>
     <button type="submit" class="btn btn-success mt-3" id="btn-submit">Registrar</button>
-    <a class="btn btn-dark mt-3" href="../producto">Regresar</a>
+    <a class="btn btn-dark mt-3" href="../productos">Regresar</a>
 </form>
 </div>
 </div>
@@ -41,23 +41,34 @@
     
     const btnSubmit = document.getElementById("btn-submit");
     btnSubmit.addEventListener("click",async(e)=>{
-      const product={
-              name:document.getElementById('nombre').value,
-              idCat:document.getElementById('categoria').value,
-              descripcion:document.getElementById('descripcion').value,
-              precioU:document.getElementById('precio').value,
-              archivo:document.getElementById('imagen').files[0],
-            }
+
+      // const product={
+      //         name:document.getElementById('nombre').value,
+      //         idCat:document.getElementById('categoria').value,
+      //         descripcion:document.getElementById('descripcion').value,
+      //         precioU:document.getElementById('precio').value,
+      //         archivo:document.getElementById('imagen').files[0],
+      //       }
+      let product = new FormData();
+      product.append('nomProd', (document.getElementById('nombre')).value);
+      product.append('idCat', (document.getElementById('categoria')).value);
+      product.append('descripcionProd', (document.getElementById('descripcion')).value);
+      product.append('precio_uProd', (document.getElementById('precio')).value);
+      product.append('imagenProd', (document.getElementById('imagen')).files[0]);
+
       e.preventDefault();
-      console.log(product);
       try{
         const response = await fetch('api/producto',{  
             method: 'POST', 
             mode: "cors",
-            body:  JSON.stringify(product),
-            headers:{
-                'Content-Type':'application/json',
-            }
+            // body: JSON.stringify(product),
+            body: product,
+            // headers:{
+            //     'Content-Type':'application/json',
+            // }
+            // headers:{
+            //   'Content-Type': 'multipart/form-data',
+            // }
         });
         if (response.ok) {
           Swal.fire({
