@@ -31,9 +31,15 @@ const getOneProducto = async(req, res) => {
 };
 const createProducto = async (req, res) => {
     try {
-        const { idCat,name, descripcion, precioU,imagenURL } = req.body;
-        /* const {imagenURL}=req.file;
-        imagenURL=`http://localhost:3000/public/img/productos/${file.filename}`; */
+        const { idCat,name, descripcion, precioU } = req.body;
+        const {archivo}=req;
+        console.log(archivo.filename);
+        let imagenURL;
+        if(archivo){
+            imagenURL=`http://localhost:3000/public/img/productos/${archivo.filename}`;
+        }else{
+            imagenURL= null;
+        }
         const newProducto = {
             id_categoria: idCat,
             nom_prod: name,
@@ -41,8 +47,10 @@ const createProducto = async (req, res) => {
             precio_u_prod: precioU,
             imagen_prod: imagenURL,
           };
-        const producto=await ProductoServices.createProducto(newProducto);
-        return res.status(201).send(producto);
+          
+          console.log(newProducto);
+        //const producto=await ProductoServices.createProducto(newProducto);
+        return res.status(201);
     } catch (error) {
         console.log(error);
         return res.status(401);

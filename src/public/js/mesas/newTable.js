@@ -4,6 +4,7 @@ const newTable = async () => {
     backdrop: true,
   });
   document.querySelector(".modal-title").innerHTML = "Nueva Mesa";
+  document.querySelector(".modal-body").innerHTML = `${createModal()}`;
   modalNew.show();
   const btnSave = document.getElementById("btnSave");
 
@@ -46,6 +47,9 @@ const newTable = async () => {
     } catch (error) {
       console.log(error);
     }
+  });
+  modalNew.addEventListener("hidden.bs.modal", (e) => {
+    closeModal();
   });
 };
 

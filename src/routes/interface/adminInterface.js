@@ -29,5 +29,22 @@ router.get("/mesas", isLoggedIn,(req, res) => {
     res.render("admin/mesas",{nom_usu,nom_tipousu});
 });
 
+router.get("/pisos", isLoggedIn,(req, res) => {
+  const nom_usu=req.name
+  const nom_tipousu=req.role
+  res.render("admin/pisos",{nom_usu,nom_tipousu});
+});
+
+router.get("/producto", isLoggedIn,(req, res) => {
+  const nom_usu=req.name
+  const nom_tipousu=req.role
+  res.render("admin/producto",{nom_usu,nom_tipousu});
+});
+
+router.get("/NuevoProducto", isLoggedIn,(req, res) => {
+  const nom_usu=req.name
+  const nom_tipousu=req.role
+  res.render("admin/newproducto",{nom_usu,nom_tipousu});
+});
 
 module.exports=router
