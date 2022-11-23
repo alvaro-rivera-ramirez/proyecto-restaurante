@@ -82,16 +82,12 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="mb-3">
                         <div class="row">
-
                             <div class="col">
-                                <div >
-                                    <div class="col-10"><input id="celular" name="celular" class="form-control mr-sm-2"style="border-radius: 3px 0 0 3px;" type="text" ></div>
-                                </div>
+                                <input  id="dir"name="dir" type="text" class="form-control" required>
                             </div>
-                        </div>      
+                        </div>
                     </div>
                     
                     <div class="mb-0">
@@ -109,6 +105,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col" id="grupo__exampleInputEmail1">
                         <div class="mb-2" style="width:100%">
                             <div class="col-12 col-lg-12">
@@ -230,7 +227,7 @@
                       document.querySelector('#nombre').value=_usuario.nom_usu;
                       document.querySelector('#apellido1').value=_usuario.ape1_usu;
                       document.querySelector('#apellido2').value=_usuario.ape2_usu;
-                      document.querySelector('#celular').value=_usuario.dir_usu;
+                      document.querySelector('#dir').value=_usuario.dir_usu;
                       document.querySelector('#nro_ddi').value=_usuario.dni_usu;
                       document.querySelector('#email').value=_usuario.email_usu;
           }
@@ -248,7 +245,7 @@
                   name: document.querySelector('#nombre').value,
                   apellido1: document.querySelector('#apellido1').value,
                   apellido2: document.querySelector('#apellido2').value,
-                  cel: document.querySelector('#celular').value,
+                  dir: document.querySelector('#dir').value,
                   nroDdi: document.querySelector('#nro_ddi').value,
                   email: document.querySelector('#email').value,
                  

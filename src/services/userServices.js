@@ -2,7 +2,7 @@ const conn = require("../config/bd");
 const { encrypt, compare } = require("../utils/handlePass");
 
   const getUsers = async () => {
-    const users = await conn.query("SELECT t.nom_tipousu,u.tipo_usu,u.dni_usu,u.nom_usu,u.ape1_usu,u.ape2_usu,email_usu,u.dir_usu FROM usuario as u inner join tipo_usuario as t on u.tipo_usu=t.id_tipousu");
+    const users = await conn.query("SELECT t.nom_tipousu,u.id_usu,u.tipo_usu,u.dni_usu,u.nom_usu,u.ape1_usu,u.ape2_usu,email_usu,u.dir_usu FROM usuario as u inner join tipo_usuario as t on u.tipo_usu=t.id_tipousu");
   
     if (!users) throw new Error();
     return users;
@@ -13,7 +13,7 @@ const { encrypt, compare } = require("../utils/handlePass");
   };
   
   const updateUser = async (user) => {
-    const userUpdate = await conn.query("UPDATE usuario SET nom_usu=?,ape1_usu=?,ape2_usu=?,dni_usu=?,dir_usu=? WHERE email_usu=?;",user);
+    const userUpdate = await conn.query("UPDATE usuario SET nom_usu=?,ape1_usu=?,ape2_usu=?,dir_usu=?,dni_usu=? WHERE email_usu=?;",user);
     if (!userUpdate) throw new Error();
     return userUpdate;
   };
