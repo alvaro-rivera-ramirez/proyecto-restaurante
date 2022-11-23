@@ -21,8 +21,6 @@
       <div class="form-group col-md-12">
         <label for="inputState">Categoria</label>
         <select id="categoria" class="form-control">
-          <option selected value="1">Entrada</option>
-          <option value="2">Bebida sin Alcoholica</option>
         </select>
       </div>
       <div class=" form-group custom-file col-md-12">
@@ -38,7 +36,6 @@
     
     //MOSTRAR
     //submit para el CREAR
-    
     const btnSubmit = document.getElementById("btn-submit");
     btnSubmit.addEventListener("click",async(e)=>{
 
@@ -92,4 +89,26 @@
 
       }
     });
+    window.onload =getUsuarios;
+    const tablaList=document.querySelector('#categoria'); 
+    function getUsuarios(){
+              fetch('/api/category')
+      .then( response => response.json() )
+      .then( data =>{
+          cat=data;
+          console.log(data);
+          renderResult(cat);
+          
+      })
+      const renderResult=(cat)=>{
+        let listHTML="";
+                    
+        cat.forEach(cat => {
+            
+            listHTML+=`<option selected value="${cat.id_categoria}">${cat.nom_categoria}</option>`;
+        });
+        tablaList.innerHTML=listHTML;
+      }
+    }
+
 </script>
