@@ -8,7 +8,7 @@ const ejs = require("ejs");
 const cors=require("cors");
 const expressLayouts=require('express-ejs-layouts')
 const cookieParser=require("cookie-parser");
-
+const multer=require("multer");
 
 app.set('port', process.env.port || 3000);    
 app.set('view engine','ejs');

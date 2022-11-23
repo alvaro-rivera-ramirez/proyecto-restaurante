@@ -14,6 +14,7 @@ const getOneProducto = async(id) => {
     return producto;
 };
 const createProducto = async(producto) => {
+    console.log("entrando base de datos: ",producto)
     try {
         const newProducto=await con.query("INSERT INTO producto SET ?",[producto]);
         return newProducto;

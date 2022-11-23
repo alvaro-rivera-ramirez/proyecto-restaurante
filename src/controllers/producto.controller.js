@@ -30,13 +30,19 @@ const getOneProducto = async(req, res) => {
     }
 };
 const createProducto = async (req, res) => {
+    
     try {
-        const { idCat,name, descripcion, precioU } = req.body;
-        const {archivo}=req;
-        console.log(archivo.filename);
+        console.log("revisando: ",req.file.filename)
+        //console.log(req.producto.idCat)
+        const { idCat,name, descripcion, precioU} = req.body;
+        //console.log("producto: ",req.body.archivo)
+        //const {archivo}=req.file;
+        //console.log(detalle);
         let imagenURL;
-        if(archivo){
-            imagenURL=`http://localhost:3000/public/img/productos/${archivo.filename}`;
+        if(req.file){
+            
+            imagenURL=`http://localhost:3000/public/img/productos/${req.file.filename}`;
+            console.log("url: ",imagenURL);
         }else{
             imagenURL= null;
         }
@@ -48,9 +54,9 @@ const createProducto = async (req, res) => {
             imagen_prod: imagenURL,
           };
           
-          console.log(newProducto);
-        //const producto=await ProductoServices.createProducto(newProducto);
-        return res.status(201);
+          console.log("pasando else:",newProducto);
+        const producto=await ProductoServices.createProducto(newProducto);
+        return res.status(201).send(producto);
     } catch (error) {
         console.log(error);
         return res.status(401);

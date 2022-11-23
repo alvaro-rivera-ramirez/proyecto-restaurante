@@ -26,8 +26,8 @@
         </select>
       </div>
       <div class=" form-group custom-file col-md-12">
-        <label class="custom-file-label" for="imagen">Archivo</label>
-        <input type="file" class="form-control" id="imagen" name="file">
+        <label class="custom-file-label" for="file">Archivo</label>
+        <input type="file" class="form-control" id="file" name="file">
       </div>
     <button type="submit" class="btn btn-success mt-3" id="btn-submit">Registrar</button>
     <a class="btn btn-dark mt-3" href="../producto">Regresar</a>
@@ -46,12 +46,13 @@
               idCat:document.getElementById('categoria').value,
               descripcion:document.getElementById('descripcion').value,
               precioU:document.getElementById('precio').value,
-              archivo:document.getElementById('imagen').files[0],
+              archivo:document.getElementById('file').files[0],
             }
       e.preventDefault();
       console.log(product);
       try{
-        const response = await fetch('api/producto',{  
+        
+        const response = await fetch('/api/producto/registro',{  
             method: 'POST', 
             mode: "cors",
             body:  JSON.stringify(product),
@@ -66,6 +67,7 @@
             showConfirmButton: false,
             timer: 800,
           }).then(() => {
+            
             //window.location.reload();
           });
         } else {
@@ -78,6 +80,7 @@
             timer: 1000,
           })};  
       }catch(error){
+        
 
       }
     });
