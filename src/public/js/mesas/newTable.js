@@ -31,7 +31,10 @@ const newTable = async () => {
           showConfirmButton: false,
           timer: 800,
         }).then(() => {
-          window.location.reload();
+          modalNew.hide();
+          window.location.reload() 
+          // $("#tableMesas").dataTable().fnDestroy();
+          // listTable()
         });
       } else {
         const res = await response.json();

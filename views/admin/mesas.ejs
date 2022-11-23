@@ -1,23 +1,27 @@
 <div class="container">
   <div class="body__title mb-2">
-    <h2>Mesas</h2>
+    <h2 class="text-center">Mesas</h2>
   </div>
-  <button id="btnAdd" class="btn btn-primary mt-2">
-    &nbsp;+ Nuevo Registro
-  </button>
-  <div class="table-responsive mt-3">
-    <table class="table table-striped pt-2" id="tableMesas" style="width: 100%">
-      <thead class="table-dark">
+  <div class="table-responsive shadow p-3 mb-5 bg-body rounded mt-3">
+    <table class="table table-light table-striped table-bordered mb-3 pt-2" id="tableMesas" style="max-width: 100%">
+      <thead>
+        <div class="row">
+          <div class="col-3">
+            <button id="btnAdd" class="btn btn-primary mt-2">
+              &nbsp;+ Nuevo Registro
+            </button>
+          </div>
+        </div>
         <tr>
           <th class="text-center">#</th>
           <th class="text-center">Número</th>
           <th class="text-center">Piso</th>
           <th class="text-center">Estado</th>
-          <th class="text-center">Editar</th>
-          <th class="text-center">Eliminar</th>
+          <th class="text-center">Operaciones</th>
         </tr>
       </thead>
-      <tbody class="text-center"></tbody>
+      <tbody class="text-center"
+      id="dataTable"></tbody>
     </table>
   </div>
 </div>
@@ -67,7 +71,9 @@
     </div>
   </div>
 </div>
+
 <script src="/public/js/mesas/modal.js"></script>
+<script src="/public/js/configTable.js"></script>
 <script src="/public/js/mesas/listTable.js"></script>
 <script src="/public/js/mesas/newTable.js"></script>
 <script src="/public/js/mesas/editTable.js"></script>

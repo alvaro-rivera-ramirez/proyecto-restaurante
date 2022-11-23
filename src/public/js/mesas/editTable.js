@@ -10,16 +10,16 @@ document.addEventListener("click", async (e) => {
     let fila = btn.parentNode.parentNode;
     let id = fila.children[0].innerHTML;
     console.log(id);
-    await editCategory(id);
+    await editTable(id);
   }
 });
 
-const editCategory = async (id) => {
+const editTable = async (id) => {
   let modalEdit = new bootstrap.Modal(
     document.getElementById("modalTable"),
     { keyboard: false, backdrop: true }
   );
-  document.querySelector(".modal-title").innerHTML = "Editar Categoria";
+  document.querySelector(".modal-title").innerHTML = "Editar Mesa";
   document.querySelector(".modal-body").innerHTML =`${createModal()}<label for="id_emesa" class="col-form-label">Piso</label>
   <select name="id_emesa" id="id_emesa" class="form-select">
     <option value="1">Disponible</option>
@@ -31,7 +31,6 @@ const editCategory = async (id) => {
   fetch(`/api/table/${id}`)
   .then((res) => res.json())
   .then((res) => {
-      console.log(res)
       let select1=document.querySelector('#id_piso');
       let opcion1=select1.querySelector('option[value="'+res.id_piso+'"]');
       console.log(opcion1)
@@ -69,7 +68,10 @@ const editCategory = async (id) => {
           showConfirmButton: false,
           timer: 800,
         }).then(() => {
+          modalEdit.hide();
           window.location.reload();
+          // $("#tableMesas").dataTable().fnDestroy();
+          // listTable()
         });
       } else {
         const res = await response.json();

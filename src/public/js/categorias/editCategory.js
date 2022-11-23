@@ -35,6 +35,7 @@ const editCategory = async (id) => {
     const form = new FormData(formCategory);
     let data = {};
     form.forEach((value, key) => (data[key] = value));
+    console.log(data)
     try {
       const response = await fetch("/api/category/" + id, {
         method: "put",
@@ -56,7 +57,10 @@ const editCategory = async (id) => {
           showConfirmButton: false,
           timer: 800,
         }).then(() => {
-            window.location.reload();
+          modalEdit.hide();
+          window.location.reload();
+          // $("#tableCategory").dataTable().fnDestroy();
+          // listCategory();
         });
       } else {
         Swal.fire({
