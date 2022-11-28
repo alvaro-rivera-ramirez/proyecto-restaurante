@@ -14,6 +14,7 @@ app.set('port', process.env.port || 3000);
 app.set('view engine','ejs');
 app.set('layout', "layouts/main.ejs");
 app.set("layout extractScripts", true)
+app.set("layout extractStyles", true)
 app.use(morgan('dev'));
 app.use(cors());
 app.use(cookieParser());
