@@ -1,0 +1,43 @@
+.contenedor-home{
+    background-color: #fff;
+    padding: 15px;
+    font-family: var(--font-one);
+    width: 95%;
+    margin: 20px auto;
+}
+
+.contenedor-home h2{
+    padding: 15px 10px;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.container-mesas{
+    display: inline-block;
+    width: 80%;
+}
+
+.container-mesas .tablero-mesa{
+    width: 80%;
+    padding: 8px;
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-mesa{
+    justify-content: space-around;
+    align-items: center;
+    display: flex;
+    width: 15%;
+    height: 80px;
+    background-color: rgb(106, 252, 114);
+    margin: 6px;
+    border-radius: 6px;
+}
+
+@media (max-width: 750px) {
+    .col-mesa {
+        width: 40%;
+    }
+}
