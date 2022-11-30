@@ -1,10 +1,9 @@
 const conn=require("../config/bd");
 const getProfileHeader = async (id) => {
-  console.log(id);
+  
   const result = await conn.query("SELECT * FROM usuario,tipo_usuario WHERE id_usu=? AND tipo_usu=id_tipousu", [
     id,
   ]);
-  console.log(result[0])
 
   return result[0];
 };

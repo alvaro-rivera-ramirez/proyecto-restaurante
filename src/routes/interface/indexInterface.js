@@ -31,7 +31,7 @@ router.get('/home',isLoggedIn,async(req,res)=>{
             res.render('cocinero/home',{nom_usu,nom_tipousu});        
             break;
     }
-    res.render('home',{nom_usu,nom_tipousu});
+    // res.render('home',{nom_usu,nom_tipousu});
 })
 
 // Logout
