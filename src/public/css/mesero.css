@@ -18,13 +18,25 @@
 
 .container-mesas{
     display: inline-block;
-    width: 60%;
+    width: 55%;
     margin-right: 10px;
     margin-top: 5px;
     padding: 8px;
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
+    /* border-right: solid 1px #000; */
 }
 
+.col-mesa{
+    justify-content: space-around;
+    align-items: center;
+    display: flex;
+    width: 100px;
+    height: 100px;
+    background-color: rgb(106, 252, 114);
+    margin: 8px;
+    padding: 10px;
+    border-radius: 6px;
+}
 
 .container-tableros{
     background-color: aquamarine;
@@ -63,23 +75,27 @@
 }
 .container-mesas .tablero-mesa{
     width: 100%;
-    padding: 5px;
-    /* margin: 10px; */
     box-sizing: inherit;
     display: flex;
     flex-wrap: wrap;
 }
 
-.col-mesa{
-    justify-content: space-around;
-    align-items: center;
-    display: flex;
-    width: 15%;
-    height: 80px;
-    background-color: rgb(106, 252, 114);
-    margin: 8px;
+.col-pedido{
+    width: 100%;
     padding: 10px;
-    border-radius: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: bisque;
+}
+/*dfsdfsdf */
+.col-pedido img{
+    width: 40px;
+    height: 50px;
+    margin-right: 8px;
+}
+
+.col-pedido p{
+    margin-left: 8px;
 }
 
 @media (max-width: 500px) {
