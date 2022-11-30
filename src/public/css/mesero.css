@@ -4,23 +4,68 @@
     font-family: var(--font-one);
     width: 95%;
     margin: 20px auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .contenedor-home h2{
-    padding: 15px 10px;
+    padding: 15px 8px;
     font-size: 30px;
     font-weight: 700;
+    width: 100%;
 }
 
 .container-mesas{
     display: inline-block;
-    width: 80%;
+    width: 60%;
+    margin-right: 10px;
+    margin-top: 5px;
+    padding: 8px;
+    background-color: antiquewhite;
 }
 
+
+.container-tableros{
+    background-color: aquamarine;
+    display: inline-block;
+    width: 30%;
+    padding: 10px;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.container-tableros .container-operaciones h4{
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.container-tableros .container-operaciones{
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.col-operacion{
+    width: 30%;
+    padding: 8px 5px;
+    margin: 5px;
+    text-align: center;
+    border-radius: 2px;
+}
+
+.col-operacion img{
+    width: 40px;
+    height: 40px;
+}
+.col-operacion p{
+    margin-top: 5px;
+}
 .container-mesas .tablero-mesa{
-    width: 80%;
-    padding: 8px;
-    margin: 10px;
+    width: 100%;
+    padding: 5px;
+    /* margin: 10px; */
+    box-sizing: inherit;
     display: flex;
     flex-wrap: wrap;
 }
@@ -32,12 +77,27 @@
     width: 15%;
     height: 80px;
     background-color: rgb(106, 252, 114);
-    margin: 6px;
+    margin: 8px;
+    padding: 10px;
     border-radius: 6px;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 500px) {
+    .container-mesas{
+        width: 65%;
+    }
     .col-mesa {
         width: 40%;
+    }
+}
+@media (min-width:501px) and (max-width: 750px) {
+    .col-mesa {
+        width: 25%;
+    }
+}
+@media (min-width:751px) and (max-width: 900px) {
+    .col-mesa {
+        width: 30%;
+        margin: 5px;
     }
 }
