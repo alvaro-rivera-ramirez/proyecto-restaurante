@@ -30,7 +30,7 @@ app.use('/api/category',require("./routes/category.routes"))
 app.use('/api/table',require("./routes/tables.routes"))
 app.use('/api/producto',require("./routes/producto.routes"))
 app.use('/api/pisos',require("./routes/pisos.routes"))
-
+app.use('/api/letter',require("./routes/letter.routes"))
 app.use(require("./routes/interface/indexInterface"))
 app.use(require("./routes/interface/adminInterface"))
 

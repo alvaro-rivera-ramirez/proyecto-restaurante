@@ -46,5 +46,10 @@ router.get("/NuevoProducto", isLoggedIn,(req, res) => {
   const nom_tipousu=req.role
   res.render("admin/newproducto",{nom_usu,nom_tipousu});
 });
-
+//mesero carta
+router.get("/letter", isLoggedIn,(req, res) => {
+  const nom_usu=req.name
+  const nom_tipousu=req.role
+  res.render("mesero/letter",{nom_usu,nom_tipousu});
+});
 module.exports=router
