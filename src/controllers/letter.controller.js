@@ -11,6 +11,7 @@ const getCarta = async (req, res) => {
 };
 const register = async (req, res) => {
     try {
+      console.log("en registro");
         console.log(Object.values(req.body))
         const values=Object.values(req.body);
        const users=await cartaServices.postPedido(values);

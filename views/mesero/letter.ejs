@@ -28,7 +28,7 @@
                         <label for="">Nro Orden: </label>
                     </div>
                     <div class="col-10">
-                        <input id="nro_orden" name="apellido1" type="text" class="form-control" value="1">
+                        <input id="nro_orden" name="apellido1" type="text" class="form-control" value="">
                     </div>
                     <div class="col-2">
                         <label for="">Cliente: </label>
@@ -216,23 +216,27 @@
             idMod: document.querySelector('#tipo_ped').value,
         }
         console.log(register_)
-        fetch('/api/letter/register',{
-            method: 'POST',
-            body:JSON.stringify(register_),
-            headers:{
-                'Content-Type': 'application/json'
-            }
-        })
+        if(document.getElementById('nro_orden').value==''){
+            fetch('/api/letter/register',{
+                method: 'POST',
+                body:JSON.stringify(register_),
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            })
+        }
     fetch('/api/letter/lastRecord')
       .then( response => response.json() )
       .then( nroPed_ =>{
           ped_=nroPed_;
-          console.log("usuario",nroPed_);
+          console.log("nroped: ",nroPed_);
           renderPed(ped_);
       })
       const renderPed=(ped_)=>{
+            document.getElementById('nro_orden').value=ped_.id_ped;
             for(let item of ped_){
                 datoPed=item.id_ped
+                document.getElementById('nro_orden').value=item.id_ped;
                 for (let item of _prePedido){
                     console.log(datoPed)
                     item['idPed']=datoPed;
