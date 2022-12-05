@@ -1,8 +1,9 @@
 const {Router}=require("express");
 const letterController=require('../controllers/letter.controller');
 const {validationToken}=require('../middleware/validationToken')
-const tetterRouter=Router();
+const letterRouter=Router();
 
-tetterRouter.post('/register', letterController.register);
-tetterRouter.post('/registerDetalle', letterController.registerDetalle);
-module.exports=tetterRouter;
+letterRouter.post('/register', letterController.register);
+letterRouter.post('/registerDetalle', letterController.registerDetalle);
+letterRouter.get('/lastRecord', letterController.lastRecord);
+module.exports=letterRouter;

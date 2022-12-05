@@ -20,10 +20,20 @@ const register = async (req, res) => {
     }
   };
   const registerDetalle = async (req, res) => {
+    
     try {
+        console.log("algo pasa")
         console.log(Object.values(req.body))
         const values=Object.values(req.body);
        const users=await cartaServices.postDetallePedido(values);
+        return res.status(201).send(users);
+    } catch (error) {
+      return res.status(401);
+    }
+  };
+  const lastRecord = async (req, res) => {
+    try {
+       const users=await cartaServices.getLastRecord();
         return res.status(201).send(users);
     } catch (error) {
       return res.status(401);
@@ -34,4 +44,5 @@ module.exports = {
   getCarta,
   register,
   registerDetalle,
+  lastRecord,
 };

@@ -130,7 +130,11 @@
     //window.onload =detalladoCarta;
    // const detalladoCarta=(id)=>{}  
     }
+    let _prePedido=[];
     function prePedido(dato,precio,id_prod){
+        var cant_=1;
+        let _datos={id_prod,cant_};
+        _prePedido.push(_datos);
         console.log(dato,"--",precio,"--",id_prod)
         document.getElementById('pedidoCarta').innerHTML+=`<div class="row"><div class="col-4"><label for="">Descripcion</label></div><div class="col-4"><label for="">Cantidad</label></div><div class="col-4"><label for="">
             Importe</label></div><div class="col-4">
@@ -166,6 +170,13 @@
         document.getElementById('total').innerHTML=precio_;
     }
     function btn_mas(id_prod){
+        for(let item of _prePedido){
+            console.log(item.id_prod)
+            if(item.id_prod==id_prod){
+                item.cant_+=1;
+            }
+        }
+        console.log(_prePedido)
         var total_=parseInt(document.getElementById('total').innerHTML);
         var val=parseInt(document.getElementById(id_prod).innerHTML);
         var precio=parseInt(document.getElementById('prec_'+id_prod).value);
@@ -179,6 +190,13 @@
         document.getElementById('total').innerHTML=total_+val*precio;
     }
     function btn_menos(id_prod){
+        for(let item of _prePedido){
+            console.log(item.id_prod)
+            if(item.id_prod==id_prod){
+                item.cant_-=1;
+            }
+        };
+        console.log(_prePedido)
         var total_=parseInt(document.getElementById('total').innerHTML);
         var val=parseInt(document.getElementById(id_prod).innerHTML);
         var precio=parseInt(document.getElementById('prec_'+id_prod).value);
@@ -197,12 +215,6 @@
             idEpedido: document.querySelector('#epedido_').value,
             idMod: document.querySelector('#tipo_ped').value,
         }
-        /*const regDetalle_={
-            idProd:document.querySelector('#nro_mozo').value,
-            idped:,
-            cantidad:,
-            descripcion,
-        }*/
         console.log(register_)
         fetch('/api/letter/register',{
             method: 'POST',
@@ -211,6 +223,35 @@
                 'Content-Type': 'application/json'
             }
         })
+    fetch('/api/letter/lastRecord')
+      .then( response => response.json() )
+      .then( nroPed_ =>{
+          ped_=nroPed_;
+          console.log("usuario",nroPed_);
+          renderPed(ped_);
+      })
+      const renderPed=(ped_)=>{
+            for(let item of ped_){
+                datoPed=item.id_ped
+                for (let item of _prePedido){
+                    console.log(datoPed)
+                    item['idPed']=datoPed;
+                }
+            };
+            console.log(_prePedido)
+            for (let item of _prePedido){
+                console.log("dentro de for: ")
+                    fetch('/api/letter/registerDetalle',{
+                        method: 'POST',
+                        body:JSON.stringify(item),
+                        headers:{
+                            'Content-Type': 'application/json'
+                        }
+                    })
+            };
+        }
+            
     }
+    
     </script>
 </div>
