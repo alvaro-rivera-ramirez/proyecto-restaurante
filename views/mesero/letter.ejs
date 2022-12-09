@@ -1,0 +1,261 @@
+
+<div>
+    <div class="container-fluid">
+        <div class="row text-white">
+            <div class="col-6 bg-dark border">
+                <p>Carta</p>
+                <div class="row">
+                    <div class="col-6" >
+                        <select class="form-select" aria-label="Default select example" id="carta">
+                        </select>
+                    </div>
+                </div>
+                <p>Entrada</p>
+                <div class="row" id="cartaProducto">
+                    
+                </div>
+            </div>
+            <div class="col-6 bg-warning text-dark">
+                Datos:
+                <div class="row">
+                    <div class="col-2">
+                        <label for="">Mesa: </label>
+                    </div>
+                    <div class="col-10">
+                        <input id="nro_mesa" name="apellido1" type="text" class="form-control" value="1">
+                    </div>
+                    <div class="col-2">
+                        <label for="">Nro Orden: </label>
+                    </div>
+                    <div class="col-10">
+                        <input id="nro_orden" name="apellido1" type="text" class="form-control" value="">
+                    </div>
+                    <div class="col-2">
+                        <label for="">Cliente: </label>
+                    </div>
+                    <div class="col-10">
+                        <input id="nro_cliente" name="apellido1" type="text" class="form-control" value="">
+                    </div>
+                    <div class="col-2">
+                        <label for="">Mozo: </label>
+                    </div>
+                    <div class="col-10">
+                        <input id="nro_mozo" name="apellido1" type="text" class="form-control" value="46">
+                    </div>
+                    <div class="col-2">
+                        <label for="">Para: </label>
+                    </div>
+                    <div class="col-10">
+                        <input id="tipo_ped" name="apellido1" type="text" class="form-control" value="2">
+                    </div>
+                    <input type="hidden" id="epedido_" value="1">
+                </div>
+                <div id="pedidoCarta">
+                    
+                    
+                </div>
+                <div >
+                    <label for="" id="total">0</label>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-dark btn-primary mx-2" onclick=""><i class="fa-solid"></i> Precuente</button>
+                    <button type="button" class="btn btn-dark btn-primary mx-2" onclick="postPedido()"><i class="fa-solid"></i> Guardar</button>
+                    <button type="button" class="btn btn-dark btn-primary mx-2" onclick=""><i class="fa-solid"></i> Cancelar</button>
+                </div>
+             
+            </div>
+        </div>
+      </div>
+    <script>
+        
+    window.onload =getProducto;
+    const tablaList=document.querySelector('#carta'); 
+    fetch('/api/category')
+      .then( response => response.json() )
+      .then( data =>{
+          cat=data;
+          console.log(data);
+          renderResult(cat);
+          
+      })
+      const renderResult=(cat)=>{
+        let listHTML="";
+                    
+        cat.forEach(cat => {
+            
+            listHTML+=`<option selected value="${cat.id_categoria}">${cat.nom_categoria}</option>`;
+        });
+        tablaList.innerHTML=listHTML;
+      }
+      
+   
+   function getProducto(){
+              fetch('/api/producto')
+      .then( response => response.json() )
+      .then( usuario =>{
+          prod=usuario;
+          console.log(usuario);
+          //renderResult(prod);
+          
+      })
+
+    var slcchange = document.getElementById("carta");
+    slcchange.addEventListener("change", function() {
+    //console.log(slcchange.value)
+    //let listHTML="";
+    let _usuario={};
+    const productosList=document.querySelector('#cartaProducto'); 
+        prod.filter(prod=>{
+                    if(prod.id_categoria==slcchange.value)
+                    {
+                        _usuario=prod
+                        
+                    }
+                });
+        let listHTML="";
+        
+        for (let item of prod) {
+            if(_usuario.id_categoria==item.id_categoria){
+                listHTML+=`<div class="col-4 bg-red border">
+                    <img src="/public/img/productos/${item.imagen_prod}" class="img-fluid" alt="" width="300" height="300">
+                    <p>${item.nom_prod}</p>
+                    <label for="">${item.precio_u_prod}</label>
+                    <button type="button" class="btn btn-success btn-circle btn-sm" onclick="prePedido('${item.nom_prod}','${item.precio_u_prod}','${item.id_prod}')">+</button>
+                    </div>`;
+            }
+            
+        };
+        productosList.innerHTML=listHTML;
+    });
+    //window.onload =detalladoCarta;
+   // const detalladoCarta=(id)=>{}  
+    }
+    let _prePedido=[];
+    function prePedido(dato,precio,id_prod){
+        var cant_=1;
+        let _datos={id_prod,cant_};
+        _prePedido.push(_datos);
+        console.log(dato,"--",precio,"--",id_prod)
+        document.getElementById('pedidoCarta').innerHTML+=`<div class="row"><div class="col-4"><label for="">Descripcion</label></div><div class="col-4"><label for="">Cantidad</label></div><div class="col-4"><label for="">
+            Importe</label></div><div class="col-4">
+                <label for="">`+dato+`</label>
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-default" onclick="btn_menos(${id_prod})">
+                    <span class="glyphicon glyphicon-align-justify"><</span>
+                </button>
+                <label id='`+id_prod+`' value="1">1</label>
+                
+
+                <button type="button" class="btn btn-default" onclick="btn_mas(${id_prod})">
+                    <span class="glyphicon glyphicon-align-justify">></span>
+                </button>
+            </div>
+            <div class="col-4">
+                <input type="hidden" value="`+precio+`" id='prec_`+id_prod+`'>
+                <label id='precio_`+id_prod+`'>`+precio+`</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <label for="">observacion</label>
+            </div>
+            <div class="col-10">
+                <input type="text">
+            </div>
+        </div>
+        `;
+        var precio_=parseInt(document.getElementById('total').innerHTML);
+        precio_=precio_+parseInt(precio);
+        document.getElementById('total').innerHTML=precio_;
+    }
+    function btn_mas(id_prod){
+        for(let item of _prePedido){
+            console.log(item.id_prod)
+            if(item.id_prod==id_prod){
+                item.cant_+=1;
+            }
+        }
+        console.log(_prePedido)
+        var total_=parseInt(document.getElementById('total').innerHTML);
+        var val=parseInt(document.getElementById(id_prod).innerHTML);
+        var precio=parseInt(document.getElementById('prec_'+id_prod).value);
+        total_=total_-val*precio;
+        val=val+1;
+        //console.log(document.getElementById('precio_'+id_prod).innerHTML)
+        console.log(precio)
+        
+        document.getElementById('precio_'+id_prod).innerHTML=val*precio;
+        document.getElementById(id_prod).innerHTML=val;
+        document.getElementById('total').innerHTML=total_+val*precio;
+    }
+    function btn_menos(id_prod){
+        for(let item of _prePedido){
+            console.log(item.id_prod)
+            if(item.id_prod==id_prod){
+                item.cant_-=1;
+            }
+        };
+        console.log(_prePedido)
+        var total_=parseInt(document.getElementById('total').innerHTML);
+        var val=parseInt(document.getElementById(id_prod).innerHTML);
+        var precio=parseInt(document.getElementById('prec_'+id_prod).value);
+        total_=total_-val*precio;
+        val=val-1;
+        console.log(val)
+        console.log(precio)
+        document.getElementById('precio_'+id_prod).innerHTML=val*precio;
+        document.getElementById(id_prod).innerHTML=val;
+        document.getElementById('total').innerHTML=total_+val*precio;
+        //document.getElementById(precio_id_prod).innerHTML=val*;
+    }
+    const postPedido=()=>{
+        const register_={
+            idUsu: document.querySelector('#nro_mozo').value,
+            idEpedido: document.querySelector('#epedido_').value,
+            idMod: document.querySelector('#tipo_ped').value,
+        }
+        console.log(register_)
+        if(document.getElementById('nro_orden').value==''){
+            fetch('/api/letter/register',{
+                method: 'POST',
+                body:JSON.stringify(register_),
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            })
+        }
+    fetch('/api/letter/lastRecord')
+      .then( response => response.json() )
+      .then( nroPed_ =>{
+          ped_=nroPed_;
+          console.log("nroped: ",nroPed_);
+          renderPed(ped_);
+      })
+      const renderPed=(ped_)=>{
+            document.getElementById('nro_orden').value=ped_.id_ped;
+            for(let item of ped_){
+                datoPed=item.id_ped
+                document.getElementById('nro_orden').value=item.id_ped;
+                for (let item of _prePedido){
+                    console.log(datoPed)
+                    item['idPed']=datoPed;
+                }
+            };
+            console.log(_prePedido)
+            for (let item of _prePedido){
+                console.log("dentro de for: ")
+                    fetch('/api/letter/registerDetalle',{
+                        method: 'POST',
+                        body:JSON.stringify(item),
+                        headers:{
+                            'Content-Type': 'application/json'
+                        }
+                    })
+            };
+        }
+            
+    }
+    
+    </script>
+</div>
