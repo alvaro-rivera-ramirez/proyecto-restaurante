@@ -235,6 +235,7 @@
                       document.querySelector('#email').value=_usuario.email_usu;
           }
           function deleteUsuario(id){
+            console.log(id)
               fetch ( `/api/user/${id}`, {
                   method: 'DELETE',
                   body: '',

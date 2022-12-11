@@ -2,7 +2,7 @@ const conn = require("../config/bd");
 const { encrypt, compare } = require("../utils/handlePass");
 
   const getUsers = async () => {
-    const users = await conn.query("SELECT t.nom_tipousu,u.tipo_usu,u.dni_usu,u.nom_usu,u.ape1_usu,u.ape2_usu,email_usu,u.dir_usu FROM usuario as u inner join tipo_usuario as t on u.tipo_usu=t.id_tipousu");
+    const users = await conn.query("SELECT u.id_usu,t.nom_tipousu,u.tipo_usu,u.dni_usu,u.nom_usu,u.ape1_usu,u.ape2_usu,email_usu,u.dir_usu FROM usuario as u inner join tipo_usuario as t on u.tipo_usu=t.id_tipousu");
   
     if (!users) throw new Error();
     return users;
