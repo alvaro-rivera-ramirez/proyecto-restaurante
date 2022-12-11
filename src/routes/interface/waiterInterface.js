@@ -11,4 +11,11 @@ router.get("/carta", isLoggedIn,(req, res) => {
     const nom_tipousu=req.role
     res.render("mesero/letter",{nom_usu,nom_tipousu});
   });
+
+//pruebas
+router.get("/pruebas", isLoggedIn,(req, res) => {
+  const nom_usu=req.name
+  const nom_tipousu=req.role
+  res.render("mesero/pruebas",{nom_usu,nom_tipousu});
+});
   module.exports=router
