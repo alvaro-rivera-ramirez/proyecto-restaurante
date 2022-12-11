@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="/public/css/cajero-home.css"/>
+
+<main>
+    <div id="container-cajero-home" class="d-flex justify-content-between">
+        <div class="section-mesas">
+            <p class="fw-bold fs-4 mb-3">Mesas</p>
+            <div class="mesas__filter d-flex align-items-center mb-3">
+                <div class="mesas__filter-title me-3">
+                    Piso:
+                </div>
+                <div class="mesas__filter-input">
+                    <select name="id-piso" id="id-piso">
+                        <% for (let i = 1; i <= 3; i++){ %>
+                            <option value="<%= i %>"><%= "Piso n°" + i %></option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+            <div class="mesas__panel mb-3">
+                <% for (let i = 1; i <= 16; i++){ %>
+                    <div class="col-mesa"><p class="num-mesa"><%= i %></p></div>
+                <% } %>
+            </div>
+            <div class="mesas__information d-flex justify-content-center mb-3">
+                <div class="d-flex justify-content-center align-items-center me-5">
+                    <div class="casilla me-3" style="background-color: green"></div>
+                    Libre
+                </div>
+                <div class="d-flex justify-content-center align-items-center me-5">
+                    <div class="casilla me-3" style="background-color: red"></div>
+                    Ocupado
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="casilla me-3" style="background-color: gray"></div>
+                    Inhabilitado
+                </div>
+            </div>
+        </div>
+        <div class="section-operaciones">
+            <p class="fw-bold fs-4">Operaciones</p>
+            <div class="operaciones__buttonx" style="background-color: #A0A0B5;">
+                <div class="d-flex justify-content-center" style="width: 30%"><i class="fa-solid fa-cash-register operaciones__buttonx-img"></i></div>
+                <p class="operaciones__buttonx-body">Aperturar caja</p>
+            </div>
+            <div class="operaciones__card" style="background-color: #00ACAF;">
+                <div class="d-flex justify-content-center" style="width: 30%"><i class="fa-solid fa-money-bill operaciones__card-img"></i></div>
+                <div class="operaciones__card-body">
+                    <p class="operaciones__card-title">Total efectivo</p>
+                    <p class="operaciones__card-text fw-bold">S/. 00.00</p>
+                </div>
+            </div>
+            <div class="operaciones__buttony" style="background-color: #A0A0B5;">
+                <i class="fa-solid fa-file-lines operaciones__buttony-img"></i>
+                <p class="operaciones__buttony-body">Pago</p>
+            </div>
+        </div>
+    </div>
+</main>
