@@ -40,10 +40,33 @@ const register = async (req, res) => {
       return res.status(401);
     }
   };
+  const tableState = async (req, res) => {
+    try {
+      const { params: {id},}=req;
+      console.log("en getuser",req.body)
+      const emesa=await cartaServices.tableState(id);
+      return res.status(201).send(emesa);
+    } catch (error) {
+      return res.status(401);
+    }
+  };
+  const eMesa = async (req, res) => {
+    try {
+      console.log("en emesa")
+      console.log(Object.values(req.body))
+      const values=Object.values(req.body);
+     const users=await cartaServices.eMesa(values);
+      return res.status(201).send(users);
+  } catch (error) {
+    return res.status(401);
+  }
+  };
 
 module.exports = {
   getCarta,
   register,
   registerDetalle,
   lastRecord,
+  tableState,
+  eMesa,
 };

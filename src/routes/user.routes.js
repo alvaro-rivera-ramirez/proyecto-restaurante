@@ -5,7 +5,7 @@ const UserRouter=Router();
 
 
 UserRouter.get('/',userController.getUsers);
-UserRouter.get('/:id',validationToken, userController.getUser);
+UserRouter.get('/:id',userController.getUser);
 UserRouter.put('/',userController.updateUser);
 UserRouter.delete('/:id',userController.deleteUser);
 UserRouter.post('/change-psd', userController.changePassword);

@@ -9,7 +9,11 @@ const { encrypt, compare } = require("../utils/handlePass");
   };
 
   const getUser = async (id) => {
-    
+    console.log("en getuser",id)
+    const users = await conn.query("SELECT * FROM usuario WHERE id_usu=?",id);
+  
+    if (!users) throw new Error();
+    return users;
   };
   
   const updateUser = async (user) => {

@@ -19,36 +19,39 @@
                 Datos:
                 <div class="row">
                     <div class="col-2">
-                        <label for="">Mesa: </label>
+                        <label for="nro_mesa">Mesa: </label>
                     </div>
                     <div class="col-10">
-                        <input id="nro_mesa" name="apellido1" type="text" class="form-control" value="1">
+                        <input id="nro_mesa" name="nro_mesa" type="text" class="form-control" value="1" disabled>
                     </div>
                     <div class="col-2">
                         <label for="">Nro Orden: </label>
                     </div>
                     <div class="col-10">
-                        <input id="nro_orden" name="apellido1" type="text" class="form-control" value="">
+                        <input id="nro_orden" name="nro_orden" type="text" class="form-control" value="" disabled>
                     </div>
                     <div class="col-2">
                         <label for="">Cliente: </label>
                     </div>
                     <div class="col-10">
-                        <input id="nro_cliente" name="apellido1" type="text" class="form-control" value="">
+                        <input id="nro_cliente" name="nro_cliente" type="text" class="form-control" value="" disabled>
                     </div>
                     <div class="col-2">
-                        <label for="">Mozo: </label>
+                        <label for="nro_mozo">Mozo: </label>
                     </div>
                     <div class="col-10">
-                        <input id="nro_mozo" name="apellido1" type="text" class="form-control" value="46">
+                        <input id="nro_mozo" name="nro_mozo" type="text" class="form-control" value="<%= nom_usu %>" disabled>
                     </div>
                     <div class="col-2">
                         <label for="">Para: </label>
                     </div>
                     <div class="col-10">
-                        <input id="tipo_ped" name="apellido1" type="text" class="form-control" value="2">
+                        <input id="tipo_ped" name="tipo_ped" type="text" class="form-control" value="llevar" disabled>
                     </div>
                     <input type="hidden" id="epedido_" value="1">
+                </div>
+                <div id="pedidosReg">
+
                 </div>
                 <div id="pedidoCarta">
                     
@@ -67,42 +70,144 @@
         </div>
       </div>
     <script>
+        window.onload =getCarta;
+        window.onload =getProducto;
         
-    window.onload =getProducto;
-    const tablaList=document.querySelector('#carta'); 
-    fetch('/api/category')
-      .then( response => response.json() )
-      .then( data =>{
-          cat=data;
-          console.log(data);
-          renderResult(cat);
-          
-      })
-      const renderResult=(cat)=>{
-        let listHTML="";
-                    
-        cat.forEach(cat => {
+        let list_mesas=[1,2,3,4];
+        let tipo_pedido=2;
+        let id_mesero=46;
+        let desicion=0;
+        if(tipo_pedido==1){
+
+        }
+        else if (tipo_pedido==2){
+            for (let item of list_mesas){
+                fetch(`/api/letter/tableState/${item}`)
+                .then( response => response.json() )
+                .then( mesa =>{
+                emesa=mesa;
+                console.log("dentro de tipo_pedido2",mesa);
+                renderResult(emesa);
+                })
+                const renderResult=(emesa)=>{
+                    for(let item of emesa){
+                        if(item.id_emesa==1){
+                            desicion=1;    
+                            // cambio del estado del pedido de una mesa o un grupo de mesas
+                            
+                            const edit_mesa={
+                            id_mesa: item.id_mesa,
+                            }
+                            console.log("item_idemesa",edit_mesa)
+                            fetch('/api/letter/emesa',{
+                                method: 'PUT',
+                                body:JSON.stringify(edit_mesa),
+                                headers:{
+                                    'Content-Type': 'application/json'
+                                }
+                            })
+                        }
+                    }
+                }
+                
+            }
+            if(desicion==1){
+                postPedido();
+                desicion=0;
+            }
+            else if (desicion==0){
+                
+            }
             
-            listHTML+=`<option selected value="${cat.id_categoria}">${cat.nom_categoria}</option>`;
-        });
-        tablaList.innerHTML=listHTML;
-      }
+                
+        }
+
+    function getPedidosreg(){
+        const tablaList=document.querySelector('#carta'); 
+        fetch('/api/registrerOrders')
+        .then( response => response.json() )
+        .then( data =>{
+            ped_data=data;
+            console.log(data);
+            renderResult(ped_data);
+            
+        })
+        const renderResult=(ped_data)=>{
+            let listHTML="";
+                        
+            ped_data.forEach(ped_data => {
+                
+                listHTML+=`<div class="row"><div class="col-4"><label for="">Descripcion</label></div><div class="col-4"><label for="">Cantidad</label></div><div class="col-4"><label for="">
+            Importe</label></div><div class="col-4">
+                <label for="">${ped_data.nom_prod}</label>
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-align-justify"><</span>
+                </button>
+                <label value="1">${ped_data.cantidad_det}</label>
+                
+
+                <button type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-align-justify">></span>
+                </button>
+            </div>
+            <div class="col-4">
+                <input type="hidden">
+                <label >${ped_data.cantidad_det}</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <label for="">observacion</label>
+            </div>
+            <div class="col-10">
+                <input type="text">
+            </div>
+        </div>
+        `;
+            });
+            tablaList.innerHTML=listHTML;
+        }
+    }
+    
+    function getCarta(){
+        const tablaList=document.querySelector('#pedidosReg'); 
+        fetch('/api/category')
+        .then( response => response.json() )
+        .then( data =>{
+            cat=data;
+            console.log(data);
+            renderResult(cat);
+            
+        })
+        const renderResult=(cat)=>{
+            let listHTML="";
+                        
+            cat.forEach(cat => {
+                
+                listHTML+=`<option selected value="${cat.id_categoria}">${cat.nom_categoria}</option>`;
+            });
+            tablaList.innerHTML=listHTML;
+        }
+    }
+        
       
    
    function getProducto(){
-              fetch('/api/producto')
-      .then( response => response.json() )
-      .then( usuario =>{
-          prod=usuario;
-          console.log(usuario);
-          //renderResult(prod);
+        fetch('/api/producto')
+        .then( response => response.json() )
+        .then( usuario =>{
+            prod=usuario;
+            console.log(usuario);
+            //renderResult(prod);
           
-      })
+        })
 
     var slcchange = document.getElementById("carta");
     slcchange.addEventListener("change", function() {
     //console.log(slcchange.value)
-    //let listHTML="";
+    let listHTML="";
     let _usuario={};
     const productosList=document.querySelector('#cartaProducto'); 
         prod.filter(prod=>{
@@ -112,7 +217,7 @@
                         
                     }
                 });
-        let listHTML="";
+        //let listHTML="";
         
         for (let item of prod) {
             if(_usuario.id_categoria==item.id_categoria){
@@ -127,6 +232,7 @@
         };
         productosList.innerHTML=listHTML;
     });
+    
     //window.onload =detalladoCarta;
    // const detalladoCarta=(id)=>{}  
     }
@@ -209,14 +315,15 @@
         document.getElementById('total').innerHTML=total_+val*precio;
         //document.getElementById(precio_id_prod).innerHTML=val*;
     }
+    //pedido con mesa libre
     const postPedido=()=>{
         const register_={
-            idUsu: document.querySelector('#nro_mozo').value,
-            idEpedido: document.querySelector('#epedido_').value,
-            idMod: document.querySelector('#tipo_ped').value,
+            idUsu: 46,
+            idEpedido: 1,
+            idMod: tipo_pedido,
         }
         console.log(register_)
-        if(document.getElementById('nro_orden').value==''){
+        //registro del pedido
             fetch('/api/letter/register',{
                 method: 'POST',
                 body:JSON.stringify(register_),
@@ -224,16 +331,16 @@
                     'Content-Type': 'application/json'
                 }
             })
-        }
-    fetch('/api/letter/lastRecord')
-      .then( response => response.json() )
-      .then( nroPed_ =>{
-          ped_=nroPed_;
-          console.log("nroped: ",nroPed_);
-          renderPed(ped_);
-      })
-      const renderPed=(ped_)=>{
-            document.getElementById('nro_orden').value=ped_.id_ped;
+        //obtencion del nro pedido recien creado
+            fetch('/api/letter/lastRecord')
+            .then( response => response.json() )
+            .then( nroPed_ =>{
+                ped_=nroPed_;
+                console.log("nroped: ",nroPed_);
+                renderPed(ped_);
+            })
+        const renderPed=(ped_)=>{
+            //document.getElementById('nro_orden').value=ped_.id_ped;
             for(let item of ped_){
                 datoPed=item.id_ped
                 document.getElementById('nro_orden').value=item.id_ped;
