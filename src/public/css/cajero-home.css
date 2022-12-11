@@ -1,0 +1,104 @@
+#container-cajero-home{
+    font-family: var(--font-one);
+}
+
+#container-cajero-home .section-mesas{
+    width: 70%;
+}
+
+#container-cajero-home .section-operaciones{
+    width: 25%;
+}
+
+#container-cajero-home .mesas__filter select, 
+#container-cajero-home .mesas__filter option{
+    width: 20rem;
+    height: 2rem;
+    background-color: var(--white-color);
+    border: none;
+    border-bottom: 1px solid var(--first-color);
+}
+
+#container-cajero-home .mesas__filter option:hover{
+	background-color: var(--first-color);
+}
+
+#container-cajero-home .mesas__panel{
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+}
+
+#container-cajero-home .col-mesa{
+    width: 140px;
+    height: 140px;
+    margin: .5rem;
+    background-color: white;
+    border: 1px solid var(--first-color);
+    border-radius: 4px;
+}
+
+#container-cajero-home .num-mesa{
+    font-size: 2rem;
+    line-height: 140px;
+    text-align: center;
+}
+
+#container-cajero-home .operaciones__card, 
+#container-cajero-home .operaciones__buttonx, 
+#container-cajero-home .operaciones__buttony{
+    min-height: 5rem;
+    border-radius: 4px;
+}
+
+#container-cajero-home .operaciones__card, 
+#container-cajero-home .operaciones__buttonx{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: .5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 2px 4px rgba(0, 0, 0, .1);
+}
+
+#container-cajero-home .operaciones__card{
+    color: var(--first-color-text);
+    background-color: var(--second-color);
+}
+
+#container-cajero-home .operaciones__buttony{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: .5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1), 0 2px 4px rgba(0, 0, 0, .1);
+}
+
+#container-cajero-home .operaciones__card-img, 
+#container-cajero-home .operaciones__buttonx-img{
+    margin-right: .5rem;
+}
+
+#container-cajero-home .operaciones__card-body, 
+#container-cajero-home .operaciones__buttonx-body{
+    width: 70%;
+}
+
+#container-cajero-home *{
+    font-size: 1.25rem;
+}
+
+#container-cajero-home .section-operaciones i{
+    font-size: 2rem;
+}
+
+#container-cajero-home .casilla{
+    width: .75rem;
+    height: .75rem;
+    border: 1px solid var(--first-color);
+    border-radius: 4px;
+}
