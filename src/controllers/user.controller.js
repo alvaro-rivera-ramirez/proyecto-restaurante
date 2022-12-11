@@ -11,7 +11,14 @@ const getUsers = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  
+  const { params: {id},}=req;
+  console.log("en getuser",req.body)
+  try {
+    const users=await userServices.getUser(id);
+    return res.status(201).send(users);
+  } catch (error) {
+    return res.status(401);
+  }
 };
 
 const updateUser = async (req, res) => {
