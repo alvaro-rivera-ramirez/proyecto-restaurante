@@ -3,30 +3,61 @@
     <div class="row">
         <div class="col-md-8 p-0">
             <div class="shadow p-3 box-pedido">
-                <h4>Pedidos</h4>
-                <div class="box-orden">
-                    <h6>N° Orden: 02</h6>
+                <h3>Pedidos</h3>
+                <div class="box-orden ms-3">
+                    <h5 class="mb-2">N° Orden: 00001</h5>
                     <div class="d-flex justify-content">
                         <p>Mesa: 15</p>
-                        <p>Mozo: Javier</p>
+                        <p class="ms-4">Mozo: Javier</p>
                     </div>
-                    <div class="">
-                        <p>Orden:</p>
-                        <ul>
-                            <li>Causa Rellena</li>
-                            <li>Causa Rellena</li>
-                        </ul>
+                    <div class="box-detalle mb-2">
+                        <p class="mb-2">Orden:</p>
+                        <div class="d-flex">
+                            <p class="me-2 ms-2 c-red">2</p>
+                            <p>Causa Rellena</p>
+                        </div>
+                        <p class="text-obs">Observación: Picante</p>
+                        <div class="d-flex">
+                            <p class="me-2 ms-2 c-red">1</p>
+                            <p>Papa Rellena</p>
+                        </div>
+                        <p class="text-obs">Observación: Picante</p>
                     </div>
                     <div class="box-btn">
-                        <button class="btn btn-cancelar">Cancelar</button>
+                        <button class="btn btn-cancelar me-2">Cancelar</button>
                         <button class="btn btn-realizar">Realizado</button>
                     </div>
                 </div>
+                <div class="box-orden ms-3 ">
+                    <h5 class="mb-2">N° Orden: 00002</h5>
+                    <div class="d-flex justify-content">
+                        <p>Mesa: 15</p>
+                        <p class="ms-4">Mozo: Javier</p>
+                    </div>
+                    <div class="box-detalle mb-2">
+                        <p class="mb-2">Orden:</p>
+                        <div class="d-flex">
+                            <p class="me-2 ms-2 c-red">2</p>
+                            <p>Causa Rellena</p>
+                        </div>
+                        <p class="text-obs">Observación: Picante</p>
+                        <div class="d-flex">
+                            <p class="me-2 ms-2 c-red">1</p>
+                            <p>Papa Rellena</p>
+                        </div>
+                        <p class="text-obs">Observación: Picante</p>
+                    </div>
+                    <div class="box-btn">
+                        <button class="btn btn-cancelar me-2">Cancelar</button>
+                        <button class="btn btn-realizar">Realizado</button>
+                    </div>
+                </div>
+                
             </div>
         </div>
         <div class="col-md-4 p-0">
             <div class="col-md-12 shadow p-3 box-resumen">
-                <h4>Resumen</h4>
+                <h3>Resumen</h3>
                 <div class="box-info">
                     <div class="d-flex justify-content-between">
                         <p>En preparación:</p>
@@ -39,8 +70,46 @@
                 </div>
             </div>
             <div class="col-md-12 shadow p-3">
-                <h4>Realizados</h4>
+                <h3>Realizados</h3>
+                <h5>Ordenes</h5>
+                <div class="box-realizados">
+                    <button type="button" class="btn"  data-bs-toggle="modal" data-bs-target="#exampleModal">00001</button>
+                    <button type="button" class="btn"  data-bs-toggle="modal" data-bs-target="#exampleModal">00001</button>
+                    <button type="button" class="btn"  data-bs-toggle="modal" data-bs-target="#exampleModal">00001</button>
+                    <button type="button" class="btn"  data-bs-toggle="modal" data-bs-target="#exampleModal">00001</button>
+                    
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Orden 00001</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Mesa: 15</p>
+            <p>Mozo: Javier</p>
+            <p class="mb-1">Orden:</p>
+            <div class="m-orden">
+                <div class="m-orden-detalle">
+                    <p>Causa rellena (1)</p>
+                    <p class="m-obs">Observación: Picante</p>
+                </div>
+                <div class="m-orden-detalle">
+                    <p>Causa rellena (1)</p>
+                    <p class="m-obs">Observación: Picante</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-realizar">Restaurar</button>
+        </div>
+      </div>
+    </div>
+  </div>
