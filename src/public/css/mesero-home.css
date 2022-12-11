@@ -9,6 +9,32 @@
     flex-wrap: wrap;
 }
 
+.container-pisos{
+    padding: 5px 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+}
+
+.form-label{
+    display: inherit;
+    width: 15%;
+    padding: 5px 5px 5px 10px;
+    margin-right: 5px;
+}
+.form-select{
+    display: inherit;
+    width: 50%;
+    margin-left: 5px;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 1px solid rgb(171, 171, 171);;
+}
 .contenedor-home h2{
     padding: 15px 8px;
     font-size: 30px;
@@ -26,30 +52,48 @@
     /* border-right: solid 1px #000; */
 }
 
-.col-mesa{
-    justify-content: space-around;
-    align-items: center;
+.tablero-mesa,.tablero-mesa-modal{
     display: flex;
-    width: 100px;
-    height: 100px;
-    background-color: rgb(106, 252, 114);
-    margin: 8px;
-    padding: 10px;
-    border-radius: 6px;
+    flex-wrap: wrap;
+    /* border-radius: 2px;
+    border: 2px solid rgb(160, 160, 160); */
 }
 
+.col-mesa{
+    display: inherit;
+    justify-content: center;
+    align-items: center;
+    width: 105px;
+    height: 105px;
+    /* background-color: rgb(106, 252, 114); */
+    margin: 8px;
+    padding: 5px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.mesa-disponible{
+    background-color: rgb(106, 252, 114);
+}
+
+.mesa-ocupada{
+    background-color: rgb(234, 65, 65);
+}
+
+.mesa-inhabilitada{
+    background-color: rgb(186, 186, 186);
+}
+
+.selected{
+    background-color: rgb(27, 175, 220);
+}
 .container-tableros{
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
     display: inline-block;
-    width: 30%;
+    width: 35%;
     padding: 10px;
     margin-left: 10px;
     margin-top: 5px;
-}
-
-.container-tableros .container-operaciones h4{
-    width: 100%;
-    margin-bottom: 5px;
 }
 
 .container-tableros .container-operaciones{
@@ -57,13 +101,19 @@
     justify-content: flex-start;
     flex-wrap: wrap;
 }
+.container-tableros .container-operaciones h4{
+    width: 100%;
+    margin-bottom: 5px;
+}
+
 
 .col-operacion{
     width: 30%;
     padding: 8px 5px;
-    margin: 5px;
+    margin: 8px;
     text-align: center;
     border-radius: 2px;
+    cursor: pointer;
 }
 
 .col-operacion img{
@@ -80,12 +130,18 @@
     flex-wrap: wrap;
 }
 
+.container-pedidos{
+    margin-top: 8px;
+}
 .col-pedido{
-    width: 100%;
-    padding: 10px;
+    width: 70%;
+    margin-top: 8px;
+    padding: 10px 15px;
     display: flex;
     flex-wrap: wrap;
-    background-color: bisque;
+    border-radius: 2px;
+    border: 2px solid rgb(171, 171, 171);
+    /* background-color: bisque; */
 }
 /*dfsdfsdf */
 .col-pedido img{
@@ -100,15 +156,26 @@
 
 @media (max-width: 500px) {
     .container-mesas{
-        width: 65%;
+        width: 90%;
     }
     .col-mesa {
         width: 40%;
     }
 }
 @media (min-width:501px) and (max-width: 750px) {
+    .container-mesas{
+        width: 70%;
+    }
     .col-mesa {
         width: 25%;
+    }
+
+    .container-tableros{
+        width: 25%;
+    }
+
+    .col-operacion{
+        width: 80%;
     }
 }
 @media (min-width:751px) and (max-width: 900px) {
