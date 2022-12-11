@@ -70,13 +70,13 @@
         </div>
       </div>
     <script>
-        window.onload =getCarta;
         window.onload =getProducto;
         
         let list_mesas=[1,2,3,4];
         let tipo_pedido=2;
         let id_mesero=46;
         let desicion=0;
+
         if(tipo_pedido==1){
 
         }
@@ -109,7 +109,6 @@
                         }
                     }
                 }
-                
             }
             if(desicion==1){
                 postPedido();
@@ -118,10 +117,7 @@
             else if (desicion==0){
                 
             }
-            
-                
         }
-
     function getPedidosreg(){
         const tablaList=document.querySelector('#carta'); 
         fetch('/api/registrerOrders')
@@ -172,7 +168,7 @@
     }
     
     function getCarta(){
-        const tablaList=document.querySelector('#pedidosReg'); 
+        const tablaList=document.querySelector('#carta'); 
         fetch('/api/category')
         .then( response => response.json() )
         .then( data =>{
@@ -203,7 +199,7 @@
             //renderResult(prod);
           
         })
-
+        getCarta();
     var slcchange = document.getElementById("carta");
     slcchange.addEventListener("change", function() {
     //console.log(slcchange.value)
@@ -231,6 +227,7 @@
             
         };
         productosList.innerHTML=listHTML;
+        
     });
     
     //window.onload =detalladoCarta;
