@@ -63,7 +63,7 @@ btnLlevar.addEventListener("click", (e) => {
 });
 panelMesas.addEventListener("click", (e) => {
   const mesaEtiqueta = e.target;
-  if (mesaEtiqueta.classList.contains("col-mesa")) {
+  if (mesaEtiqueta.classList.value==="col-mesa mesa-disponible") {
     window.location.href = "/realizar-pedido/?mesa=" + mesaEtiqueta.innerHTML;
   }
 });

@@ -70,10 +70,11 @@
     padding: 5px;
     border-radius: 6px;
     cursor: pointer;
+    user-select: none;
 }
 
 .mesa-disponible{
-    background-color: rgb(106, 252, 114);
+    background-color: rgb(78, 223, 85);
 }
 
 .mesa-ocupada{
@@ -84,6 +85,18 @@
     background-color: rgb(186, 186, 186);
 }
 
+.mesas__information{
+    display: flex;
+    margin-top: 5px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.mesas__information .casilla{
+    width: .75rem;
+    height: .75rem;
+    border: 1px solid var(--first-color);
+    border-radius: 4px;
+}
 .selected{
     background-color: rgb(27, 175, 220);
 }
