@@ -6,7 +6,15 @@ const {
 
 const getTables = async (req, res) => {
   try {
-    const tables = await TableServices.getTables();
+    let tables;
+    if(!(req.query.estado && req.query.piso)){
+      tables = await TableServices.getTables();
+    }
+    else if(!req.query.estado){
+      tables = await TableServices.getTablesByFloor(req.query.piso);
+    }else if(req.query.estado && req.query.piso){
+      tables = await TableServices.getTablesByState(req.query.piso,req.query.estado);
+    }
     return res.status(200).send(tables);
   } catch (error) {
     console.log(error);
