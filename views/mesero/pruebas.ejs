@@ -1,5 +1,6 @@
 <script>
     let list_mesas=[1,2,3,4];
+    var dato;
     for (let item of list_mesas){
         console.log(item)
     }
@@ -17,7 +18,14 @@
         .then( usuario =>{
             prod=usuario;
             console.log(usuario);
-            //renderResult(prod);
+            for(let item of list_mesas){
+        dato=1;
+        for(let item of list_mesas){
+            dato=2;
+        }
+    }
         })
     }
+    
+    console.log(dato)
 </script>

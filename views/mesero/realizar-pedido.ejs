@@ -1,3 +1,150 @@
-<main>
-    <h1>Hacer Pedido</h1>
-</main>
+<div>
+    <div class="container-fluid">
+        <div class="row text-white">
+            <div class="col-6 bg-dark border">
+                <p>Carta</p>
+                <div class="row">
+                    <div class="col-6" >
+                        <select class="form-select" aria-label="Default select example" id="carta">
+                        </select>
+                    </div>
+                </div>
+                <p>Entrada</p>
+                <div class="row" id="cartaProducto">
+                    
+                </div>
+            </div>
+            <div class="col-6 bg-warning text-dark">
+                Datos:
+                <div class="row">
+                    <div class="col-2">
+                        <label for="nro_mesa">Mesa: </label>
+                    </div>
+                    <div class="col-10">
+                        <input id="nro_mesa" name="nro_mesa" type="text" class="form-control" value="1" disabled>
+                    </div>
+                    <div class="col-2">
+                        <label for="">Nro Orden: </label>
+                    </div>
+                    <div class="col-10">
+                        <input id="nro_orden" name="nro_orden" type="text" class="form-control" value="" disabled>
+                    </div>
+                    <div class="col-2">
+                        <label for="">Cliente: </label>
+                    </div>
+                    <div class="col-10">
+                        <input id="nro_cliente" name="nro_cliente" type="text" class="form-control" value="" disabled>
+                    </div>
+                    <div class="col-2">
+                        <label for="nro_mozo">Mozo: </label>
+                    </div>
+                    <div class="col-10">
+                        <input id="nro_mozo" name="nro_mozo" type="text" class="form-control" value="<%= nom_usu %>" disabled>
+                    </div>
+                    <div class="col-2">
+                        <label for="">Para: </label>
+                    </div>
+                    <div class="col-10">
+                        <input id="tipo_ped" name="tipo_ped" type="text" class="form-control" value="llevar" disabled>
+                    </div>
+                    <input type="hidden" id="epedido_" value="1">
+                </div>
+                <div id="pedidosReg">
+
+                </div>
+                <div id="pedidoCarta">
+                    
+                    
+                </div>
+                <div >
+                    <label for="" id="total">0</label>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-dark btn-primary mx-2" onclick=""><i class="fa-solid"></i> Precuente</button>
+                    <button type="button" class="btn btn-dark btn-primary mx-2" onclick="getget()"><i class="fa-solid"></i> Guardar</button>
+                    <button type="button" class="btn btn-dark btn-primary mx-2" onclick=""><i class="fa-solid"></i> Cancelar</button>
+                </div>
+                <div id="desicion">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let desicion=-1;
+    let arr=window.location.search;
+    let params = new URLSearchParams(arr); 
+    let nroMesas=params.getAll('mesa');
+    const hidden_=document.querySelector('#desicion'); 
+    //window.onload =inicio_();
+    inicio_();
+    console.log(document.getElementById('desicionhiden').value);
+    function inicio_(){
+        if(nroMesas.length==0){
+            console.log("para llevar")
+        }
+        else if(nroMesas.length!=0){
+            console.log("para la mesa")
+            
+            for(let item of nroMesas){
+                
+                fetch(`/api/letter/tableState/${item}`)
+                .then( response => response.json() )
+                .then( mesa =>{
+                    emesa=mesa;
+                    console.log(emesa);
+                    renderResultado(emesa);
+                })
+                const renderResultado=(cat)=>{
+                let listHTML="";
+
+                emesa.forEach(emesa => {
+                        console.log("---",emesa.estado_emesa)
+                        if(emesa.estado_emesa=='Libre'){
+                            console.log(emesa.estado_emesa)
+                            desicion=1;
+                            listHTML=`<input type="text" id="desicionhiden" value="1">`;
+                            console.log(listHTML)
+                        }
+                        else if(emesa.estado_emesa=='Ocupado'){
+                            console.log(emesa.estado_emesa)
+                            desicion=1;
+                            listHTML=`<input type="text" id="desicionhiden" value="0">`;
+                            console.log(listHTML)
+                            //console.log("ocupado",desicion)
+                            //break;
+                        }
+                    });
+                
+                    hidden_.innerHTML=listHTML;
+                }
+        }
+    }
+}
+    function getget(){
+        console.log(document.getElementById('desicionhiden').value)
+    }
+    /*
+    function getdesicion(){
+        const tablaList=document.querySelector('#desicion'); 
+        fetch('/api/category')
+        .then( response => response.json() )
+        .then( data =>{
+            cat=data;
+            console.log(data);
+            renderResult(cat);
+            
+        })
+        const renderResult=(cat)=>{
+            let listHTML="";
+                        
+                
+                listHTML+=`<input type="hidden" value="1">`;
+            
+            tablaList.innerHTML=listHTML;
+        }
+    }*/
+        
+    
+</script>
