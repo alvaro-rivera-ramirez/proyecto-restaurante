@@ -59,10 +59,8 @@
                 <div >
                     <label for="" id="total">0</label>
                 </div>
-                <div>
-                    <button type="button" class="btn btn-dark btn-primary mx-2" onclick=""><i class="fa-solid"></i> Precuente</button>
-                    <button type="button" class="btn btn-dark btn-primary mx-2" onclick="getget()"><i class="fa-solid"></i> Guardar</button>
-                    <button type="button" class="btn btn-dark btn-primary mx-2" onclick=""><i class="fa-solid"></i> Cancelar</button>
+                <div id="divButtons">
+                    
                 </div>
                 <div id="desicion">
                     
@@ -73,78 +71,390 @@
 </div>
 <script>
     let desicion=-1;
+    var pendiente;
+    let nomUsu=document.getElementById('nro_mozo').value;
+    let _prePedido=[];
     let arr=window.location.search;
     let params = new URLSearchParams(arr); 
     let nroMesas=params.getAll('mesa');
-    const hidden_=document.querySelector('#desicion'); 
-    //window.onload =inicio_();
+    var mod;
+    
+    document.getElementById('nro_mesa').value=nroMesas;
+    getUsuario(nomUsu);
     inicio_();
-    console.log(document.getElementById('desicionhiden').value);
+    getMod();
+    getEpedido();
+    var usuarioId;
+
     function inicio_(){
         if(nroMesas.length==0){
-            console.log("para llevar")
+            mod='Para llevar';
+            document.getElementById('tipo_ped').value=mod;
         }
         else if(nroMesas.length!=0){
-            console.log("para la mesa")
-            
-            for(let item of nroMesas){
-                
-                fetch(`/api/letter/tableState/${item}`)
-                .then( response => response.json() )
-                .then( mesa =>{
-                    emesa=mesa;
-                    console.log(emesa);
-                    renderResultado(emesa);
-                })
-                const renderResultado=(cat)=>{
-                let listHTML="";
-
-                emesa.forEach(emesa => {
-                        console.log("---",emesa.estado_emesa)
-                        if(emesa.estado_emesa=='Libre'){
-                            console.log(emesa.estado_emesa)
+            mod='Para la Mesa';
+            document.getElementById('tipo_ped').value=mod;
+            fetch('/api/letter/tableState')
+            .then( response => response.json() )
+            .then( table =>{
+            prod=table;
+            renderResult(table);
+            })
+            const renderResult=(table)=>{  
+                for(let item of nroMesas){
+                    for(let item2 of table){
+                        if(item==item2.numero_mesa & item2.estado_emesa=='Libre'){
                             desicion=1;
-                            listHTML=`<input type="text" id="desicionhiden" value="1">`;
-                            console.log(listHTML)
                         }
-                        else if(emesa.estado_emesa=='Ocupado'){
-                            console.log(emesa.estado_emesa)
-                            desicion=1;
-                            listHTML=`<input type="text" id="desicionhiden" value="0">`;
-                            console.log(listHTML)
-                            //console.log("ocupado",desicion)
-                            //break;
+                        else if(item==item2.numero_mesa & item2.estado_emesa=='Ocupado'){
+                            desicion=2;
                         }
-                    });
-                
-                    hidden_.innerHTML=listHTML;
+                    }
                 }
+                switch(desicion){
+                    case 1:
+                        getCarta();
+                        getbuttons(desicion);
+                        break;
+                    case 2:
+                        getnroped();
+                        getdetallePedido();
+                        getbuttons(desicion);
+                        break;
+
+                }
+
+            }
         }
     }
-}
-    function getget(){
-        console.log(document.getElementById('desicionhiden').value)
+
+    function getProducto(){
+        fetch('/api/producto')
+        .then( response => response.json() )
+        .then( usuario =>{
+            prod=usuario;
+            renderResult(usuario);
+        })
+            const renderResult=(usuario)=>{
+            var slcchange = document.getElementById("carta");
+            slcchange.addEventListener("change", function() {
+            let listHTML="";
+            let _usuario={};
+            const productosList=document.querySelector('#cartaProducto'); 
+                prod.filter(prod=>{
+                            if(prod.id_categoria==slcchange.value)
+                            {
+                                _usuario=prod
+                                
+                            }
+                        });
+                
+                for (let item of prod) {
+                    if(_usuario.id_categoria==item.id_categoria){
+                        listHTML+=`<div class="col-4 bg-red border">
+                            <img src="/public/img/productos/${item.imagen_prod}" class="img-fluid" alt="" width="300" height="300">
+                            <p>${item.nom_prod}</p>
+                            <label for="">${item.precio_u_prod}</label>
+                            <button type="button" class="btn btn-success btn-circle btn-sm" onclick="prePedido('${item.nom_prod}','${item.precio_u_prod}','${item.id_prod}')">+</button>
+                            </div>`;
+                    }
+                    
+                };
+                productosList.innerHTML=listHTML;
+            });
+        }
+        
+    
     }
-    /*
-    function getdesicion(){
-        const tablaList=document.querySelector('#desicion'); 
+    function getbuttons(desicion){
+        const buttonsList=document.querySelector('#divButtons'); 
+        console.log(desicion)
+        if (desicion==1){
+            let listHTML=`
+                    <button type="button" class="btn btn-dark btn-primary mx-2" onclick="postPedido()"><i class="fa-solid"></i> Guardar</button>
+                    <a class="btn btn-dark btn-primary mx-2" href="/home" role="button"><i class="fa-solid fa-file-pen"></i> Regresar</a>`;
+            buttonsList.innerHTML=listHTML;
+            
+        }
+        else if (desicion==2){
+            let listHTML=`
+                <button type="button" class="btn btn-dark btn-primary mx-2" onclick=""><i class="fa-solid"></i> Precuenta</button>
+                <a class="btn btn-dark btn-primary mx-2" href="/home" role="button"><i class="fa-solid fa-file-pen"></i> Regresar</a>`;
+            buttonsList.innerHTML=listHTML;
+            
+            
+        }
+        
+    }
+    function getCarta(){
+        const tablaList=document.querySelector('#carta'); 
         fetch('/api/category')
         .then( response => response.json() )
         .then( data =>{
             cat=data;
-            console.log(data);
             renderResult(cat);
             
         })
         const renderResult=(cat)=>{
             let listHTML="";
                         
+            cat.forEach(cat => {
                 
-                listHTML+=`<input type="hidden" value="1">`;
-            
+                listHTML+=`<option selected value="${cat.id_categoria}">${cat.nom_categoria}</option>`;
+            });
             tablaList.innerHTML=listHTML;
+            getProducto();
         }
-    }*/
         
+    }
+
+
+    //AÑADIR PLATOS AL PEDIDO
+    function prePedido(dato,precio,id_prod){
+        var cant_=1;
+        let _datos={id_prod,cant_};
+        _prePedido.push(_datos);
+        document.getElementById('pedidoCarta').innerHTML+=`<div class="row"><div class="col-4"><label for="">Descripcion</label></div><div class="col-4"><label for="">Cantidad</label></div><div class="col-4"><label for="">
+            Importe</label></div><div class="col-4">
+                <label for="">`+dato+`</label>
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-default" onclick="btn_menos(${id_prod})">
+                    <span class="glyphicon glyphicon-align-justify"><</span>
+                </button>
+                <label id='`+id_prod+`' value="1">1</label>
+                
+
+                <button type="button" class="btn btn-default" onclick="btn_mas(${id_prod})">
+                    <span class="glyphicon glyphicon-align-justify">></span>
+                </button>
+            </div>
+            <div class="col-4">
+                <input type="hidden" value="`+precio+`" id='prec_`+id_prod+`'>
+                <label id='precio_`+id_prod+`'>`+precio+`</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <label for="">observacion</label>
+            </div>
+            <div class="col-10">
+                <input type="text">
+            </div>
+        </div>
+        `;
+        var precio_=parseInt(document.getElementById('total').innerHTML);
+        precio_=precio_+parseInt(precio);
+        document.getElementById('total').innerHTML=precio_;
+    }
+    function btn_mas(id_prod){
+        for(let item of _prePedido){
+            if(item.id_prod==id_prod){
+                item.cant_+=1;
+            }
+        }
+        var total_=parseInt(document.getElementById('total').innerHTML);
+        var val=parseInt(document.getElementById(id_prod).innerHTML);
+        var precio=parseInt(document.getElementById('prec_'+id_prod).value);
+        total_=total_-val*precio;
+        val=val+1;
+        
+        document.getElementById('precio_'+id_prod).innerHTML=val*precio;
+        document.getElementById(id_prod).innerHTML=val;
+        document.getElementById('total').innerHTML=total_+val*precio;
+    }
+    function btn_menos(id_prod){
+        for(let item of _prePedido){
+            if(item.id_prod==id_prod){
+                item.cant_-=1;
+            }
+        };
+        var total_=parseInt(document.getElementById('total').innerHTML);
+        var val=parseInt(document.getElementById(id_prod).innerHTML);
+        var precio=parseInt(document.getElementById('prec_'+id_prod).value);
+        total_=total_-val*precio;
+        val=val-1;
+        document.getElementById('precio_'+id_prod).innerHTML=val*precio;
+        document.getElementById(id_prod).innerHTML=val;
+        document.getElementById('total').innerHTML=total_+val*precio;
+    }
+    function getMod(){
+
+        fetch(`/api/letter/getMod`)
+        .then( response => response.json() )
+        .then( data =>{
+            mod_=data;
+            renderResult(mod_);
+            
+        })
+        const renderResult=(mod_)=>{
+            for (let item of mod_){
+                if(item.nom_mod=='Para llevar'){
+                    mod=item.id_mod;
+                }
+                else if(item.nom_mod=='Para la Mesa'){
+                    mod=item.id_mod;
+                }
+            }
+        }
+    }
     
+    function getUsuario(nomUsu1){
+
+        fetch(`/api/user/${nomUsu1}`)
+        .then( response => response.json() )
+        .then( data =>{
+            usu=data;
+            renderResult(usu);
+            
+        })
+        const renderResult=(usu)=>{
+            for (let item of usu){
+                usuarioId=item.id_usu;
+            }
+        }
+    }
+    function getEpedido(){
+
+        fetch(`/api/letter/getEpedido`)
+        .then( response => response.json() )
+        .then( data =>{
+            ePedido_=data;
+            renderResult(ePedido_);
+            
+        })
+        const renderResult=(ePedido_)=>{
+            for (let item of ePedido_){
+                if(item.tipo_epedido=='Pendiente'){
+                    pendiente=item.id_epedido;
+                }
+            }
+        }
+    }
+    const postPedido=()=>{
+        const register_={
+            idUsu: usuarioId,
+            idEpedido: pendiente,
+            idMod: mod,
+        }
+        //registro del pedido
+            fetch('/api/letter/register',{
+                method: 'POST',
+                body:JSON.stringify(register_),
+                headers:{
+                    'Content-Type': 'application/json'
+                }
+            })
+        //obtencion del nro pedido recien creado
+            fetch('/api/letter/lastRecord')
+            .then( response => response.json() )
+            .then( nroPed_ =>{
+                ped_=nroPed_;
+                renderPed(ped_);
+            })
+        const renderPed=(ped_)=>{
+            //document.getElementById('nro_orden').value=ped_.id_ped;
+            for(let item of ped_){
+                datoPed=item.id_ped
+                localStorage.setItem("nroPed",datoPed);
+                //document.getElementById('nro_orden').value=item.id_ped;
+                for (let item of _prePedido){
+                    item['idPed']=datoPed;
+                }
+                //registro mesa_pedido
+                
+            };
+            for(let item of nroMesas){
+                    const mesaPed_={
+                        nroPed: datoPed,
+                        nroMes: item,
+                    }
+                    fetch('/api/letter/orderTable',{
+                        method: 'POST',
+                        body:JSON.stringify(mesaPed_),
+                        headers:{
+                            'Content-Type': 'application/json'
+                        }
+                    })
+
+                };
+            
+            for (let item of _prePedido){
+                    fetch('/api/letter/registerDetalle',{
+                        method: 'POST',
+                        body:JSON.stringify(item),
+                        headers:{
+                            'Content-Type': 'application/json'
+                        }
+                    })
+            };
+            location.reload();
+        }
+        for(let item of nroMesas){
+            const edit_mesa={
+                id_mesa: item,
+            }
+            fetch('/api/letter/emesa',{
+                method: 'PUT',
+                 body:JSON.stringify(edit_mesa),
+                 headers:{
+                      'Content-Type': 'application/json'
+                  }
+             })           
+        }
+        //for para mesa_pedido
+
+            
+    }
+    function getnroped(){
+        document.getElementById('nro_orden').value=localStorage.getItem('nroPed');
+    }
+    function getdetallePedido(){
+        let nroPedido=localStorage.getItem('nroPed');
+        fetch(`/api/letter/getDetPed/${nroPedido}`)
+            .then( response => response.json() )
+            .then( detPed =>{
+                detPed_=detPed;
+                renderPed(detPed_);
+            })
+        const renderPed=(detPed_)=>{
+            let listdetPed=document.querySelector('#pedidosReg');
+            let listHTML="";
+            let sumdetPed=0;
+            for (let item of detPed_){
+                let precioCant=item.cantidad_det*item.precio_u_prod;
+                sumdetPed=precioCant+sumdetPed;
+                listHTML+=`<div class="row"><div class="col-4"><label for="">Descripcion</label></div><div class="col-4"><label for="">Cantidad</label></div><div class="col-4"><label for="">
+            Importe</label></div><div class="col-4">
+                <label for="">${item.nom_prod}</label>
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-align-justify"><</span>
+                </button>
+                <label  value="1">${item.cantidad_det}</label>
+                
+
+                <button type="button" class="btn btn-default" >
+                    <span class="glyphicon glyphicon-align-justify">></span>
+                </button>
+            </div>
+            <div class="col-4">
+                <label >`+precioCant+`</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <label for="">observacion</label>
+            </div>
+            <div class="col-10">
+                <input type="text">
+            </div>
+        </div>
+        `;
+            }
+            document.getElementById('total').innerHTML=sumdetPed;
+            listdetPed.innerHTML=listHTML;
+        }
+    }
 </script>

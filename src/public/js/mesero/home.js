@@ -40,13 +40,13 @@ const renderTables = (tables,panelMesas) => {
   let listHTML = "";
   tables.forEach((table) => {
     switch (table.id_emesa) {
-      case 3:
+      case 1:
         listHTML += `<div class="col-mesa mesa-disponible">${table.numero_mesa}</div>`;
         break;
       case 2:
         listHTML += `<div class="col-mesa mesa-ocupada">${table.numero_mesa}</div>`;
         break;
-      case 1:
+      case 3:
         listHTML += `<div class="col-mesa mesa-inhabilitada">${table.numero_mesa}</div>`;
         break;
     }
