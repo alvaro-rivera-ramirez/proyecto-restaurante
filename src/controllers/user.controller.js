@@ -12,7 +12,6 @@ const getUsers = async (req, res) => {
 
 const getUser = async (req, res) => {
   const { params: {id},}=req;
-  console.log("en getuser",req.body)
   try {
     const users=await userServices.getUser(id);
     return res.status(201).send(users);
@@ -22,7 +21,6 @@ const getUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  console.log(Object.values(req.body))
   const values=Object.values(req.body);
   try {
     const users=await userServices.updateUser(values);

@@ -8,10 +8,8 @@ const { encrypt, compare } = require("../utils/handlePass");
     return users;
   };
 
-  const getUser = async (id) => {
-    console.log("en getuser",id)
-    const users = await conn.query("SELECT * FROM usuario WHERE id_usu=?",id);
-  
+  const getUser = async (nomUsu) => {
+    const users = await conn.query("SELECT * FROM usuario WHERE nom_usu=?",nomUsu);
     if (!users) throw new Error();
     return users;
   };
