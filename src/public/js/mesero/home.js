@@ -10,12 +10,13 @@ fetch("/api/pisos")
   .then((res) => {
     let listHTML = "";
     res.forEach((piso) => {
-      listHTML += `<option value="${piso.id_piso}">${piso.numero_piso}</option>`;
+      listHTML += `<option value="${piso.id_piso}">${piso.nom_piso}</option>`;
     });
     selectPisos.innerHTML = listHTML;
   })
   .then(async () => {
     let mesas = await getTableByFloor(selectPisos.firstChild.value);
+    console.log(mesas)
     renderTables(mesas,panelMesas);
   })
   .catch((error) => console.log(error));
@@ -83,7 +84,7 @@ btnOpenModal.addEventListener("click", (e) => {
   .then((res) => {
     let listHTML = "";
     res.forEach((piso) => {
-      listHTML += `<option value="${piso.id_piso}">${piso.numero_piso}</option>`;
+      listHTML += `<option value="${piso.id_piso}">${piso.nom_piso}</option>`;
     });
     select.innerHTML = listHTML;
   })

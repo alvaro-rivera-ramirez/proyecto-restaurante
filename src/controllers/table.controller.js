@@ -7,7 +7,8 @@ const {
 const getTables = async (req, res) => {
   try {
     let tables;
-    if(!(req.query.estado && req.query.piso)){
+
+    if(!req.query.estado && !req.query.piso){
       tables = await TableServices.getTables();
     }
     else if(!req.query.estado){
