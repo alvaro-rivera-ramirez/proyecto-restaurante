@@ -78,14 +78,12 @@
     let params = new URLSearchParams(arr); 
     let nroMesas=params.getAll('mesa');
     var mod;
-    
     document.getElementById('nro_mesa').value=nroMesas;
     getUsuario(nomUsu);
     inicio_();
     getMod();
     getEpedido();
     var usuarioId;
-
     function inicio_(){
         if(nroMesas.length==0){
             mod='Para llevar';
@@ -114,11 +112,12 @@
                 switch(desicion){
                     case 1:
                         getCarta();
+                        getpedMesa(nroMesas[0]);
                         getbuttons(desicion);
                         break;
                     case 2:
-                        getnroped();
-                        getdetallePedido();
+                        getpedMesa(nroMesas[0]);
+                        //getnroped();
                         getbuttons(desicion);
                         break;
 
@@ -353,11 +352,9 @@
                 renderPed(ped_);
             })
         const renderPed=(ped_)=>{
-            //document.getElementById('nro_orden').value=ped_.id_ped;
             for(let item of ped_){
                 datoPed=item.id_ped
                 localStorage.setItem("nroPed",datoPed);
-                //document.getElementById('nro_orden').value=item.id_ped;
                 for (let item of _prePedido){
                     item['idPed']=datoPed;
                 }
@@ -402,9 +399,6 @@
                   }
              })           
         }
-        //for para mesa_pedido
-
-            
     }
     function getnroped(){
         document.getElementById('nro_orden').value=localStorage.getItem('nroPed');
@@ -418,7 +412,7 @@
                 renderPed(detPed_);
             })
         const renderPed=(detPed_)=>{
-            let listdetPed=document.querySelector('#pedidosReg');
+            let listdetPed=document.querySelector('#pedidoCarta');
             let listHTML="";
             let sumdetPed=0;
             for (let item of detPed_){
@@ -455,6 +449,25 @@
             }
             document.getElementById('total').innerHTML=sumdetPed;
             listdetPed.innerHTML=listHTML;
+        }
+    }
+    function getpedMesa(nromesa){
+        console.log("daasdasds: ",nromesa)
+        fetch(`/api/letter/pedidoOcupado/${nromesa}`)
+        .then( response => response.json() )
+        .then( data =>{
+            nromesa__=data;
+            renderResult(nromesa__);
+            
+        })
+        const renderResult=(nromesa__)=>{
+
+            for (let item of nromesa__){
+                console.log(item.id_ped)
+                localStorage.setItem("nroPed",item.id_ped);
+                document.getElementById('nro_orden').value=localStorage.getItem('nroPed');
+            }
+            getdetallePedido();
         }
     }
 </script>

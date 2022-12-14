@@ -12,5 +12,6 @@ letterRouter.get('/getMod', letterController.getMod);
 letterRouter.get('/getEpedido', letterController.getEpedido);
 letterRouter.post('/orderTable', letterController.orderTable);
 letterRouter.get('/getDetPed/:id', letterController.getDetPed);
+letterRouter.get('/pedidoOcupado/:id', letterController.pedidoOcupado);
 
 module.exports=letterRouter;

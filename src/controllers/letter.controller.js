@@ -88,6 +88,16 @@ const register = async (req, res) => {
     return res.status(401);
   }
   };
+  const pedidoOcupado = async (req, res) => {
+    try {
+      
+     const { params: {id},}=req;
+     const pedidoOcupado_=await cartaServices.pedidoOcupado(id);
+      return res.status(201).send(pedidoOcupado_);
+  } catch (error) {
+    return res.status(401);
+  }
+  };
 
 module.exports = {
   getCarta,
@@ -100,4 +110,5 @@ module.exports = {
   getEpedido,
   orderTable,
   getDetPed,
+  pedidoOcupado,
 };

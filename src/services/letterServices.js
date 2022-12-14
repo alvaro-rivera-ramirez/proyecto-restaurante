@@ -48,6 +48,13 @@ const getLastRecord = async () => {
       if (!eMesa_) throw new Error();
       return eMesa_;
     };
+    const pedidoOcupado = async (mesa) => {
+      console.log("nro ped services: ",mesa)
+      const eMesa_ = await conn.query("select * from mesa inner join mesa_pedido on mesa.id_mesa=mesa_pedido.id_mesa inner join pedido on pedido.id_ped=mesa_pedido.id_ped where mesa.numero_mesa=?;",mesa);
+      console.log("eMesa_ services: ",eMesa_)
+      if (!eMesa_) throw new Error();
+      return eMesa_;
+    };
 
 module.exports={
     postPedido,
@@ -59,4 +66,5 @@ module.exports={
     getEpedido,
     orderTable,
     getDetPed,
+    pedidoOcupado,
 }
