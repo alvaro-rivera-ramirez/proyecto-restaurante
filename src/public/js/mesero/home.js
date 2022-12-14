@@ -70,6 +70,7 @@ panelMesas.addEventListener("click", (e) => {
 });
 
 
+
 /* Modal Unir Mesas */
 btnOpenModal.addEventListener("click", (e) => {
   const modalMesas = document.querySelector("#modalMergeTable");
