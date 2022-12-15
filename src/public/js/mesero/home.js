@@ -9,6 +9,7 @@ fetch("/api/pisos")
   .then((res) => res.json())
   .then((res) => {
     let listHTML = "";
+    console.log(res)
     res.forEach((piso) => {
       listHTML += `<option value="${piso.id_piso}">${piso.nom_piso}</option>`;
     });

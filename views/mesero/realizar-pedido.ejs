@@ -71,7 +71,7 @@
     </div>
 </div>
 <script>
-    let desicion=-1;
+    let desicion=1;
     var pendiente;
     let nomUsu=document.getElementById('nro_mozo').value;
     let _prePedido=[];
@@ -89,9 +89,16 @@
         if(nroMesas.length==0){
             mod='Para llevar';
             document.getElementById('tipo_ped').value=mod;
+            switch(desicion){
+                    case 1:
+                        getCarta();
+                        getbuttons(desicion);
+                        break;
+
+                }
         }
         else if(nroMesas.length!=0){
-            mod='Para la Mesa';
+            mod='Para la mesa';
             document.getElementById('tipo_ped').value=mod;
             fetch('/api/letter/tableState')
             .then( response => response.json() )
@@ -113,7 +120,7 @@
                 switch(desicion){
                     case 1:
                         getCarta();
-                        // getpedMesa(nroMesas[0]);
+                        //getpedMesa(nroMesas[0]);
                         getbuttons(desicion);
                         break;
                     case 2:
@@ -168,7 +175,6 @@
     }
     function getbuttons(desicion){
         const buttonsList=document.querySelector('#divButtons'); 
-        console.log(desicion)
         if (desicion==1){
             let listHTML=`
                     <button type="button" class="btn btn-dark btn-primary mx-2" onclick="postPedido()"><i class="fa-solid"></i> Guardar</button>
@@ -289,10 +295,7 @@
         })
         const renderResult=(mod_)=>{
             for (let item of mod_){
-                if(item.nom_mod=='Para llevar'){
-                    mod=item.id_mod;
-                }
-                else if(item.nom_mod=='Para la Mesa'){
+                if(mod==item.nom_mod){
                     mod=item.id_mod;
                 }
             }
@@ -387,7 +390,12 @@
                         }
                     })
             };
-            location.reload();
+            if(mod==1){
+                window.location.href = "/home";
+            }
+            else if(mod==2){
+                location.reload();
+            }
         }
         for(let item of nroMesas){
             const edit_mesa={
@@ -454,7 +462,6 @@
         }
     }
     function getpedMesa(nromesa){
-        console.log("daasdasds: ",nromesa)
         fetch(`/api/letter/pedidoOcupado/${nromesa}`)
         .then( response => response.json() )
         .then( data =>{
@@ -465,7 +472,6 @@
         const renderResult=(nromesa__)=>{
 
             for (let item of nromesa__){
-                console.log(item.id_ped)
                 localStorage.setItem("nroPed",item.id_ped);
                 document.getElementById('nro_orden').value=localStorage.getItem('nroPed');
             }

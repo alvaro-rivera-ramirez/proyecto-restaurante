@@ -66,6 +66,7 @@ const register = async (req, res) => {
     tipo_usu: idRol,
     dir_usu: dir,
   };
+  console.log(newUser)
   const passEncrypt = await encrypt(pass);
   newUser.psw_usu = passEncrypt;
   // conn.query("INSERT INTO usuario SET ?", [newUser], (err, res) => {
