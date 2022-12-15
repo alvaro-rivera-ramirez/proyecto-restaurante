@@ -39,7 +39,7 @@ const createTable = async (req, res) => {
   const table = { numero_mesa, id_piso, id_emesa };
   try {
     await TableServices.createTable(table);
-    return res.status(201).send("TABLE_CREATED");
+    return res.status(201).send({ok:true,msg:"TABLE_CREATED"});
   } catch (error) {
     console.log(error);
     handleErrorResponse(res, "ERROR EN LA CONSULTA");
@@ -52,7 +52,7 @@ const updateTable = async (req, res) => {
   const table = { id_piso, numero_mesa, id_emesa };
   try {
     await TableServices.updateTable(id, table);
-    return res.status(201).send("TABLE_UPDATED");
+    return res.status(201).send({ok:true,msg:"TABLE_UPDATED"});
   } catch (error) {
     handleErrorResponse(res, "ERROR EN LA CONSULTA");
     console.log(error);
@@ -62,7 +62,7 @@ const deleteTable = async (req, res) => {
   const { id } = req.params;
   try {
     await TableServices.deleteTable(id);
-    return res.status(201).send("TABLE_DELETED");
+    return res.status(201).send({ok:true,msg:"TABLE_DELETED"});
   } catch (error) {
     handleErrorResponse(res, "ERROR EN LA CONSULTA");
     console.log(error);

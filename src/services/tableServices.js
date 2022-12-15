@@ -1,7 +1,7 @@
 const con = require("../config/bd");
 
 const getTables = async () => {
-  const mesas = await con.query("SELECT * FROM mesa");
+  const mesas = await con.query("SELECT m.*,p.nom_piso FROM mesa m INNER JOIN piso p ON m.id_piso=p.id_piso");
   if (!mesas) throw new Error();
 
   return mesas;
