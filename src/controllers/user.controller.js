@@ -60,11 +60,23 @@ const changePassword = async (req, res) => {
   const change = await userServices.changePassword(id_usu, old_password, new_password);
   return res.status(201).send(change);
 }
+const getCliente = async (req, res) => {
+  console.log('getCliente.controler');
+  try {
+    
+    const users=await userServices.getCliente();
+    return res.status(201).send(users);
+  } catch (error) {
+    return res.status(401);
+  }
+};
+
 
 module.exports = {
   getUsers,
   getUser,
   updateUser,
   deleteUser,
-  changePassword
+  changePassword,
+  getCliente,
 };

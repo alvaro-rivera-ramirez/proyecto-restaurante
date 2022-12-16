@@ -15,9 +15,18 @@
             <h2>Nuevo Cliente</h2>
             <input type="text" name="dni" placeholder="Dni">
             <input type="text" name="nombre" placeholder="Nombre">
-            <button id="btn_login">Registrar </button>
+            <button id="btn_login1">Registrar </button>
         </form>
     </div>
-    
+<script>
+    fetch('/api/user/clientes')
+      .then( response => response.json() )
+      .then( data =>{
+          usuario=data;
+          console.log(data);
+          //renderResult(usuario);
+          
+      })
+</script>
 </body>
 </html>

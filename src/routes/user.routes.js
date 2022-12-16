@@ -9,6 +9,7 @@ UserRouter.get('/:id',userController.getUser);
 UserRouter.put('/',userController.updateUser);
 UserRouter.delete('/:id',userController.deleteUser);
 UserRouter.post('/change-psd', userController.changePassword);
+UserRouter.get('/clientes',userController.getCliente);
 
 
 module.exports=UserRouter;
