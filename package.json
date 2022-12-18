@@ -20,6 +20,7 @@
   "homepage": "https://github.com/Alvaro0801/proyecto-restaurante#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "bootstrap": "^5.0.2",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
