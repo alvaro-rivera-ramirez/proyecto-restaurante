@@ -181,81 +181,83 @@ window.addEventListener('DOMContentLoaded', e => {
   // Guardar cambios para crear o editar
   btnSave.addEventListener("click", async (e) => {
     e.preventDefault();
-    const form = new FormData(formTable);
-    let data = {};
-    form.forEach((value, key) => (data[key] = value));
-    console.log(data);
-
-    if (option == "crear") {
-      try {
-        const response = await fetch("/api/table", {
-          method: "POST",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        if (response.ok) {
-          const result = await response.json();
-          Swal.fire({
-            title: "Mesa creada",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 800,
-          }).then(() => {
-            tableMesa.ajax.reload(null, false);
+    if(validateForm()){
+      const form = new FormData(formTable);
+      let data = {};
+      form.forEach((value, key) => (data[key] = value));
+      console.log(data);
+  
+      if (option == "crear") {
+        try {
+          const response = await fetch("/api/table", {
+            method: "POST",
+            mode: "cors",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
           });
-        } else {
-          Swal.fire({
-            title: "Error",
-            text: "Verifique los campos",
-            icon: "error",
-            showConfirmButton: false,
-            timer: 1000,
-          });
-          throw new Error(`HTTP error! status: ${response.status}`);
+          if (response.ok) {
+            const result = await response.json();
+            Swal.fire({
+              title: "Mesa creada",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 800,
+            }).then(() => {
+              tableMesa.ajax.reload(null, false);
+            });
+          } else {
+            Swal.fire({
+              title: "Error",
+              text: "Verifique los campos",
+              icon: "error",
+              showConfirmButton: false,
+              timer: 1000,
+            });
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
       }
-    }
-    if (option == "editar") {
-      console.log(id);
-      try {
-        const response = await fetch("/api/table/" + id, {
-          method: "put",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-
-        if (response.ok) {
-          Swal.fire({
-            title: "Mesa Actualizada",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 800,
-          }).then(() => {
-            tableMesa.ajax.reload(null, false);
+      if (option == "editar") {
+        console.log(id);
+        try {
+          const response = await fetch("/api/table/" + id, {
+            method: "put",
+            mode: "cors",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
           });
-        } else {
-          Swal.fire({
-            title: "Error",
-            text: "Verifique los campos",
-            icon: "error",
-            showConfirmButton: false,
-            timer: 1000,
-          });
-          throw new Error(`HTTP error! status: ${response.status}`);
+  
+          if (response.ok) {
+            Swal.fire({
+              title: "Mesa Actualizada",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 800,
+            }).then(() => {
+              tableMesa.ajax.reload(null, false);
+            });
+          } else {
+            Swal.fire({
+              title: "Error",
+              text: "Verifique los campos",
+              icon: "error",
+              showConfirmButton: false,
+              timer: 1000,
+            });
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
       }
+      modalNew.hide();
     }
-    modalNew.hide();
   });
 
   const modalTable = document.getElementById('modalTable')
@@ -265,5 +267,6 @@ window.addEventListener('DOMContentLoaded', e => {
       const formBody=document.querySelector('.modal-body');
       formBody.lastChild.remove();
     }
+    clearErrors();
   });
 });

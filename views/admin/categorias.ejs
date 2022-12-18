@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/public/css/admin-validation.css">
 <div class="container">
   <div class="body__title mb-2">
     <h2 class="text-center">Categorías</h2>
@@ -48,13 +49,17 @@
       </div>
       <form id="formCategory">
         <div class="modal-body">
-          <label for="nom_categoria" class="col-form-label">Categoria:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="nom_categoria"
-            name="nom_categoria"
-          />
+          <div class="form_control">
+            <label for="nom_categoria" class="col-form-label">Categoria:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nom_categoria"
+              name="nom_categoria"
+            />
+            <i class="fas fa-exclamation-circle"></i>
+            <small>Error message</small>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -69,4 +74,6 @@
   </div>
 </div>
 <script src="/public/js/configTable.js"></script>
+<script src="/public/js/categorias/validateForm.js"></script>
+<script src="/public/js/show-errors.js"></script>
 <script src="/public/js/categorias/category.js"></script>

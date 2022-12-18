@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/public/css/admin-validation.css">
 <div class="container">
   <div class="body__title mb-2">
     <h2 class="text-center">Mesas</h2>
@@ -50,7 +51,7 @@
       </div>
       <form id="formTable">
         <div class="modal-body">
-          <div class="mb-3">
+          <div class="form_control">
             <label for="numero_mesa" class="col-form-label">Número:</label>
             <input
               type="text"
@@ -58,8 +59,10 @@
               id="numero_mesa"
               name="numero_mesa"
             />
+            <i class="fas fa-exclamation-circle"></i>
+            <small>Error message</small>
           </div>
-          <div class="mb-3">
+          <div class="form_control">
             <label for="id_piso" class="col-form-label">Piso</label>
             <select
               name="id_piso"
@@ -86,4 +89,6 @@
 </div>
 
 <script src="/public/js/configTable.js"></script>
+<script src="/public/js/mesas/validateForm.js"></script>
+<script src="/public/js/show-errors.js"></script>
 <script src="/public/js/mesas/table.js"></script>
