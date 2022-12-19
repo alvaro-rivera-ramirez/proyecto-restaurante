@@ -1,0 +1,29 @@
+.form_control{
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.form_control.error input {
+	border-color: #e74c3c;
+}
+
+.form_control i {
+	visibility: hidden;
+	position: absolute;
+	top: 50px;
+	right: 10px;
+}
+
+.form_control.error i.fa-exclamation-circle {
+	color: #e74c3c;
+	visibility: visible;
+}
+
+.form_control small {
+	color: #e74c3c;
+	display: none;
+}
+
+.form_control.error small {
+	display: block;
+}

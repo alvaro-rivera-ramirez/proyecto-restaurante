@@ -81,7 +81,8 @@
         </div>
     </div>
 </div>
-
+<script src="/socket.io/socket.io.js"></script>
+<script src="/public/js/mesero/socket-pedido-mesero.js"></script>
 <script>
     let desicion=1;
     var pendiente;
@@ -369,6 +370,8 @@
                     'Content-Type': 'application/json'
                 }
             })
+
+            socket.emit('confirmar-pedido',nroMesas)
         //obtencion del nro pedido recien creado
             fetch('/api/letter/lastRecord')
             .then( response => response.json() )
