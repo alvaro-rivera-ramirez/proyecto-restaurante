@@ -7,7 +7,7 @@ if(window.location.search){
     var mesas=searchMesas.getAll('mesa');
     lblMesas.innerHTML=mesas.join(',');
 }else{
-    lblMesas.innerHTML='Para llevar'
+    lblMesas.innerHTML='Para llevar';
 }
 
 btnSave.addEventListener('click',()=>{
