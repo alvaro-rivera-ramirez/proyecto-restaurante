@@ -1,55 +1,63 @@
+<link rel="stylesheet" href="/public/css/style-letter.css" />
+<main>
 
 <div>
     <div class="container-fluid">
-        <div class="row text-white">
-            <div class="col-6 bg-dark border">
-                <p>Carta</p>
+        <div class="row text-black">
+            <div class="col-6">
+                <h3><strong>Carta:</strong></h3>
                 <div class="row">
                     <div class="col-6" >
-                        <select class="form-select" aria-label="Default select example" id="carta">
+                        <select class="form-select border-0 border-bottom border-dark bg-transparent rounded-0" aria-label="Default select example" id="carta">
                         </select>
                     </div>
                 </div>
-                <p>Entrada</p>
+                <h3><strong>Entrada:</strong></h3>
                 <div class="row" id="cartaProducto">
                     
                 </div>
             </div>
-            <div class="col-6 bg-warning text-dark">
-                Datos:
+            <div class="col-6 text-dark">
+                <h3><strong>Datos:</strong></h3>
                 <div class="row">
                     <div class="col-2">
                         <label for="nro_mesa">Mesa: </label>
                     </div>
                     <div class="col-10">
-                        <input id="nro_mesa" name="nro_mesa" type="text" class="form-control" value="1" disabled>
+                        <input id="nro_mesa" name="nro_mesa" type="text" class="form-control border-0 bg-transparent" value="1" disabled>
                     </div>
                     <div class="col-2">
                         <label for="">Nro Orden: </label>
                     </div>
                     <div class="col-10">
-                        <input id="nro_orden" name="nro_orden" type="text" class="form-control" value="" disabled>
+                        <input id="nro_orden" name="nro_orden" type="text" class="form-control border-0 bg-transparent" value="" disabled>
                     </div>
                     <div class="col-2">
                         <label for="">Cliente: </label>
                     </div>
                     <div class="col-10">
-                        <input id="nro_cliente" name="nro_cliente" type="text" class="form-control" value="" disabled>
+                        <input id="nro_cliente" name="nro_cliente" type="text" class="form-control border-0 bg-transparent" value="" disabled>
                     </div>
                     <div class="col-2">
                         <label for="nro_mozo">Mozo: </label>
                     </div>
                     <div class="col-10">
-                        <input id="nro_mozo" name="nro_mozo" type="text" class="form-control" value="<%= nom_usu %>" disabled>
+                        <input id="nro_mozo" name="nro_mozo" type="text" class="form-control border-0 bg-transparent" value="<%= nom_usu %>" disabled>
                     </div>
                     <div class="col-2">
                         <label for="">Para: </label>
                     </div>
                     <div class="col-10">
-                        <input id="tipo_ped" name="tipo_ped" type="text" class="form-control" value="llevar" disabled>
+                        <input id="tipo_ped" name="tipo_ped" type="text" class="form-control border-0 bg-transparent" value="llevar" disabled>
                     </div>
                     <input type="hidden" id="epedido_" value="1">
                 </div>
+                <div class="row">
+                    <div class="col-4 text-center"><strong>Descripcion</strong></div>
+                    <div class="col-4 text-center"><strong>Cantidad</strong></div>
+                    <div class="col-4 text-center"><strong>Importe</strong></div>
+                </div>
+                <hr>
                 <div id="pedidosReg">
 
                 </div>
@@ -57,12 +65,15 @@
                     
                     
                 </div>
-                <div >
-                    <label for="" id="total">0</label>
+                <hr>
+                <div class="text-end p-5">
+                    <label for="">Total:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S/. </label>&nbsp;<label for="" id="total">0</label>
                 </div>
+                <center>
                 <div id="divButtons">
                     
                 </div>
+                </center>
                 <div id="desicion">
                     
                 </div>
@@ -160,11 +171,17 @@
                 
                 for (let item of prod) {
                     if(_usuario.id_categoria==item.id_categoria){
-                        listHTML+=`<div class="col-4 bg-red border">
-                            <img src="/public/img/productos/${item.imagen_prod}" class="img-fluid" alt="" width="300" height="300">
+                        listHTML+=`<div class="row col border rounded shadow p-3 m-3 text-center">
+                            <div class="col-12">
+                            <img src="/public/img/productos/${item.imagen_prod}" width="150" height="150"  class="rounded mx-auto d-block" alt="...">
+                            </div>
                             <p>${item.nom_prod}</p>
-                            <label for="">${item.precio_u_prod}</label>
-                            <button type="button" class="btn btn-success btn-circle btn-sm" onclick="prePedido('${item.nom_prod}','${item.precio_u_prod}','${item.id_prod}')">+</button>
+                            <div class="col-6">
+                                <label for=""><strong>S/. ${item.precio_u_prod}</strong></label>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-circle btn-lg bg-secondary" id='prod__`+item.id_prod+`' onclick="prePedido('${item.nom_prod}','${item.precio_u_prod}','${item.id_prod}')"><i class="fa-sharp fa-solid fa-plus"></i></button>
+                            </div>
                             </div>`;
                     }
                     
@@ -179,15 +196,15 @@
         const buttonsList=document.querySelector('#divButtons'); 
         if (desicion==1){
             let listHTML=`
-                    <button type="button" class="btn btn-dark btn-primary mx-2" onclick="postPedido()"><i class="fa-solid"></i> Guardar</button>
-                    <a class="btn btn-dark btn-primary mx-2" href="/home" role="button"><i class="fa-solid fa-file-pen"></i> Regresar</a>`;
+                    <button type="button" class="btn btn-dark btn-primary mx-2 border-0" onclick="postPedido()"><i class="fa-sharp fa-solid fa-floppy-disk"></i></i> Guardar</button>
+                    <a class="btn btn-dark btn-primary mx-2 bg-danger border-0" href="/home" role="button"><i class="fa-sharp fa-solid fa-xmark"></i> Regresar</a>`;
             buttonsList.innerHTML=listHTML;
             
         }
         else if (desicion==2){
             let listHTML=`
-                <button type="button" class="btn btn-dark btn-primary mx-2" onclick=""><i class="fa-solid"></i> Precuenta</button>
-                <a class="btn btn-dark btn-primary mx-2" href="/home" role="button"><i class="fa-solid fa-file-pen"></i> Regresar</a>`;
+                <button type="button" class="btn btn-primary mx-2 bg-warning border-0 text-secondary" onclick=""><i class="fa-solid fa-sharp fa-solid fa-file-invoice"></i> Precuenta</button>
+                <a class="btn btn-dark btn-primary mx-2 bg-danger border-0" href="/home" role="button"><i class="fa-sharp fa-solid fa-xmark"></i> Regresar</a>`;
             buttonsList.innerHTML=listHTML;
             
             
@@ -222,43 +239,43 @@
         var cant_=1;
         let _datos={id_prod,cant_};
         _prePedido.push(_datos);
-        document.getElementById('pedidoCarta').innerHTML+=`<div class="row"><div class="col-4"><label for="">Descripcion</label></div><div class="col-4"><label for="">Cantidad</label></div><div class="col-4"><label for="">
-            Importe</label></div><div class="col-4">
+        document.getElementById('pedidoCarta').innerHTML+=`<div class="row bg-secondary m-2 p-2 text-center"><div class="col-4">
                 <label for="">`+dato+`</label>
             </div>
             <div class="col-4">
-                <button type="button" class="btn btn-default" onclick="btn_menos(${id_prod})">
-                    <span class="glyphicon glyphicon-align-justify"><</span>
+                <button type="button" class="btn btn-default" id='btnmas__`+id_prod+`' onclick="btn_menos(${id_prod})">
+                    <span class="glyphicon glyphicon-align-justify"><i class="fa-sharp fa-solid fa-angles-left"></i></span>
                 </button>
                 <label id='`+id_prod+`' value="1">1</label>
                 
 
-                <button type="button" class="btn btn-default" onclick="btn_mas(${id_prod})">
-                    <span class="glyphicon glyphicon-align-justify">></span>
+                <button type="button" class="btn btn-default" id='btnmenos__`+id_prod+`' onclick="btn_mas(${id_prod})">
+                    <span class="glyphicon glyphicon-align-justify"><strong><i class="fa-sharp fa-solid fa-angles-right"></i></strong></span>
                 </button>
             </div>
             <div class="col-4">
-                <input type="hidden" value="`+precio+`" id='prec_`+id_prod+`'>
+                <label>S/. </label><input type="hidden" value="`+precio+`" id='prec_`+id_prod+`'>
                 <label id='precio_`+id_prod+`'>`+precio+`</label>
             </div>
+            <div class="col-12">
+                <label for="" style="width: 70%;" class="col">Observacion</label>
+                <input type="text" class="border border-dark col" style="width: 70%;">
         </div>
-        <div class="row">
-            <div class="col-2">
-                <label for="">observacion</label>
-            </div>
-            <div class="col-10">
-                <input type="text">
-            </div>
         </div>
+        
         `;
+        
         var precio_=parseInt(document.getElementById('total').innerHTML);
         precio_=precio_+parseInt(precio);
         document.getElementById('total').innerHTML=precio_;
+        console.log('precio__'+id_prod)
+        document.getElementById('prod__'+id_prod).disabled=true;
     }
     function btn_mas(id_prod){
         for(let item of _prePedido){
             if(item.id_prod==id_prod){
                 item.cant_+=1;
+                document.getElementById(id='btnmas__'+id_prod).disabled=false;
             }
         }
         var total_=parseInt(document.getElementById('total').innerHTML);
@@ -275,6 +292,9 @@
         for(let item of _prePedido){
             if(item.id_prod==id_prod){
                 item.cant_-=1;
+                if(item.cant_==0){
+                    document.getElementById(id='btnmas__'+id_prod).disabled=true;
+                }
             }
         };
         var total_=parseInt(document.getElementById('total').innerHTML);
@@ -432,33 +452,22 @@
             for (let item of detPed_){
                 let precioCant=item.cantidad_det*item.precio_u_prod;
                 sumdetPed=precioCant+sumdetPed;
-                listHTML+=`<div class="row"><div class="col-4"><label for="">Descripcion</label></div><div class="col-4"><label for="">Cantidad</label></div><div class="col-4"><label for="">
+                listHTML+=`<div class="row bg-secondary m-2 p-2 text-center"><div class="col-4"><label for="">Descripcion</label></div><div class="col-4"><label for="">Cantidad</label></div><div class="col-4"><label for="">
             Importe</label></div><div class="col-4">
                 <label for="">${item.nom_prod}</label>
             </div>
             <div class="col-4">
-                <button type="button" class="btn btn-default">
-                    <span class="glyphicon glyphicon-align-justify"><</span>
-                </button>
                 <label  value="1">${item.cantidad_det}</label>
-                
-
-                <button type="button" class="btn btn-default" >
-                    <span class="glyphicon glyphicon-align-justify">></span>
-                </button>
             </div>
             <div class="col-4">
-                <label >`+precioCant+`</label>
+                <label>S/.&nbsp; </label><label >`+precioCant+`</label>
+            </div>
+            <div class="col-12">
+                <label for="" style="width: 70%;" class="col">Observacion</label>
+                <input type="text" class="border border-dark col" style="width: 70%;">
             </div>
         </div>
-        <div class="row">
-            <div class="col-2">
-                <label for="">observacion</label>
-            </div>
-            <div class="col-10">
-                <input type="text">
-            </div>
-        </div>
+        
         `;
             }
             document.getElementById('total').innerHTML=sumdetPed;
@@ -483,3 +492,5 @@
         }
     }
 </script>
+    
+</main>
