@@ -32,7 +32,11 @@ const createPisos = async (req, res) => {
     try {
         const {name} = req.body;
         const newPiso = {
+//<<<<<<< HEAD
             nom_piso: name,
+//=======
+//            numero_piso: name,
+//>>>>>>> main
           };
         const piso=await PisosServices.createPisos(newPiso);
         return res.status(201).send(piso);
