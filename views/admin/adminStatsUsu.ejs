@@ -2,21 +2,21 @@
 <main>
 
     <div class="row text-center">
-        <div class="col-3">
-            <p>2000</p>
+        <div class="col-3" >
+            <p id="cantVentas"></p>
             <p>ventas</p>
         </div>
-        <div class="col-3">
-            <p>2000</p>
-            <p>ventas</p>
+        <div class="col-3" >
+            <p id="cantPedidos"></p>
+            <p>pedidos</p>
         </div>
-        <div class="col-3">
+        <div class="col-3" id="cantPlatos">
             <p>2000</p>
-            <p>ventas</p>
+            <p>platos</p>
         </div>
         <div class="col-3">
             <label for="fecha">Filtros:</label>
-            <input type="month" name="fecha" id="fecha" class="form-control" onclick="getStatsUsu()" value="2019-08">
+            <input type="month" name="fecha" id="fecha" class="form-control" value="2020-10">
         </div>
         <div class="col-9">
             <canvas id="graficaUsu"></canvas>
@@ -25,9 +25,11 @@
 </main>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        getStatsUsu();
         function getStatsUsu(){
             
-
+            var slcchange = document.getElementById("fecha");
+            slcchange.addEventListener("change", function() {
                 let fecha_=document.getElementById('fecha').value;
                 console.log(fecha_)
                 fetch(`api/stats/pedMes/${fecha_}`)
@@ -37,19 +39,46 @@
                     console.log(statsUsu_)
                     renderResult(statsUsu_);
                 })
-                const renderResult=()=>{
+                const renderResult=(statsUsu_)=>{
+                    
                     let micanvas=document.getElementById('graficaUsu').getContext('2d');
-                    var chart=new Chart(micanvas,{
+                    if(window.chart!=null){
+                        window.chart.destroy();
+                    }
+                    let usuPedMes=[];
+                    var sumPedUsu=0;
+                    var countPed_=0;
+                    for(let item of statsUsu_){
+                        usuPedMes.push(item.nom_usu);
+                        sumPedUsu=sumPedUsu+item.sumPres;
+                        countPed_=countPed_+item.countPed;
+                    }
+                    console.log(countPed_);
+                    document.getElementById('cantVentas').innerHTML=sumPedUsu;
+                    document.getElementById('cantPedidos').innerHTML=countPed_;
+                    console.log(usuPedMes)
+                    window.chart=new Chart(micanvas,{
                         type:"bar",
                         data:{
-                            labels:[]
+                            labels:usuPedMes,
+                            datasets:[
+                    {
+                        label:"mi grafica de bebidas",
+                        backgroundColor:"rgb(0,0,0)",
+                        borderColor:"rgb(0,255,0)",
+                        data:[12,39,5,30]
+                    }
+                ]
                         }
                     })
+                    
+                    
                 }
+            });
 
-            
+            }
 
-        }
+        
         /*let micanvas=document.getElementById('graficaUsu').getContext('2d');
         var chart=new Chart(micanvas,{
             type:"bar",
