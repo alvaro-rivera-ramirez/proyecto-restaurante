@@ -19,6 +19,7 @@ class Server {
       product: "/api/producto",
       floor: "/api/pisos",
       letter: "/api/letter",
+      stats: "/api/stats",
     };
 
     // Configuraciones
@@ -66,6 +67,7 @@ class Server {
     this.app.use(this.paths.product, require("./routes/producto.routes"));
     this.app.use(this.paths.floor, require("./routes/pisos.routes"));
     this.app.use(this.paths.letter, require("./routes/letter.routes"));
+    this.app.use(this.paths.stats, require("./routes/stats.routes"));
     this.app.use(require("./routes/interface/indexInterface"));
     this.app.use(require("./routes/interface/adminInterface"));
     this.app.use(require("./routes/interface/meseroInterface"));
