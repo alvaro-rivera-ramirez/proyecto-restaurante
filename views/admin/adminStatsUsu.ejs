@@ -16,7 +16,7 @@
         </div>
         <div class="col-3">
             <label for="fecha">Filtros:</label>
-            <input type="month" name="fecha" id="fecha" class="form-control" value="2019-08">
+            <input type="month" name="fecha" id="fecha" class="form-control" onclick="getStatsUsu()" value="2019-08">
         </div>
         <div class="col-9">
             <canvas id="graficaUsu"></canvas>
@@ -26,23 +26,28 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         function getStatsUsu(){
-            let fecha_=document.getElementById('fecha').value;
-            fetch(`/api/estadisticausu/${fecha_}`)
-            .then(resp=>resp.json())
-            .then(datos=>{
-                statsUsu_=datos;
-                console.log(statsUsu_)
-                renderResult(statsUsu_);
-            })
-            const renderResult=()=>{
-                let micanvas=document.getElementById('graficaUsu').getContext('2d');
-                var chart=new Chart(micanvas,{
-                    type:"bar",
-                    data:{
-                        labels:[]
-                    }
+            
+
+                let fecha_=document.getElementById('fecha').value;
+                console.log(fecha_)
+                fetch(`api/stats/pedMes/${fecha_}`)
+                .then(resp=>resp.json())
+                .then(datos=>{
+                    statsUsu_=datos;
+                    console.log(statsUsu_)
+                    renderResult(statsUsu_);
                 })
-            }
+                const renderResult=()=>{
+                    let micanvas=document.getElementById('graficaUsu').getContext('2d');
+                    var chart=new Chart(micanvas,{
+                        type:"bar",
+                        data:{
+                            labels:[]
+                        }
+                    })
+                }
+
+            
 
         }
         /*let micanvas=document.getElementById('graficaUsu').getContext('2d');
