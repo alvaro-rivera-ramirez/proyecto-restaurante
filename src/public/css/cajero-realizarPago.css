@@ -1,0 +1,131 @@
+.conteiner-fluid *{
+    font-family: var(--font-one);
+}
+.conteiner-fluid {
+    width: 95%!important;
+    margin: auto;
+}
+h3{
+    font-family: var(--font-one);
+    font-weight: 900;
+    position: relative;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+h3:before{
+    content: "";
+    border-bottom: solid 1px #A63730;
+    position:absolute;
+    bottom:0;
+    width: 110px;
+  }
+h5{
+    font-family: var(--font-one);
+    font-weight: 900;  
+}
+.conteiner-fluid  p{
+    font-family: var(--font-one);
+    font-size: 18px;
+}
+.c-red{
+    color:#fff;
+    background-color: #7B0D1E;
+    width: 15px;
+    text-align: center;
+}
+.box-pedido{
+    margin-right:5px!important;
+}
+.box-resumen{
+    margin-bottom: 15px;
+} 
+.box-info{
+    padding: 15px;
+    padding-bottom: 5px!important;
+    width: 60%;
+} 
+.box-orden{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-top: solid 1px #d3d3d3;
+    border-bottom: solid 1px #d3d3d3;
+}
+.box-btn{
+    display: flex;
+    justify-content: flex-end;
+}
+.btn-realizar{
+    background-color: #7B0D1E;
+}
+.btn-realizar:hover{
+    background-color: #4d0913;
+    color:white;
+}
+.btn-cancelar{
+    background-color: #0C1919;
+}
+.btn-cancelar:hover{
+    background-color: #070f0f;
+    color:white;
+}
+.btn-cancelar,.btn-realizar{
+    font-family: var(--font-one);
+    color: white;
+    font-size:15px;
+    width: 120px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.box-detalle ul{
+    margin-left: 35px;
+}
+
+.box-platos{
+    background: rgba(143, 8, 8, 0.377);
+    padding: 3px;
+}
+.text-obs{
+    margin-left: 22px;
+    padding-left: 7px;
+    margin-bottom: 5px;
+    font-style: italic;
+    color: #7B0D1E;
+    border-left: solid 1px #7B0D1E;
+}
+.box-realizados{
+    margin-top: 15px;
+}
+.box-realizados button{
+    background: rgba(110, 110, 110, 0.281);
+    padding: 2px 8px;
+    margin: 1px;
+}
+.box-realizados button:hover{
+    background: #0C1919;
+    color: white;
+}
+@media screen and (max-width:768px){
+    .conteiner-fluid {
+        width: 100%!important;
+        margin: auto;
+    }
+    .box-pedido{
+        margin-right:0px!important;
+        margin-bottom: 15px;
+    }
+    .box-resumen{
+        margin-bottom: 15px;
+    } 
+    .box-info{
+        width: 100%;
+    } 
+}
+@media screen and (max-width:1224px){
+    .conteiner-fluid {
+        width: 100%!important;
+        margin: auto;
+    }
+    .box-info{
+        width: 100%;
+    } 
+}
