@@ -20,6 +20,7 @@ class Server {
       floor: "/api/pisos",
       letter: "/api/letter",
       order:"/api/order",
+      client:"/api/client",
     };
 
     // Configuraciones
@@ -68,6 +69,7 @@ class Server {
     this.app.use(this.paths.floor, require("./routes/pisos.routes"));
     this.app.use(this.paths.letter, require("./routes/letter.routes"));
     this.app.use(this.paths.order, require("./routes/order.routes"));
+    this.app.use(this.paths.client, require("./routes/client.routes"));
     this.app.use(require("./routes/interface/indexInterface"));
     this.app.use(require("./routes/interface/adminInterface"));
     this.app.use(require("./routes/interface/meseroInterface"));
