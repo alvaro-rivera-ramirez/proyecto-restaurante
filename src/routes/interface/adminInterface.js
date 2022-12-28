@@ -47,4 +47,9 @@ router.get("/NuevoProducto", isLoggedIn,(req, res) => {
   const nom_tipousu=req.role
   res.render("admin/newproducto",{nom_usu,nom_tipousu});
 });
+router.get("/estadisticasusu", isLoggedIn,(req, res) => {
+  const nom_usu=req.name
+  const nom_tipousu=req.role
+  res.render("admin/adminStatsUsu",{nom_usu,nom_tipousu});
+});
 module.exports=router

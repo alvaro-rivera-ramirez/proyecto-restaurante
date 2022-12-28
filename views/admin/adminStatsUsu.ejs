@@ -1,0 +1,63 @@
+
+<main>
+
+    <div class="row text-center">
+        <div class="col-3">
+            <p>2000</p>
+            <p>ventas</p>
+        </div>
+        <div class="col-3">
+            <p>2000</p>
+            <p>ventas</p>
+        </div>
+        <div class="col-3">
+            <p>2000</p>
+            <p>ventas</p>
+        </div>
+        <div class="col-3">
+            <label for="fecha">Filtros:</label>
+            <input type="month" name="fecha" id="fecha" class="form-control" value="2019-08">
+        </div>
+        <div class="col-9">
+            <canvas id="graficaUsu"></canvas>
+        </div>
+    </div>
+</main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function getStatsUsu(){
+            let fecha_=document.getElementById('fecha').value;
+            fetch(`/api/estadisticausu/${fecha_}`)
+            .then(resp=>resp.json())
+            .then(datos=>{
+                statsUsu_=datos;
+                console.log(statsUsu_)
+                renderResult(statsUsu_);
+            })
+            const renderResult=()=>{
+                let micanvas=document.getElementById('graficaUsu').getContext('2d');
+                var chart=new Chart(micanvas,{
+                    type:"bar",
+                    data:{
+                        labels:[]
+                    }
+                })
+            }
+
+        }
+        /*let micanvas=document.getElementById('graficaUsu').getContext('2d');
+        var chart=new Chart(micanvas,{
+            type:"bar",
+            data:{
+                labels:["vino","tequila,","cerveza","ron"],
+                datasets:[
+                    {
+                        label:"mi grafica de bebidas",
+                        backgroundColor:"rgb(0,0,0)",
+                        borderColor:"rgb(0,255,0)",
+                        data:[12,39,5,30]
+                    }
+                ]
+            }
+        })*/
+    </script>
