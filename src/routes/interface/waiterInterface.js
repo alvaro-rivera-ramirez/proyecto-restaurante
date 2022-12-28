@@ -5,17 +5,19 @@ const {
   verifyLoggedIn,
 } = require("../../middleware/authentication");
 const router = Router();
-//mesero carta
-router.get("/carta", isLoggedIn,(req, res) => {
+
+
+router.get("/comanda", isLoggedIn,(req, res) => {
     const nom_usu=req.name
     const nom_tipousu=req.role
-    res.render("mesero/letter",{nom_usu,nom_tipousu});
-  });
-
-//pruebas
-router.get("/pruebas", isLoggedIn,(req, res) => {
-  const nom_usu=req.name
-  const nom_tipousu=req.role
-  res.render("mesero/pruebas",{nom_usu,nom_tipousu});
+    if(!req.query.cod){
+      res.render("mesero/comanda",{nom_usu,nom_tipousu});
+      return;
+    }
+    res.render("mesero/comanda-pedido",{nom_usu,nom_tipousu});
 });
-  module.exports=router
+
+
+
+module.exports=router;
+
