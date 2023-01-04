@@ -1,7 +1,7 @@
 const conn = require("../config/bd");
 
   const pedMes = async (arrayfecha) => {
-    const users = await conn.query(`select count(ped.id_ped) as countPed,sum(det.cantidad_det) as sumDet
+    const users = await conn.query(`select count(distinct ped.id_ped) as countPed,sum(det.cantidad_det) as sumDet
     ,sum(det.cantidad_det*prod.precio_u_prod) as sumPres,ped.id_usu,u.nom_usu from usuario as u inner join pedido as ped on u.id_usu=ped.id_usu inner join detalle_pedido as det on ped.id_ped=det.id_ped 
     inner join producto as prod on prod.id_prod=det.id_prod inner join categoria as 
     cat on cat.id_categoria=prod.id_categoria where month(ped.fecha_ped)=? and year(ped.fecha_ped)=? group by ped.id_usu;`,arrayfecha);
@@ -15,7 +15,7 @@ const conn = require("../config/bd");
     return users;
   };
   const pedDia = async (arrayfecha) => {
-    const users = await conn.query(`select count(ped.id_ped) as countPed,sum(det.cantidad_det) as sumDet
+    const users = await conn.query(`select count(distinct ped.id_ped) as countPed,sum(det.cantidad_det) as sumDet
     ,sum(det.cantidad_det*prod.precio_u_prod) as sumPres,ped.id_usu,u.nom_usu from usuario as u inner join pedido as ped on u.id_usu=ped.id_usu inner join detalle_pedido as det on ped.id_ped=det.id_ped 
     inner join producto as prod on prod.id_prod=det.id_prod inner join categoria as 
     cat on cat.id_categoria=prod.id_categoria where ped.fecha_ped=? group by ped.id_usu;`,arrayfecha);

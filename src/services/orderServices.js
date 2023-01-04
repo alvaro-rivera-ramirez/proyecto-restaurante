@@ -128,7 +128,7 @@ module.exports = {
   getPedido,
   getPedidoDetalle,
   UpdateEstadoPedido,
-  getOrdersByTable,
+  getOrderByTable,
   getOrderDetailsByOrder,
   createOrder,
   createDetailOrder,
