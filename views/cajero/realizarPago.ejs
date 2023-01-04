@@ -9,33 +9,29 @@
                     <div class="box-orden ms-3">
                         <h5 class="mb-2">N° Orden: <%= ped[0].id_ped %></h5>
                         <div class="d-flex justify-content">
-                            <p>Mesa: 15</p>
-                            <p class="ms-4">Mozo: Javier</p>
+                            <p>Mesa: <%= id_mesa %></p>
+                            <p class="ms-4">Mozo: <%= ped[0].nom_usu %></p>
                         </div>
                         <div class="box-detalle mb-2">
                             <p class="mb-2">Orden:</p>
-                            <div class="d-flex justify-content-between">
-                                <div class="d-flex">
-                                    <p class="me-2 ms-2 c-red">1</p>
-                                    <p>Causa Limeña</p>
+
+                            <% for (let i = 0; i < det.length; i++){ %>
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex">
+                                        <p class="me-2 ms-2 c-red"><%= i+1 %></p>
+                                        <p><%= det[i].nom_prod %></p>
+                                    </div>
+                                    <p class=""><%= det[i].cantidad_det %></p>
+                                    <p class=""><%= det[i].precio_u_prod %></p>
+                                    <p class=""><%= det[i].subtotal %></p>
                                 </div>
-                                <p class="">S/. 38.00</p>
-                            </div>
-                            <!-- <p class="text-obs">Observación: Picante</p> -->
-                            <div class="d-flex justify-content-between">
-                                <div class="d-flex">
-                                    <p class="me-2 ms-2 c-red">2</p>
-                                    <p>Papa Rellena</p>
-                                </div>
-                                <p class="">S/. 29.00</p>
-                            </div>
-                            <!-- <p class="text-obs">Observación: Picante</p> -->
+                            <% } %>
                         </div>
                         <div class="">
-                            <p class="" style="font-size: 1.2rem;">Total: S/. 57.00</p>
+                            <p class="" style="font-size: 1.2rem;">Total: S/. <%= total %></p>
                         </div>
                         <div class="box-btn d-flex justify-content-center">
-                            <button class="btn btn-realizar me-3">Pagar</button>
+                            <button id="btnPago" class="btn btn-realizar me-3">Pagar</button>
                             <button class="btn btn-cancelar">Cancelar</button>
                         </div>
                     </div>
