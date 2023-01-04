@@ -29,7 +29,7 @@ const addDetail = (idprod, nomprod, countProd, subtotal, observation) => {
 </div>`;
 };
 
-const renderInfoOrder = (orderInfo, tables) => {
+const renderInfoOrder = (orderInfo, tables=null) => {
   console.log(orderInfo);
   const containerOrderInfo = document.querySelector(".container__order__info");
   const totalOrder = document.querySelector("#priceTotalOrder");
