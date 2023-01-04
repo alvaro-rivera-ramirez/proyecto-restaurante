@@ -1,0 +1,148 @@
+<link rel="stylesheet" href="/public/css/mesero-comanda.css">
+<main>
+    <div class="container__main">
+        <div class="container__carta">
+            <h2>Carta</h2>
+            <div class="container__carta__category">
+                <!-- <label for="">Categoria:</label> -->
+                <select name="category" id="selectCategory">
+                    <option value="" selected disabled>Selecciona una opción</option>
+                </select>
+            </div>
+            <div class="container__carta__products">
+                
+            </div>
+        </div>
+        <div class="container__order">
+            <div class="container__order__info">
+                <h3>Datos:</h3>
+                <div class="container__order__info_row">
+                    <h4>Mesa</h4>
+                    <p id="contain__mesas"></p>
+                </div>
+                <div class="container__order__info_row">
+                    <h4>N° Orden</h4>
+                    <p></p>
+                </div>
+                <div class="container__order__info_row">
+                    <h4>Cliente</h4>
+                    <p></p>
+                </div>
+                <div class="container__order__info_row">
+                    <h4>Mesero</h4>
+                    <p><%= nom_usu %></p>
+                </div>
+                <div class="container__order__info_row">
+                    <h4>Para</h4>
+                    <input type="hidden" id="modalidad">
+                    <p></p>
+                </div>
+            </div>
+            <div class="container__order__details">
+                <h3>Orden:</h3>
+                <div class="container__order__details__info">
+                    <div class="row">
+                        <div class="col-md-4 offset-md-1">Descripcion</div>
+                        <div class="col-md-4">Cantidad</div>
+                        <div class="col-md-3">Importe</div>
+                    </div>
+                    <!-- <div class="row d-flex align-items-center">
+                        <div class="col-md-1" onclick="deleteDetail(this)">
+                            <button class="btn-delete">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-4">Hamburguesas con queso</div>
+                        <div class="col-md-4 d-flex justify-content-center align-items-center">
+                            <button class="btn btn-decrement me-3" onclick="quantityProd(this)">
+                                <i class="fa-solid fa-angle-left"></i>
+                            </button>
+                            <p>1</p>
+                            <button class="btn btn-increment ms-3" onclick="quantityProd(this)">
+                                <i class="fa-solid fa-angle-right"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-3">
+                            S/. 15.00
+                        </div>
+                        <div class="col-md-11 offset-md-1 d-flex mt-2">
+                            <label for="obs">
+                                Observacion:
+                            </label>
+                            <input type="text" name="" id="obs">
+                        </div>
+                    </div>
+                    <div class="row d-flex align-items-center">
+                        <div class="col-md-1" onclick="deleteDetail(this)">
+                            <button class="btn-delete">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-4">Hamburguesas con queso</div>
+                        <div class="col-md-4 d-flex justify-content-center align-items-center">
+                            <button class="btn btn-decrement me-3" onclick="quantityProd(this)">
+                                <i class="fa-solid fa-angle-left"></i>
+                            </button>
+                            <p>1</p>
+                            <button class="btn btn-increment ms-3" onclick="quantityProd(this)">
+                                <i class="fa-solid fa-angle-right"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-3">
+                            S/. 100.00
+                        </div>
+                        <div class="col-md-11 offset-md-1 d-flex mt-2">
+                            <label for="obs">
+                                Observacion:
+                            </label>
+                            <input type="text" name="" id="obs">
+                        </div>
+                    </div>
+                    <div class="row d-flex align-items-center">
+                        <div class="col-md-1" onclick="deleteDetail(this)">
+                            <button class="btn-delete">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-4">Hamburguesas con queso</div>
+                        <div class="col-md-4 d-flex justify-content-center align-items-center">
+                            <button class="btn btn-decrement me-3" onclick="quantityProd(this)">
+                                <i class="fa-solid fa-angle-left"></i>
+                            </button>
+                            <p>1</p>
+                            <button class="btn btn-increment ms-3" onclick="quantityProd(this)">
+                                <i class="fa-solid fa-angle-right"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-3">
+                            S/. 20.00
+                        </div>
+                        <div class="col-md-11 offset-md-1 d-flex mt-2">
+                            <label for="obs">
+                                Observacion:
+                            </label>
+                            <input type="text" name="" id="obs">
+                        </div>
+                    </div> -->
+                </div>  
+            </div>
+            <div class="container__order__total">
+                <p>
+                    Total:&nbsp;
+                    <strong>S/. 30.00</strong>
+                </p>
+            </div>
+            <div class="container__order__buttons">
+                <button id="btn-save">
+                    <i class="fa-regular fa-floppy-disk"></i>
+                    &nbsp;Guardar
+                </button>
+                <button id="btn-cancel">
+                    <i class="far fa-window-close"></i>
+                    &nbsp;Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="/public/js/mesero/comanda.js"></script>

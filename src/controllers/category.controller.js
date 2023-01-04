@@ -6,7 +6,7 @@ const {
 const getCategories = async (req, res) => {
   try {
     const categories = await CategoryServices.getCategories();
-    return res.status(201).send(categories);
+    return res.status(200).send(categories);
   } catch (error) {
     console.log(error);
     return res.status(401);

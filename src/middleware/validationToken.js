@@ -4,12 +4,13 @@ const validationToken = async (req, res, next) => {
   try {
 
     const { jwt } = req.cookies;
+    // console.log(req.cookies)
     if (!jwt){
       handleErrorResponse(res,"NO_CREDENTIALS",401)
       return;
     }
     
-    const { payload } = await verifyToken(token);
+    const { payload } = await verifyToken(jwt);
     req.id = payload.user.id_usu;
     req.role=payload.user.nom_tipousu;
     next();

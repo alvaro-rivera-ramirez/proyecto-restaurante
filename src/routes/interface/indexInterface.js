@@ -7,6 +7,7 @@ const {
   getCountOrderWait,
   getCountOrderPrepared,
 } = require("../../services/orderServices");
+const { getPisos } = require("../../services/pisosServices");
 const {
   isLoggedIn,
   verifyLoggedIn,
@@ -33,13 +34,15 @@ router.get("/home", isLoggedIn, async (req, res) => {
         count_users,
         count_orders
       });
+
       break;
     case "Mesero":
       const {count_orders_day} = await getCountOrdersByWaiter(req.id);
-      res.render("mesero/home", { nom_usu, nom_tipousu,count_orders_day});
+      res.render("mesero/home", { nom_usu, nom_tipousu, count_orders_day});
       break;
     case "Cajero":
-      res.render("cajero/home", { nom_usu, nom_tipousu });
+      pisos = await getPisos();
+      res.render("cajero/home", { nom_usu, nom_tipousu, pisos });
       break;
     case "Cocinero":
       const {count_orders_wait} = await getCountOrderWait();

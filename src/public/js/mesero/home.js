@@ -46,7 +46,7 @@ const renderTables = (tables,panelMesas) => {
         listHTML += `<div class="col-mesa mesa-disponible">${table.numero_mesa}</div>`;
         break;
       case 2:
-        listHTML += `<div class="col-mesa mesa-ocupada">${table.numero_mesa}</div>`;
+        listHTML += `<div class="col-mesa mesa-ocupada"><a href="/comanda?cod=${table.cod_ped}">${table.numero_mesa}</a></div>`;
         break;
       case 3:
         listHTML += `<div class="col-mesa mesa-inhabilitada">${table.numero_mesa}</div>`;
@@ -61,12 +61,15 @@ selectPisos.addEventListener("change", async (e) => {
 });
 
 btnLlevar.addEventListener("click", (e) => {
-  window.location.href = "/realizar-pedido";
+  window.location.href = "/comanda";
 });
 panelMesas.addEventListener("click", (e) => {
   const mesaEtiqueta = e.target;
-  if (mesaEtiqueta.classList.value==="col-mesa mesa-disponible" || mesaEtiqueta.classList.value==="col-mesa mesa-ocupada") {
-    window.location.href = "/realizar-pedido/?mesa=" + mesaEtiqueta.innerHTML;
+  // if (mesaEtiqueta.classList.value==="col-mesa mesa-disponible" || mesaEtiqueta.classList.value==="col-mesa mesa-ocupada") {
+  //   window.location.href = "/realizar-pedido/?mesa=" + mesaEtiqueta.innerHTML;
+  // }
+  if (mesaEtiqueta.classList.value==="col-mesa mesa-disponible") {
+    window.location.href = "/comanda/?mesa=" + mesaEtiqueta.innerHTML;
   }
 });
 
@@ -117,7 +120,7 @@ panelMesasModal.addEventListener("click", (e) => {
 });
 
 btnSaveModal.addEventListener("click", () => {
-  let baseUrl = "/realizar-pedido";
+  let baseUrl = "/comanda";
   let paramName = "mesa=";
 
   let arrayAsString = "?" + paramName + mesas.join("&" + paramName);

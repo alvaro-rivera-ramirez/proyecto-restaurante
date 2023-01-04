@@ -1,5 +1,7 @@
 #container-cajero-home{
     font-family: var(--font-one);
+    padding: 1.5rem;
+    background-color: white;
 }
 
 #container-cajero-home .section-mesas{
@@ -14,9 +16,9 @@
 #container-cajero-home .mesas__filter option{
     width: 20rem;
     height: 2rem;
-    background-color: var(--white-color);
+    background-color: white;
     border: none;
-    border-bottom: 1px solid var(--first-color);
+    border-bottom: 1px solid white;
 }
 
 #container-cajero-home .mesas__filter option:hover{
@@ -30,12 +32,29 @@
 }
 
 #container-cajero-home .col-mesa{
+    display: inherit;
+    justify-content: center;
+    align-items: center;
     width: 140px;
     height: 140px;
     margin: .5rem;
-    background-color: white;
-    border: 1px solid var(--first-color);
+    color: black;
+    border: 1px solid var(--white-color);
     border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+}
+
+#container-cajero-home .mesa-disponible{
+    background-color: rgb(78, 223, 85);
+}
+
+#container-cajero-home .mesa-ocupada{
+    background-color: rgb(234, 65, 65);
+}
+
+#container-cajero-home .mesa-inhabilitada{
+    background-color: rgb(186, 186, 186);
 }
 
 #container-cajero-home .num-mesa{
@@ -101,4 +120,12 @@
     height: .75rem;
     border: 1px solid var(--first-color);
     border-radius: 4px;
+}
+
+#container-cajero-home .btn .caret{
+	width: 0;
+	height: 0;
+	border-left: .4rem solid transparent;
+	border-right: .4rem solid transparent;
+	border-top: .4rem solid white;
 }
