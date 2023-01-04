@@ -1,36 +1,43 @@
-
-
-<div class="p-3 pb-5 pl-5 shadow">
-  <h2 class="mb-3 p-3 ps-0">Agregar Producto</h2> 
-<div class="row">
-<form id="formProducto" class="col-lg-7" enctype="multipart/form-data">
-    <div class="form row">
-      <div class="form-group col-md-12">
-        <label for="inputEmail4">Nombre Producto</label>
-        <input type="text" class="form-control" id="nombre">
+<div class="container-fluid shadow-lg" style="background-color: white;">
+  <div class="p-3 mb-2  pb-5" >
+    <nav aria-label="breadcrumb" class="pt-3">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/home">Inicio</a></li>
+          <li class="breadcrumb-item"><a href="/productos">Productos</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Agregar</li>
+        </ol>
+      </nav>
+    <h2 class="mb-3 p-3 ps-0 text-center">Agregar Producto</h2> 
+  <div class="row d-flex justify-content-center">
+  <form id="formProducto" class="col-lg-7" enctype="multipart/form-data">
+      <div class="form row">
+        <div class="form-group col-md-12">
+          <label for="inputEmail4">Nombre Producto</label>
+          <input type="text" class="form-control" id="nombre">
+        </div>
+        <div class="form-group col-md-12">
+          <label for="inputPassword4">Descripción</label>
+          <input type="text" class="form-control" id="descripcion">
+        </div>
       </div>
-      <div class="form-group col-md-12">
-        <label for="inputPassword4">Descripción</label>
-        <input type="text" class="form-control" id="descripcion">
+      <div class="form-group">
+        <label for="inputAddress">Precio</label>
+        <input type="text" class="form-control" id="precio" placeholder="S/.">
       </div>
-    </div>
-    <div class="form-group">
-      <label for="inputAddress">Precio</label>
-      <input type="text" class="form-control" id="precio" placeholder="S/.">
-    </div>
-      <div class="form-group col-md-12">
-        <label for="inputState">Categoria</label>
-        <select id="categoria" class="form-control">
-        </select>
-      </div>
-      <div class=" form-group custom-file col-md-12">
-        <label class="custom-file-label" for="imagen">Archivo</label>
-        <input type="file" class="form-control" id="imagen">
-      </div>
-    <button type="submit" class="btn btn-success mt-3" id="btn-submit">Registrar</button>
-    <a class="btn btn-dark mt-3" href="../productos">Regresar</a>
-</form>
-</div>
+        <div class="form-group col-md-12">
+          <label for="inputState">Categoria</label>
+          <select id="categoria" class="form-control">
+          </select>
+        </div>
+        <div class=" form-group custom-file col-md-12">
+          <label class="custom-file-label" for="imagen">Archivo</label>
+          <input type="file" class="form-control" id="imagen">
+        </div>
+      <button type="submit" class="btn btn-success mt-3" id="btn-submit">Registrar</button>
+      <a class="btn btn-dark mt-3" href="../productos">Regresar</a>
+  </form>
+  </div>
+  </div>
 </div>
 <script>
     
