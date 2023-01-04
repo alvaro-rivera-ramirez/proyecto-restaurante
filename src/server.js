@@ -19,6 +19,7 @@ class Server {
       product: "/api/producto",
       floor: "/api/pisos",
       letter: "/api/letter",
+      stats: "/api/stats",
       cheff: "/api/cocina",
       order:"/api/order",
       client:"/api/client",
@@ -69,6 +70,7 @@ class Server {
     this.app.use(this.paths.product, require("./routes/producto.routes"));
     this.app.use(this.paths.floor, require("./routes/pisos.routes"));
     this.app.use(this.paths.letter, require("./routes/letter.routes"));
+    this.app.use(this.paths.stats, require("./routes/stats.routes"));
     this.app.use(this.paths.cheff, require("./routes/cocina.routes"));
     this.app.use(this.paths.order, require("./routes/order.routes"));
     this.app.use(this.paths.client, require("./routes/client.routes"));
