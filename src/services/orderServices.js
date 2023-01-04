@@ -15,6 +15,16 @@ const getCountOrdersByWaiter = async (id_usu) => {
   return countOrders[0];
 };
 
+const getOrdersByTable = async (numero_mesa) =>{
+  const orders= await conn.query("SELECT p.id_ped, p.id_usu, p.id_cli, p.id_epedido, p.id_mod FROM pedido p JOIN mesa_pedido mp ON mp.id_ped = p.id_ped JOIN mesa m ON m.id_mesa = mp.id_mesa WHERE numero_mesa = ?",[numero_mesa])
+  return orders;
+};
+
+const getOrderDetailsByOrder = async (id_ped) =>{
+  const orders= await conn.query("SELECT * FROM detalle_pedido dp JOIN pedido p ON dp.id_ped = p.id_ped WHERE p.id_ped = ?",[id_ped])
+  return orders;
+};
+
 const createOrder = async (order) => {
   try {
     console.log(order);
@@ -88,6 +98,8 @@ const updateStateOrder=async(idorder,idstate)=>{
 module.exports = {
   getCountOrders,
   getCountOrdersByWaiter,
+  getOrdersByTable,
+  getOrderDetailsByOrder,
   createOrder,
   createDetailOrder,
   createTableByOrder,
