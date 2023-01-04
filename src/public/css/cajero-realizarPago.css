@@ -1,19 +1,9 @@
+.conteiner-fluid *{
+    font-family: var(--font-one);
+}
 .conteiner-fluid {
     width: 95%!important;
     margin: auto;
-}
-.scroll-div{
-    height: 71vh;
-    overflow: hidden;
-    overflow-y: scroll;
-    padding-right: 10px;
-}
-.scroll-div::-webkit-scrollbar{
-    width: 7px;
-}
-.scroll-div::-webkit-scrollbar-thumb{
-    background: #BFBFBF;
-    border-radius: 6px;
 }
 h3{
     font-family: var(--font-one);
@@ -113,16 +103,6 @@ h5{
 .box-realizados button:hover{
     background: #0C1919;
     color: white;
-}
-/*MODAL */
-.m-orden{
-    border-top: #070f0f dashed 1px;
-    border-bottom: #070f0f dashed 1px;
-    padding: 10px 00px;
-}
-.m-obs{
-    font-style: italic;
-    margin-left: 5px;
 }
 @media screen and (max-width:768px){
     .conteiner-fluid {

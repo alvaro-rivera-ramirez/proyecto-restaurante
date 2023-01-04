@@ -91,3 +91,9 @@ main{
 	display: block;
 	opacity: 1;
 }
+.breadcrumb-item a{
+	color: #181E24;
+}
+.container-fluid{
+	background-color: white;
+}
