@@ -193,10 +193,25 @@
     margin-bottom: 10px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 .container__client__info_row label{
     width: 15%;
+}
+
+.container__client__info_row input{
+    width: 40%;
+}
+
+.container__client__info_row #btn-searchClient{
+    width: 15%;
+    margin-left: 5px;
+    padding: 5px;
+    background-color: #1ea5f8;
+    color: white;
+    border: none;
+    border-radius: 4px;
 }
 
 .container__client__buttons{
