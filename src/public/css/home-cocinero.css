@@ -2,6 +2,19 @@
     width: 95%!important;
     margin: auto;
 }
+.scroll-div{
+    height: 71vh;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding-right: 10px;
+}
+.scroll-div::-webkit-scrollbar{
+    width: 7px;
+}
+.scroll-div::-webkit-scrollbar-thumb{
+    background: #BFBFBF;
+    border-radius: 6px;
+}
 h3{
     font-family: var(--font-one);
     font-weight: 900;

@@ -1,30 +1,30 @@
 <link rel="stylesheet" href="/public/css/home.css">
 
 <main>
-    <div class="contenedor d-flex justify-content-between">
-        <div class="seccion-panel">
-            <p class="fw-bold fs-4">Panel</p>					
+    <div class="contenedor row shadow">
+        <div class="col-md-8 panel_principal">
+            <p class="fw-bold fs-4 etiqueta">Panel</p>					
             <div class="panel__title">
                 Administración
             </div>
-            <div class="panel__selection">
-                <a href="/mesas" class="panel__option">
+            <div class="panel__selection row">
+                <a href="/mesas" class="panel__option ">
                     <img src="/public/img/flaticon-table.png" class="panel__option-img">
                     <span class="panel__option-name">Mesas</span>
                 </a>
-                <a href="/productos" class="panel__option">
+                <a href="/productos" class="panel__option ">
                     <img src="/public/img/flaticon-cutlery.png" class="panel__option-img">
                     <span class="panel__option-name">Productos</span>
                 </a>
-                <a href="/categorias" class="panel__option">
+                <a href="/categorias" class="panel__option  ">
                     <img src="/public/img/flaticon-panel.png" class="panel__option-img">
                     <span class="panel__option-name">Categorías</span>
                 </a>
-                <a href="/pisos" class="panel__option">
+                <a href="/pisos" class="panel__option  ">
                     <img src="/public/img/flaticon-hotel.png" class="panel__option-img">
                     <span class="panel__option-name">Pisos</span>
                 </a>
-                <a href="/pedidos" class="panel__option panel__option-end">
+                <a href="/pedidos" class="panel__option ">
                     <img src="/public/img/flaticon-order.png" class="panel__option-img">
                     <span class="panel__option-name">Pedidos</span>
                 </a>
@@ -32,30 +32,30 @@
             <div class="panel__title">
                 Organización
             </div>
-            <div class="panel__selection">
+            <div class="panel__selection row">
                 <a href="/Users" class="panel__option">
                     <img src="/public/img/flaticon-user.png" class="panel__option-img">
                     <span class="panel__option-name">Usuarios</span>
                 </a>
             </div>
         </div>
-        <div class="seccion-resumen">
-            <p class="fw-bold fs-4">Resumen</p>
-            <div class="resumen__card" style="background-color: #00ACAF;">
+        <div class="col-md-4 panel_principal text-white panel_resumen">
+            <p class="fw-bold fs-4 mb-3 etiqueta">Resumen</p>
+            <div class="resumen__card" style="background-color: #FCFFFD;border:none; color:black">
                 <i class="fa-solid fa-money-bill resumen__card-img"></i>
                 <div class="resumen__card-body">
                     <p class="resumen__card-title">Monto en caja</p>
                     <p class="resumen__card-text fw-bold">S/. 00.00</p>
                 </div>
             </div>
-            <div class="resumen__card" style="background-color: #D64045;">
+            <div class="resumen__card">
                 <i class="fa-solid fa-users resumen__card-img"></i>
                 <div class="resumen__card-body">
                     <p class="resumen__card-title">Empleados</p>
                     <p class="resumen__card-text fw-bold"><%= count_users %></p>
                 </div>
             </div>
-            <div class="resumen__card" style="background-color: #181A18;">
+            <div class="resumen__card">
                 <i class="fa-solid fa-bag-shopping resumen__card-img"></i>
                 <div class="resumen__card-body">
                     <p class="resumen__card-title">Pedidos</p>

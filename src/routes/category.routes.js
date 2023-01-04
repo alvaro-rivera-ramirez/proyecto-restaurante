@@ -5,9 +5,10 @@ const {
   validateDataCreate,
   validateDataUpdate,
 } = require("../middleware/validators/category");
+const {validationToken}=require("../middleware/validationToken")
 const CategoryRouter = Router();
 
-CategoryRouter.get("/", CategoryController.getCategories);
+CategoryRouter.get("/", validationToken,CategoryController.getCategories);
 CategoryRouter.get("/:id", validateId, CategoryController.getOneCategory);
 CategoryRouter.post("/", validateDataCreate, CategoryController.createCategory);
 CategoryRouter.put("/:id", validateDataUpdate,CategoryController.updateCategory);

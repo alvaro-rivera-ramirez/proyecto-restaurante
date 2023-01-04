@@ -1,0 +1,119 @@
+
+<main>
+
+    <div class="row text-center">
+        <div class="col border m-1" >
+            <p id="cantVentas"></p>
+            <p>ventas</p>
+        </div>
+        <div class="col border m-1" >
+            <p id="cantPedidos"></p>
+            <p>pedidos</p>
+        </div>
+        <div class="col border m-1">
+            <p id="cantPlatos"></p>
+            <p>platos</p>
+        </div>
+        <div class="col border m-1">
+            <label for="fecha">Filtros:</label>
+            <input type="month" name="fecha" id="fecha" class="form-control" value="2020-10">
+        </div>
+        <div class="row">
+            <div class="col-9 border mx-1 pr-3">
+                <canvas id="graficaUsu"></canvas>
+            </div>
+            <div class="col border text-sm-start">
+                <P class="m-3">Categorias mas pedidas:</P>
+                <div class="row m-2" id="rank_cat">
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        getStatsUsu();
+        ranking_cat();
+        function getStatsUsu(){
+            
+            var slcchange = document.getElementById("fecha");
+            slcchange.addEventListener("change", function() {
+                let fecha_=document.getElementById('fecha').value;
+                console.log(fecha_)
+                fetch(`api/stats/pedMes/${fecha_}`)
+                .then(resp=>resp.json())
+                .then(datos=>{
+                    statsUsu_=datos;
+                    console.log(statsUsu_)
+                    renderResult(statsUsu_);
+                })
+                const renderResult=(statsUsu_)=>{
+                    
+                    let micanvas=document.getElementById('graficaUsu').getContext('2d');
+                    if(window.chart!=null){
+                        window.chart.destroy();
+                    }
+                    let usuPedMes=[];
+                    let usuPedMescant=[];
+                    var sumPedUsu=0;
+                    var countPed_=0;
+                    for(let item of statsUsu_){
+                        usuPedMes.push(item.nom_usu);
+                        usuPedMescant.push(item.countPed);
+                        sumPedUsu=sumPedUsu+item.sumPres;
+                        countPed_=countPed_+item.countPed;
+                    }
+                    console.log(countPed_);
+                    document.getElementById('cantVentas').innerHTML=sumPedUsu;
+                    document.getElementById('cantPedidos').innerHTML=countPed_;
+                    console.log(usuPedMes)
+                    window.chart=new Chart(micanvas,{
+                        type:"bar",
+                        data:{
+                            labels:usuPedMes,
+                            datasets:[
+                    {
+                        label:"mi grafica",
+                        backgroundColor:"rgb(0,0,0)",
+                        borderColor:"rgb(0,255,0)",
+                        data:usuPedMescant
+                    }
+                ]
+                        }
+                    })
+                    
+                    
+                }
+            });
+
+        }
+
+        function ranking_cat(){
+            var slcchange = document.getElementById("fecha");
+            slcchange.addEventListener("change", function() {
+                let fecha_=document.getElementById('fecha').value;
+                console.log(fecha_)
+            fetch(`api/stats/catMes/${fecha_}`)
+                .then(resp=>resp.json())
+                .then(datos=>{
+                    statsUsu_=datos;
+                    renderResult(statsUsu_);
+                })
+                const renderResult=(statsUsu_)=>{
+                    let listCat="";
+                    let sumprod=0;
+                    console.log("catmess",statsUsu_)
+                    for (let item of statsUsu_){
+                        console.log(item.nom_categoria)
+                        sumprod=sumprod+item.cantidad;
+                        listCat+=`<div class="col-6">${item.nom_categoria}</div>
+                            <div class="col-6">${item.sumDet}</div>`;
+                    }
+                    document.getElementById('rank_cat').innerHTML=listCat;
+                    document.getElementById('cantPlatos').innerHTML=sumprod;
+                }
+            });
+        }
+    </script>

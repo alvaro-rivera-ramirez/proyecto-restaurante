@@ -1,10 +1,17 @@
-<div class="container-fluid">
+<div class="container-fluid" style="background-color: white;">
     <div class="row shadow-lg p-3 mb-5">
-        
-    <h2 class="mb-2">Registros / producto</h2>
-    
-    <a class="btn btn-dark mt-2 mb-2 col-2 ms-3 text-start" href="../NuevoProducto">
-        <i class="fa-solid fa-plus me-2"></i>Agregar</a>
+        <nav aria-label="breadcrumb" class="pt-3">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/home">Inicio</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Productos</li>
+            </ol>
+          </nav>
+    <h2 class="mb-2">Producto</h2>
+    <div class="col">
+    <a class="btn btn-dark mt-2 mb-2 col ms-3 text-start" href="../NuevoProducto">
+        &nbsp;+ Nuevo Registro</a>
+    </div>   
+
         <div class="col-12">
             <table id="tablaProducto" class="table table-striped table-bordered" style="width:100%">
             <thead>
@@ -53,7 +60,7 @@
       </div>
     </div>
   </div>
-
+<script src="/public/js/configTable.js"></script>
 <script>
     $(document).ready(function(){
         let url = 'http://localhost:3000/api/producto/';
@@ -79,6 +86,7 @@
                 {"data":"nom_categoria"},
                 {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-warning btnEditar me-2'><i class='fa-solid fa-pen-to-square'></i></button> <button class='btn btn-danger btnBorrar'><i class='fa-solid fa-trash'></i></button></div></div>"}
             ],
+            language: configTable,
             responsive: true,
             "columnDefs":[{
                 "targets":[4],
