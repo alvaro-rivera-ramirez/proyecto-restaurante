@@ -1,52 +1,77 @@
 
 <main>
-
+<h2>Reportes/Mes</h2>
     <div class="row text-center">
-        <div class="col border m-1" >
-            <p id="cantVentas"></p>
-            <p>ventas</p>
-        </div>
-        <div class="col border m-1" >
-            <p id="cantPedidos"></p>
-            <p>pedidos</p>
-        </div>
-        <div class="col border m-1">
-            <p id="cantPlatos"></p>
-            <p>platos</p>
-        </div>
-        <div class="col border m-1">
-            <label for="fecha">Filtros:</label>
-            <input type="month" name="fecha" id="fecha" class="form-control" value="2020-10">
-        </div>
-        <div class="row">
-            <div class="col-9 border mx-1 pr-3">
-                <canvas id="graficaUsu"></canvas>
+        <div class="col-3">
+            <div class="m-1 border">
+                <br>
+                <span id="cantVentas"></span><br>
+                <span>ventas</span>
             </div>
-            <div class="col border text-sm-start">
-                <P class="m-3">Categorias mas pedidas:</P>
-                <div class="row m-2" id="rank_cat">
+        </div>
+        <div class="col-3">
+            <div class="m-1 border">
+                <br>
+                <span id="cantPedidos"></span><br>
+                <span>pedidos</span>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="m-1 border">
+                <br>
+                <span id="cantPlatos"></span><br>
+                <span>platos</span>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="m-1 p-2 border">
+                <label for="fecha">Filtros:</label>
+                <center>
+                    <input type="month" name="fecha" id="fecha" class="form-control" style="width: 200px; height: 33px;">
+                </center>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+            <div class="col-9">
+                <div class="m-1 col">
+                    <canvas id="graficaUsu"></canvas>
+                </div>
+            
+            <div class="col">
+                <canvas id="graficaPedMes"></canvas>
+            </div>
+        </div>
+            <div class="col-3">
+                <div class=" text-sm-start">
+                    <div class="border m-1">
+                    <P class="m-3">Categorias mas pedidas:</P>
+                    <div class="row m-2" id="rank_cat">
                     
+                    </div>
+                    </div>
+                    <canvas id="grafica_cat"></canvas>
                 </div>
             </div>
-        </div>
-        
     </div>
+        
+    
 </main>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        const colors = ['rgb(69,177,223)', 'rgb(99,201,122)', 'rgb(203,82,82)', 'rgb(229,224,88)', 'rgb(125,100,111)'];
         getStatsUsu();
         ranking_cat();
+        rankign_pedMes();
         function getStatsUsu(){
             
             var slcchange = document.getElementById("fecha");
             slcchange.addEventListener("change", function() {
                 let fecha_=document.getElementById('fecha').value;
-                console.log(fecha_)
                 fetch(`api/stats/pedMes/${fecha_}`)
                 .then(resp=>resp.json())
                 .then(datos=>{
                     statsUsu_=datos;
-                    console.log(statsUsu_)
                     renderResult(statsUsu_);
                 })
                 const renderResult=(statsUsu_)=>{
@@ -59,26 +84,29 @@
                     let usuPedMescant=[];
                     var sumPedUsu=0;
                     var countPed_=0;
+                    let platos=0;
                     for(let item of statsUsu_){
                         usuPedMes.push(item.nom_usu);
                         usuPedMescant.push(item.countPed);
                         sumPedUsu=sumPedUsu+item.sumPres;
                         countPed_=countPed_+item.countPed;
+                        platos=platos+parseInt(item.cantidad);
+                        
+
                     }
-                    console.log(countPed_);
                     document.getElementById('cantVentas').innerHTML=sumPedUsu;
                     document.getElementById('cantPedidos').innerHTML=countPed_;
-                    console.log(usuPedMes)
+                    document.getElementById('cantPlatos').innerHTML=platos;
                     window.chart=new Chart(micanvas,{
                         type:"bar",
                         data:{
                             labels:usuPedMes,
                             datasets:[
                     {
-                        label:"mi grafica",
-                        backgroundColor:"rgb(0,0,0)",
+                        label:"Grafica de Pedidos Por Usuario en el Mes",
+                        backgroundColor:colors,
                         borderColor:"rgb(0,255,0)",
-                        data:usuPedMescant
+                        data:usuPedMescant,
                     }
                 ]
                         }
@@ -94,7 +122,6 @@
             var slcchange = document.getElementById("fecha");
             slcchange.addEventListener("change", function() {
                 let fecha_=document.getElementById('fecha').value;
-                console.log(fecha_)
             fetch(`api/stats/catMes/${fecha_}`)
                 .then(resp=>resp.json())
                 .then(datos=>{
@@ -102,18 +129,79 @@
                     renderResult(statsUsu_);
                 })
                 const renderResult=(statsUsu_)=>{
+                    let canCat=[];
+                    let nomCat=[];
                     let listCat="";
-                    let sumprod=0;
-                    console.log("catmess",statsUsu_)
                     for (let item of statsUsu_){
-                        console.log(item.nom_categoria)
-                        sumprod=sumprod+item.cantidad;
+                        canCat.push(item.sumDet);
+                        nomCat.push(item.nom_categoria);
                         listCat+=`<div class="col-6">${item.nom_categoria}</div>
                             <div class="col-6">${item.sumDet}</div>`;
                     }
                     document.getElementById('rank_cat').innerHTML=listCat;
-                    document.getElementById('cantPlatos').innerHTML=sumprod;
+                
+                let micanvas3=document.getElementById('grafica_cat').getContext('2d');
+                    if(window.chart3!=null){
+                        window.chart3.destroy();
+                    }
+                    window.chart3=new Chart(micanvas3,{
+                        type:"doughnut",
+                        data:{
+                            labels:nomCat,
+                            datasets:[
+                    {
+                        backgroundColor:colors,
+                        borderColor:"rgb(0,255,0)",
+                        data:canCat
+                    }
+                ]
+                        }
+                    })
                 }
             });
+        }
+
+        function rankign_pedMes(){
+            
+            var slcchange = document.getElementById("fecha");
+            slcchange.addEventListener("change", function() {
+                let fecha_=document.getElementById('fecha').value;
+                fetch(`api/stats/pedBimes/${fecha_}`)
+                .then(resp=>resp.json())
+                .then(datos=>{
+                    statsUsu_=datos;
+                    renderResult(statsUsu_);
+                })
+                const renderResult=(statsUsu_)=>{
+                    
+                    let micanvas2=document.getElementById('graficaPedMes').getContext('2d');
+                    if(window.chart2!=null){
+                        window.chart2.destroy();
+                    }
+                    let pedMes=[];
+                    let fechPed=[];
+                    for(let item of statsUsu_){
+                        pedMes.push(item.cantPed);
+                        fechPed.push(item.mes+"-"+item.anio);
+                    }
+                    window.chart2=new Chart(micanvas2,{
+                        type:"bar",
+                        data:{
+                            labels:fechPed,
+                            datasets:[
+                    {
+                        label:"Grafica de Pedidos en los ultimos cuatro Meses",
+                        backgroundColor:colors,
+                        borderColor:"rgb(255,255,0)",
+                        data:pedMes
+                    }
+                ]
+                        }
+                    })
+                    
+                    
+                }
+            });
+
         }
     </script>
