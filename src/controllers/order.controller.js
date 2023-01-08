@@ -18,6 +18,22 @@ const getProductsByCategory = async (req, res) => {
   }
 };
 
+
+const getOrders=async(req,res)=>{
+  try {
+    const roleUser=req.role;
+    let orders={};
+    if(roleUser=="Cocinero"){
+      orders.order=await OrderServices.getInfoOrdersTodayByState(1);
+      orders.details=await OrderServices.getDetailsOrdersTodayByState(1);
+    }
+    res.status(200).send(orders);
+    return;
+  } catch (error) {
+    console.log(error);
+    handleHttpError(res,"Error en la consulta");
+  }
+}
 const createOrder = async (req, res) => {
   /*
         body Example:
@@ -63,9 +79,14 @@ const createOrder = async (req, res) => {
             await OrderServices.createTableByOrder(idOrder,idTable.id_mesa);
             await OrderServices.updateStateTable(2,idTable.id_mesa);
         }
+
+        res.status(201).send({
+          order,
+          mesas
+      });
+      return;
     }
     res.status(201).send({
-        idOrder,
         order,
         detalle
     });
@@ -84,19 +105,9 @@ const getOneOrder = async (req, res) => {
             total+=detail.subtotal;
         }
         order.total=total;
-        if(order.id_mod!=2){
-          res.status(200).send({
-              order,
-              detailsOrder
-          })
-          return;
-        }
-
-        const tables=await OrderServices.getTableOrder(order.id_ped);
         res.status(200).send({
-          order,
-          detailsOrder,
-          tables
+            order,
+            detailsOrder
         })
         return;
     } catch (error) {
@@ -108,9 +119,38 @@ const getOneOrder = async (req, res) => {
 const updateOrder = (req, res) => {
 
 };
+
+const updateStateOrder =async(req,res)=>{
+  try {
+    const {stateOrder}=req.body;
+    const {codeOrder}=req.params;
+    console.log(req)
+    let infoOrderUpdate={
+      id_epedido:stateOrder
+    }
+    let msg;
+    if(req.body.idClient!=undefined && (req.role=="Cajero" || req.role=="Mesero")){
+      console.log('agrgeando id cliente')
+      infoOrderUpdate.id_cli=req.body.idClient;
+    }
+    if(req.role=="Cajero"){
+      
+    }
+
+    msg=(req.role=="Cajero")?'Orden Pagada':'Orden Actualizada';
+    await OrderServices.updateStateOrder(codeOrder,infoOrderUpdate);
+
+    res.status(200).send({ok:true,msg});
+  } catch (error) {
+    console.log(error);
+    handleHttpError(res,"ERROR EN LA CONSULTA");
+  }
+}
 module.exports = {
   getProductsByCategory,
+  getOrders,
   getOneOrder,
   createOrder,
   updateOrder,
+  updateStateOrder
 };

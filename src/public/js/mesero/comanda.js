@@ -1,3 +1,4 @@
+const socket=io();
 const selectCategory=document.querySelector('#selectCategory');
 const containerProducts=document.querySelector('.container__carta__products');
 const saveOrder=document.querySelector('#btn-save');
@@ -184,7 +185,7 @@ saveOrder.onclick=async()=>{
             showConfirmButton: false,
             timer: 800,
         })
-        console.log(result)
+        socket.emit('confirmar-pedido',result)
     } catch (error) {
         console.log(error)
     }
