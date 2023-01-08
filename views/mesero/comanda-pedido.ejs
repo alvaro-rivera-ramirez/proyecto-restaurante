@@ -1,56 +1,115 @@
-<link rel="stylesheet" href="/public/css/mesero-comanda.css">
+<link rel="stylesheet" href="/public/css/mesero-comanda.css" />
 <main>
-    <div class="container__main">
-        <div class="container__client">
-            <h3>Registrar Cliente</h3>
-            <div class="container__client__info">
-                <div class="container__client__info_row">
-                    <label for="">Dni:</label>
-                    <input type="text" name="" id="input-dni">
-                    <!-- <button id="btn-searchClient"> <i class="fa-solid fa-magnifying-glass-plus"></i>&nbsp;Buscar</button> -->
-                </div>
-                <div class="container__client__info_row">
-                    <label for="">Nombre:</label>
-                    <input type="text" name="" id="input-nombre">
-                </div>
-            </div>
-            <div class="container__client__buttons">
-                <button id="btn-addClient"> <i class="fa-regular fa-plus"></i>&nbsp;Agregar</button>
-            </div>
+  <div class="container__main">
+    <div class="container__client">
+      <h3>Registrar Cliente</h3>
+      <div class="container__client__info">
+        <div class="container__client__info_row">
+          <label for="" class="form-label">Dni:</label>
+          <input type="text" name="" id="input-dni-search" />
+          <button id="btn-searchClient" class="btn btn-dark">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
         </div>
-        <div class="container__order">
-            <div class="container__order__info">
-                <h3>Datos:</h3>
-                
-            </div>
-            <div class="container__order__details">
-                <h3>Orden:</h3>
-                <div class="container__order__details__info">
-                    <div class="row">
-                        <div class="col-md-4">Descripcion</div>
-                        <div class="col-md-4">Cantidad</div>
-                        <div class="col-md-3">Importe</div>
-                    </div>
-                    
-                </div>  
-            </div>
-            <div class="container__order__total">
-                <p>
-                    Total:&nbsp;
-                    <strong id="priceTotalOrder"></strong>
-                </p>
-            </div>
-            <div class="container__order__buttons">
-                <button id="btn-save">
-                    <i class="fa-regular fa-floppy-disk"></i>
-                    &nbsp;PreCuenta
-                </button>
-                <button id="btn-cancel">
-                    <i class="far fa-window-close"></i>
-                    &nbsp;Cancelar
-                </button>
-            </div>
-        </div>
+      </div>
+      <div class="container__client__buttons">
+        <button id="btn-addClient">
+          <i class="fa-regular fa-plus"></i>&nbsp;Agregar
+        </button>
+      </div>
     </div>
+    <div class="container__order">
+      <div class="container__order__info">
+        <h3>Datos:</h3>
+      </div>
+      <div class="container__order__details">
+        <h3>Orden:</h3>
+        <div class="container__order__details__info">
+          <div class="row">
+            <div class="col-md-4">Descripcion</div>
+            <div class="col-md-4">Cantidad</div>
+            <div class="col-md-3">Importe</div>
+          </div>
+        </div>
+      </div>
+      <div class="container__order__total">
+        <p>
+          Total:&nbsp;
+          <strong id="priceTotalOrder"></strong>
+        </p>
+      </div>
+      <div class="container__order__buttons">
+        <button id="btn-preCuenta">
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+          &nbsp;PreCuenta
+        </button>
+        <button id="btn-cancel">
+          <i class="far fa-window-close"></i>
+          &nbsp;Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="modalNewClient"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Cliente</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <form id="formClient">
+          <div class="modal-body">
+            <div class="form_control">
+              <label for="input-dni" class="col-form-label">D.N.I:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="input-dni"
+                name="dni"
+              />
+              <!-- <i class="fas fa-exclamation-circle"></i>
+              <small>Error message</small> -->
+            </div>
+            <div class="form_control">
+              <label for="input-nombre" class="col-form-label">Nombre:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="input-nombre"
+                name="nombre"
+              />
+              <!-- <i class="fas fa-exclamation-circle"></i>
+              <small>Error message</small> -->
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" id="btnSaveClient" class="btn btn-dark">
+              Guardar
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </main>
 <script src="/public/js/mesero/detail-order.js"></script>

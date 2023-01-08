@@ -4,8 +4,8 @@
         <div class="col-md-8 p-0">
             <div class="shadow p-3 box-pedido">
                 <h3>Pedidos</h3>
-                <div class="scroll-div">
-                    <div class="box-orden ms-3">
+                <div class="scroll-div" id="tableroPedidos">
+                    <!-- <div class="box-orden ms-3">
                         <h5 class="mb-2">N° Orden: 00001</h5>
                         <div class="d-flex justify-content">
                             <p>Mesa: 15</p>
@@ -124,7 +124,7 @@
                             <button class="btn btn-cancelar me-2">Cancelar</button>
                             <button class="btn btn-realizar">Realizado</button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -181,38 +181,4 @@
       </div>
     </div>
   </div>
-
-<script>
-   const Ordenes = document.querySelector("#box-realizados");
-   const Modal = document.querySelector(".modal");
-
-   function generador(len){
-        let num;
-        let n=len.toString.length;
-        switch (n){
-            case 1:num="0000"+len;break;
-            case 2:num="000"+len;break;
-            case 3:num="00"+len;break;
-            case 4:num="0"+len;break;
-            case 5:num=len;break;
-        }
-        return num;
-    }
-
-    fetch("/api/cocina")
-    .then((res) => res.json())
-    .then((res) => {
-        let listHTML = "";
-        res.forEach((cocina) => {
-            let nropedido=generador(cocina.id_ped);
-            console.log();
-            listHTML += `<button type="button" class="btn i"  data-bs-toggle="modal" data-bs-target="#exampleModal" value="${cocina.id_ped}">${nropedido}</button>`;              
-        });
-        Ordenes.innerHTML = listHTML;
-    }).catch((error) => console.log(error));
-    const btnOpenModal = document.querySelectorAll(".i");
-    
-    console.log(btnOpenModal);
-
-
-</script>
+<script src="/public/js/cocinero/home.js"></script>

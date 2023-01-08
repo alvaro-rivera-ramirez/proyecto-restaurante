@@ -2,19 +2,27 @@ const socketController = (socket) => {
   console.log("Cliente conectado", socket.id);
   
   socket.on("confirmar-pedido", (payload) => {
-    console.log(payload);
-    console.log("Se confirma pedido!");
-    
+
+    const orderForWaiter={
+      order:payload.order,
+      mesas:payload.mesas,
+    };
+
+    const orderForCook={
+      order:payload.order,
+      detalle:payload.detalle
+    };
+
     /* Objeto Payload
       {
-        id:2
+        order:{}
         mesas:[ ]
         detalle:[]
-        fe
       }
     */
 
-    socket.broadcast.emit("mesas-ocupadas", payload);
+    socket.broadcast.emit("mesero-recibe-pedido",orderForWaiter);
+    socket.broadcast.emit("cocinero-recibe-pedido",orderForCook);
   });
 };
 
