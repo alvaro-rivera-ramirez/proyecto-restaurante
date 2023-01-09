@@ -120,15 +120,36 @@ const updateStateOrder=async(codeOrder,infoOrder)=>{
 
 }
 
-const getOrdersToday=async()=>{
+//obtienes las ordenes pedidas por un usuario y que estan preparadas 
+const getPreparedOrdersByMode=async(idusu,idmod)=>{
   try {
-    
+    const orders=await conn.query("SELECT p.* FROM pedido p WHERE p.id_epedido=2 AND date(p.fecha_ped)= curdate() AND p.id_usu=? AND p.id_mod=?",[idusu,idmod]);
+    return orders;
   } catch (error) {
     console.log(error)
     throw Error;
   }
 }
 
+// const getPreparedOrdersTodayToCarryOut=async()=>{
+//   try {
+//     const orders=await conn.query("SELECT p.id_ped,p.cod_ped FROM pedido p WHERE p.id_epedido=2 AND date(p.fecha_ped)= curdate() AND p.id_mod=1");
+//     return orders;
+//   } catch (error) {
+//     console.log(error)
+//     throw Error;
+//   }
+// }
+
+const getPreAccountOrdersToday=async()=>{
+  try {
+    const orders=await conn.query("SELECT p.id_ped,p.cod_ped,(SELECT group_concat(numero_mesa separator ', ') from mesa_pedido mp JOIN mesa m ON mp.id_mesa=m.id_mesa WHERE mp.id_ped=p.id_ped) as mesas FROM pedido p WHERE p.id_epedido=3 AND date(p.fecha_ped)= curdate()");
+    return orders;
+  } catch (error) {
+    console.log(error)
+    throw Error;
+  }
+}
 //Obtiene las consultas de la fecha actual, info del usuario y mesas
 const getInfoOrdersTodayByState=async(idestado)=>{
   try {
@@ -170,6 +191,7 @@ module.exports = {
   getTableOrder,
   updateStateTable,
   updateStateOrder,
+  getPreparedOrdersByMode,
   getInfoOrdersTodayByState,
   getDetailsOrdersTodayByState
 };

@@ -27,6 +27,12 @@ const getOrders=async(req,res)=>{
       orders.order=await OrderServices.getInfoOrdersTodayByState(1);
       orders.details=await OrderServices.getDetailsOrdersTodayByState(1);
     }
+
+    if(roleUser=="Mesero"){
+      const idusu=req.id;
+      orders.takeaway=await OrderServices.getPreparedOrdersByMode(idusu,1);
+      orders.fortable=await OrderServices.getPreparedOrdersByMode(idusu,2);
+    }
     res.status(200).send(orders);
     return;
   } catch (error) {
@@ -34,6 +40,7 @@ const getOrders=async(req,res)=>{
     handleHttpError(res,"Error en la consulta");
   }
 }
+
 const createOrder = async (req, res) => {
   /*
         body Example:
