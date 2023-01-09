@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
       }
       const { details } = result;
+      console.log(result)
       for (const order of result.order) {
         let detailsOfOneOrder = filterById(details, order.id_ped);
         renderOrders(order, detailsOfOneOrder);
