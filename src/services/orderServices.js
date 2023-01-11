@@ -1,5 +1,15 @@
 const conn = require("../config/bd");
 
+  const getAll =async()=>{
+    const order=await conn.query("SELECT pe.id_ped, u.nom_usu, ep.id_epedido, mo.nom_mod,DATE_FORMAT(pe.fecha_ped, '%d-%m-%Y') as fecha,time(pe.fecha_ped) as hora, SUM(dt.cantidad_det*pro.precio_u_prod) as precioT  FROM pedido pe, usuario u, estado_pedido ep, modalidad mo, detalle_pedido dt, producto pro WHERE pe.id_usu=u.id_usu and pe.id_epedido=ep.id_epedido and pe.id_mod=mo.id_mod and pe.id_ped=dt.id_ped and dt.id_prod=pro.id_prod GROUP BY pe.id_ped;");
+    return order;
+  }
+
+  const getfechaAll =async(date_start,date_end)=>{
+    const order=await conn.query("SELECT pe.id_ped, u.nom_usu, ep.id_epedido, mo.nom_mod,DATE_FORMAT(pe.fecha_ped, '%d-%m-%Y') as fecha,time(pe.fecha_ped) as hora, SUM(dt.cantidad_det*pro.precio_u_prod) as precioT  FROM pedido pe, usuario u, estado_pedido ep, modalidad mo, detalle_pedido dt, producto pro WHERE pe.id_usu=u.id_usu and pe.id_epedido=ep.id_epedido and pe.id_mod=mo.id_mod and pe.id_ped=dt.id_ped and dt.id_prod=pro.id_prod and pe.fecha_ped  BETWEEN ? and ? GROUP BY pe.id_ped;",[date_start,date_end]);
+    return order;
+  }
+
   const getCountOrders = async () => {
     const countOrders = await conn.query("SELECT COUNT(*) AS count_orders FROM pedido");
   
@@ -120,6 +130,7 @@ const updateStateOrder=async(idorder,idstate)=>{
 }
 
 module.exports = {
+  getAll,
   getCountOrders,
   getCountOrdersByWaiter,
   getCountOrderWait,
@@ -138,6 +149,7 @@ module.exports = {
   getDetailsByOrder,
   getTableOrder,
   updateStateTable,
-  updateStateOrder
+  updateStateOrder,
+  getfechaAll
 };
 

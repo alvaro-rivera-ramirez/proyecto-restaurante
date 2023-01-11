@@ -1,0 +1,217 @@
+<div class="container" style="background-color: white;">
+    <div class="row shadow-lg p-3 mb-5">
+        <nav aria-label="breadcrumb" class="link_nav">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/home">Inicio</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Pedidos</li>
+            </ol>
+          </nav>
+    <h2 class="mb-2 title_registro "><i class="fa-solid fa-box"></i> Pedidos</h2>
+        <div class="row box-filtro">
+            <h5>Filtro</h5>
+        <div class="row input-daterange">
+            <div class="col-md-4">
+            <input type="date" name="start_date" id="start_date" class="form-control" />
+            </div>
+            <div class="col-md-4">
+            <input type="date" name="end_date" id="end_date" class="form-control" />
+            </div>  
+            <div class="col-md-4">
+             <input type="button" name="search" id="filtrar" value="Filtrar" class="btn btn-dark" />
+             <input type="button" name="limpiar" id="limpiar" value="Limpiar" class="btn btn-danger" />
+            </div>     
+        </div>
+
+       </div>
+
+        <div class="table-responsive col-12">
+            <table id="tablaPedido" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Responsable</th>
+                    <th>Estado Pedido</th>  
+                    <th>Modalidad</th>
+                    <th>Descripcion</th>
+                    <th>Total(S/.)</th>  
+                    <th>Fecha</th>
+                    <th>Hora</th>                                     
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            </table> 
+        </div>
+    </div>
+</div>
+
+<!--Modal-->
+<div class="modal fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Orden 00001</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <p>Mesa: 15</p>
+              <p>Mozo: Javier</p>
+              <p class="mb-1">Orden:</p>
+              <div class="m-orden">
+                  <div class="m-orden-detalle">
+                      <p>Causa rellena (1)</p>
+                      <p class="m-obs">Observación: Picante</p>
+                  </div>
+                  <div class="m-orden-detalle">
+                      <p>Causa rellena (1)</p>
+                      <p class="m-obs">Observación: Picante</p>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+        </div>
+      </div>
+  </div>
+<script src="/public/js/configTable.js"></script>
+<script>
+    $(document).ready(function(){
+        
+        let url = 'http://localhost:3000/api/order/';
+        let opcion = null;
+        //MOSTRAR
+        function tablapedido(){
+            let tablaProducto = $('#tablaPedido').DataTable({            
+                ajax:{
+                    "url": url,
+                    "dataSrc":""
+                },
+                "columns":[
+                    {"data":"id_ped"},
+                    {"data":"nom_usu"},
+                    {"data":"id_epedido",
+                    render: function (estado_mesa) {
+                        switch (estado_mesa) {
+                            case 1:
+                            return `<td><span class="badge text-bg-secondary">Pendiente</span></td>`;
+                            break;
+                            case 2:
+                            return `<td><span class="badge text-bg-success">Preparado</span></td>`;
+                            break;
+                            case 3:
+                            return `<td><span class="badge text-bg-warning">Precuenta</span></td>`;
+                            break;
+                            case 4:
+                            return `<td><span class="badge text-bg-dark">Pagado</span></td>`;
+                            break;
+                            case 5:
+                            return `<td><span class="badge text-bg-danger">Cancelado</span></td>`;
+                            break;
+                        }
+                        },
+                    },
+                    {"data":"nom_mod"},
+                    {"defaultContent": "<div class='text-center'><button class='btn-info' ><i class='fa-solid fa-circle-info'></i></button></div> "},
+                    {"data":"precioT",
+                    render: function ( data, type, row ) {
+                        return 'S/. '+ Number(data).toFixed(2);
+                    }},
+                    {"data":"fecha"},
+                    {"data":"hora"},
+                ],
+                language: configTable,  
+                responsive: true,      
+            });
+        }
+        
+        //btn filtrar
+        
+        function tablapedidoF(start_date,end_date){
+                console.log(start_date);
+                console.log(end_date);
+                       
+                $.ajax({
+                    url: "http://localhost:3000/api/order/filtro",
+                    method: 'post',
+                    contentType: 'application/json', 
+                    data:  JSON.stringify({start_date:start_date, end_date:end_date}),
+                    success: function(data){
+                        console.log(data);
+                        $('#tablaPedido').DataTable({
+                            "data":data,
+                            "responsive":true,
+                            "columns":[
+                    {"data":"id_ped"},
+                    {"data":"nom_usu"},
+                    {"data":"id_epedido",
+                    render: function (estado_mesa) {
+                        switch (estado_mesa) {
+                            case 1:
+                            return `<td><span class="badge text-bg-secondary">Pendiente</span></td>`;
+                            break;
+                            case 2:
+                            return `<td><span class="badge text-bg-success">Preparado</span></td>`;
+                            break;
+                            case 3:
+                            return `<td><span class="badge text-bg-warning">Precuenta</span></td>`;
+                            break;
+                            case 4:
+                            return `<td><span class="badge text-bg-dark">Pagado</span></td>`;
+                            break;
+                            case 5:
+                            return `<td><span class="badge text-bg-danger">Cancelado</span></td>`;
+                            break;
+                        }
+                        },
+                    },
+                    {"data":"nom_mod"},
+                    {"defaultContent": "<div class='text-center'><button class='btn-info' ><i class='fa-solid fa-circle-info'></i></button></div> "},
+                    {"data":"precioT",
+                    render: function ( data, type, row ) {
+                        return 'S/. '+ Number(data).toFixed(2);
+                    }},
+                    {"data":"fecha"},
+                    {"data":"hora"},
+                ],
+                language: configTable,
+
+                        });
+                    }  
+                });
+        };
+        $('#filtrar').click(function(){
+            var start_date = $('#start_date').val();
+            var end_date = $('#end_date').val();
+            if(start_date != '' && end_date !='')
+            {
+                $('#tablaPedido').DataTable().destroy();
+                tablapedidoF(start_date, end_date);
+            };
+        }); 
+        
+        //Mostrar       
+        $(document).on("click", ".btn-info", function(){		            
+            opcion='editar';
+            fila = $(this).closest("tr");	        
+            id = parseInt(fila.find('td:eq(0)').text());
+            url_img = fila.find('td:eq(1)').text(); 
+            name = fila.find('td:eq(2)').text();
+            descripcion = fila.find('td:eq(3)').text();
+            precio = fila.find('td:eq(4)').text();          
+            $("#id").val(id);
+            $("#nombre").val(name);
+            $("#descripcion").val(descripcion); 
+            $("#precio").val(precio);	
+            $('#exampleModal').modal('show');		   
+        });
+        //btn limpiar
+        $('#limpiar').click(function(){
+            $('#tablaPedido').DataTable().destroy();
+            tablapedido();
+            document.getElementById('start_date').value = "";
+            document.getElementById('end_date').value = "";
+        }); 
+        tablapedido();
+    });
+</script>
