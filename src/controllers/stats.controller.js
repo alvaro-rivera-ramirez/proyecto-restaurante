@@ -72,34 +72,20 @@ const catDia = async (req, res) => {
     return res.status(401);
   }
 };
-const pedBiDia=async(req,res)=>{
-  try{
-    const { params: {dato},}=req;
-    var fecha = new Date("'"+req.params.dato+"'");
+const pedBiDia = async (req, res) => {
+  const { params: {dato},}=req;
+  try {
     console.log(req.params.dato)
-    var mes=fecha.getMonth()+1;
-    var anio=fecha.getFullYear();
-    var dia=fecha.getdate();
-    if(dia-3<1){
-      var preanio=anio-1;
-      var premes=12+mes-1;
-      let diaAux=new Date(anio,mes,0);
-      var preDia=diaAux+dia-3;
-    }
-    else{
-      var preanio=anio;
-      var premes=mes;
-      var preDia=dia-3;
-    }
-    var prefecha=new Date("'"+preanio+"-"+premes+"-"+preDia+"'");
-    console.log(prefecha)
-    var arrayfecha=[prefecha,fecha];
-    const stats_=await statsServices.pedBiDia(arrayfecha);
-    return res.status(201).send(stats_);
+    let fecha=new Date("'"+req.params.dato+"'");
+    let anio=fecha.getFullYear();
+    let mes=fecha.getMonth();
+    let dia=fecha.getDate();
+    console.log(anio,mes,dia);
+    //const stats_=await statsServices.pedDia(req.params.dato);
+    return res.status(201).send("stats_");
   } catch (error) {
     return res.status(401);
   }
-
 };
 module.exports = {
   pedMes,
