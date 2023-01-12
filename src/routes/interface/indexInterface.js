@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const jwt=require('jsonwebtoken');
 const { getProfileHeader } = require("../../services/profileServices");
 const { getCountUsers } = require("../../services/userServices");
 const {
@@ -67,4 +68,22 @@ router.get("/change-password", isLoggedIn, async (req, res) => {
   res.render("change-password", { nom_usu, nom_tipousu });
 });
 
+
+//nose donde poner
+router.get("/forgot-psw", verifyLoggedIn,(req, res) => {
+  res.render("forgotPws",{layout: false});
+});
+router.get("/reset-psw/:email/:token", verifyLoggedIn,(req, res) => {
+  console.log("en reset")
+  const{email,token}=req.params;
+  try{
+    console.log(process.env.JWT_SECRET)
+    const payload=jwt.verify(token,process.env.JWT_SECRET);
+    console.log(payload)
+    console.log(email,token)
+    res.render("reset-password",{layout: false,email:email,token:token});
+} catch(error){
+  return res.status(401);
+}
+});
 module.exports = router;

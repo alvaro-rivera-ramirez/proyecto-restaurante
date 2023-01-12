@@ -75,12 +75,22 @@ const catDia = async (req, res) => {
 const pedBiDia = async (req, res) => {
   const { params: {dato},}=req;
   try {
-    console.log(req.params.dato)
+    let array=[];
     let fecha=new Date("'"+req.params.dato+"'");
     let anio=fecha.getFullYear();
     let mes=fecha.getMonth();
     let dia=fecha.getDate();
     console.log(anio,mes,dia);
+    for(let item=0;item<5;item++){
+      const stats_=await statsServices.pedBiDia(fecha);
+      array.push(stats_);
+      /*if(dia-1<1){
+        if(mes)
+      }
+      else{
+        dia=dia-1;
+      }*/
+    }
     //const stats_=await statsServices.pedDia(req.params.dato);
     return res.status(201).send("stats_");
   } catch (error) {
