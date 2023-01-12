@@ -3,7 +3,7 @@ const con = require("../config/bd");
 const createClient= async(dataClient)=>{
     try {
         const newClient=await con.query("INSERT INTO cliente SET ?",[dataClient]);
-        return newClient.insertId;
+        return newClient;
     } catch (error) {
         throw new Error("Error en la consulta");
     }

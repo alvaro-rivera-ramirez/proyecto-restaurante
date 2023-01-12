@@ -44,7 +44,7 @@
 
 .container-mesas{
     display: inline-block;
-    width: 55%;
+    width: 60%;
     margin-right: 10px;
     margin-top: 5px;
     padding: 8px;
@@ -113,7 +113,7 @@
 .container-tableros{
     /* background-color: aquamarine; */
     display: inline-block;
-    width: 35%;
+    width: 30%;
     padding: 10px;
     margin-left: 10px;
     margin-top: 5px;
@@ -175,6 +175,14 @@
 
 .col-pedido p{
     margin-left: 8px;
+}
+
+.container-pedidos .btn .caret{
+	width: 0;
+	height: 0;
+	border-left: .4rem solid transparent;
+	border-right: .4rem solid transparent;
+	border-top: .4rem solid white;
 }
 
 @media (max-width: 500px) {

@@ -1,116 +1,128 @@
-<div id="form" class="col-8 shadow p-3 mb-5 bg-body rounded pt-2" style="margin:0px auto">
-    <center><h3>Registro de Usuario</h3></center>
-    <div class="mb-0">
-        <div class="row">
-            <div class="col">
-                <label class="form-label">Nombres</label>
-            </div>
-        </div>
-    </div>
-    <div class="mb-3">
-        <div class="row">
-            <div class="col">
-                <input  id="nombre"name="nombre" type="text" class="form-control" required>
-            </div>
-        </div>
-    </div>
-    <div class="mb-0">
-        <div class="row">
-            <div class="col">
-                <label class="form-label">Apellido paterno</label>
-            </div>
-    
-            <div class="col">
-                <label class="form-label">Apellido materno</label>
-            </div>
-        </div>
-    </div>
-    
-    <div class="mb-3">
-        <div class="row">
-            <div class="col">
-                <input id="apellido1" name="apellido1" type="text" class="form-control" required>
-            </div>
 
-            <div class="col">
-                <input id="apellido2" name="apellido2" type="text" class="form-control"  required>
-            </div>
-        </div>
-    </div>
-
-    <div class="mb-0">
-        <div class="row">
-            <div class="col">
-                <label class="form-label">Direccion</label>
-            </div>
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <div class="row">
-
-            <div class="col">
-                <div >
-                    <div class="col-10"><input id="dir" name="dir" class="form-control mr-sm-2"style="border-radius: 3px 0 0 3px;" type="text" ></div>
+<div class="container-fluid shadow-lg" style="background-color: white;">
+    <div class="row p-3 pb-5" >
+      <nav aria-label="breadcrumb" class="link_nav">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="/Users">Usuario</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Agregar</li>
+          </ol>
+        </nav>
+  
+        <h2 class="mb-2 title_registro "><i class="fa-solid fa-folder-plus"></i> Registrar Usuario</h2>
+  
+    <div class="row d-flex justify-content-start style_form">
+        <div id="form" class="col-9 row" style="margin:0px auto">
+            
+            <div class="mb-0 col-lg-4">
+                <div class="row">
+                    <div class="col-12 col-lg-12">
+                        <label class="form-label">N° Documento de identidad</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col-12 col-lg-12">
+                        <input id="nro_ddi" name="nro_ddi" type="text" class="form-control" required>
+                    </div>
                 </div>
             </div>
-        </div>      
-    </div>
-    
-    <div class="mb-0">
-        <div class="row">
-            <div class="col-12 col-lg-12">
-                <label class="form-label">N° Documento de identidad</label>
-            </div>
-        </div>
-    </div>
 
-    <div class="mb-3">
-        <div class="col">
-            <div class="col-12 col-lg-12">
-                <input id="nro_ddi" name="nro_ddi" type="text" class="form-control" required>
+            <div class="mb-0 col-lg-8">
+                <div class="row">
+                    <div class="col-12 col-lg-12">
+                        <label class="form-label">Nombres</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <input  id="nombre"name="nombre" type="text" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="mb-0">
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label">Apellido paterno</label>
+                    </div>
+            
+                    <div class="col">
+                        <label class="form-label">Apellido materno</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-0">
+                <div class="row">
+                    <div class="col">
+                        <input id="apellido1" name="apellido1" type="text" class="form-control" required>
+                    </div>
+        
+                    <div class="col">
+                        <input id="apellido2" name="apellido2" type="text" class="form-control"  required>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="mb-0">
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label">Direccion</label>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="mb-0">
+                <div class="row">
+        
+                    <div class="col-12 col-lg-12">
+                        <div >
+                            <div class="col-12"><input id="dir" name="dir" class="form-control mr-sm-2"style="border-radius: 3px 0 0 3px;" type="text" ></div>
+                        </div>
+                    </div>
+                </div>      
+            </div>
+            
+            <div class="col" id="grupo__exampleInputEmail1">
+                <div class="mb-0" style="width:100%">
+                    <div class="col-12 col-lg-12">
+                        <label class="form-label">Dirección de correo electrónico</label>
+                    </div>
+                    <div class="col-12 col-lg-12">
+                        <input  id="email" name="email" type="email" class="form-control" aria-describedby="emailHelp" required>
+                    </div>
+                </div>
+                <div>
+                    <div class="col-12 col-lg-12">
+                        <label class="form-label">Contraseña</label>
+                    </div>
+                    <div class="col-12 col-lg-12">
+                        <input ID="txtPassword" type="Password" Class="form-control" required>
+                    </div>
+                </div>
+                <div>
+                    <div class="col-12 col-lg-12">
+                        <label class="form-label">Rol</label>
+                    </div>
+                    <div class="col-4">
+                       <select name="selectRol" id="selectRol" class="form-select" aria-label="Default select example" required>
+                        <option value="4">Cocinero</option>
+                        <option value="1">Administrador</option>
+                        <option value="2">Cajero</option>
+                        <option value="3">Mesero</option>
+                       </select>
+                    </div>
+                    <br>
+                </div>
+                <div class="col-12 col-lg-12 d-flex justify-content-end">
+                        <button type="button" class="btn btn-success mx-2" onclick="registerUser()"><i class="fa-regular fa-floppy-disk"></i> Registrar</button>
+                        <a href="/Users" class="btn btn-dark btn-primary"><i class="fa-solid fa-circle-chevron-left"></i> Regresar</a>
+                   
+                </div>
             </div>
         </div>
+        
     </div>
-    <div class="col" id="grupo__exampleInputEmail1">
-        <div class="mb-2" style="width:100%">
-            <div class="col-12 col-lg-12">
-                <label class="form-label">Dirección de correo electrónico</label>
-            </div>
-            <div class="col-12 col-lg-12">
-                <input  id="email" name="email" type="email" class="form-control" aria-describedby="emailHelp" required>
-            </div>
-        </div>
-        <div>
-            <div class="col-12 col-lg-12">
-                <label class="form-label">contraseña</label>
-            </div>
-            <div class="col-12 col-lg-12">
-                <input ID="txtPassword" type="Password" Class="form-control" required>
-            </div>
-        </div>
-        <div>
-            <div class="col-12 col-lg-12">
-                <label class="form-label">rol</label>
-            </div>
-            <div class="col-4">
-               <select name="selectRol" id="selectRol" class="form-select" aria-label="Default select example" required>
-                <option value="4">Cocinero</option>
-                <option value="1">Administrador</option>
-                <option value="2">Cajero</option>
-                <option value="3">Mesero</option>
-               </select>
-            </div>
-            <br>
-        </div>
-        <div class="col-12 col-lg-12">
-            <center>
-                <button type="button" class="btn btn-dark btn-primary mx-2" onclick="registerUser()"><i class="fa-solid fa-gears"></i> Registrar</button>
-                <a href="/Users" class="btn btn-dark btn-primary"><i class="fa-solid fa-circle-chevron-left"></i> Regresar</a>
-            </center>
-        </div>
     </div>
-</div>
+  </div>
 
 <script>
     const registerUser=()=>{
