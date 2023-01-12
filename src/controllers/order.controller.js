@@ -127,6 +127,32 @@ const updateOrder = (req, res) => {
 
 };
 
+
+const getPedidos = async (req, res) => {
+  try {
+      const pedidos=await OrderServices.getAll();
+      return res.status(201).send(pedidos);
+  } catch (error) {
+      return res.status(401);
+  }
+};
+
+const getPedidosFiltro = async (req, res) => {
+  try {
+      const {start_date,end_date} = req.body;
+      if(!start_date && !end_date){
+        handleErrorResponse(res,"CAMPOS VACIOS",401);
+        return;
+      }
+      console.log(start_date,end_date);
+      const pedidos=await OrderServices.getfechaAll(start_date,end_date);
+      console.log(pedidos);
+      return res.status(201).send(pedidos);
+  } catch (error) {
+      return res.status(401);
+  }
+};
+
 const updateStateOrder =async(req,res)=>{
   try {
     const {stateOrder}=req.body;
@@ -153,11 +179,14 @@ const updateStateOrder =async(req,res)=>{
     handleHttpError(res,"ERROR EN LA CONSULTA");
   }
 }
+
 module.exports = {
   getProductsByCategory,
   getOrders,
   getOneOrder,
   createOrder,
   updateOrder,
+  getPedidos,
+  getPedidosFiltro
   updateStateOrder
 };

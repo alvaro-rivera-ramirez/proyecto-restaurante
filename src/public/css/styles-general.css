@@ -97,3 +97,68 @@ main{
 .container-fluid{
 	background-color: white;
 }
+
+.link_nav{
+	font-size: 12px;
+}
+.link_nav ol{
+	margin: 0;
+}
+
+.title_registro{
+	color: #181E24;
+	padding: 8px 15px;
+	text-transform: uppercase;
+	margin-top: 8px;
+	margin-bottom: 25px!important;
+	border-bottom: #181E24 3px solid;
+}
+.btn-add{
+	border: solid 1px #181E24;
+	border-radius: 5px;
+	color: #181E24;
+	padding: 5px 15px;
+	font-size: 14px;
+	background-color: white!important;
+}
+.btn-add:hover{
+	background-color: #181E24!important;
+	color: white;
+}
+.dataTables_filter input[type="search"]{
+	border: none!important;
+	border-bottom: solid 1px #a0a0a0!important;
+	margin-bottom: 25px!important;
+}
+.dataTables_filter input[type="search"]:focus{
+	border:none!important;
+	border-bottom: solid 1px #181e248e!important;
+}
+.table thead{
+	background-color: #181E24!important;
+	color: white;
+}
+.dataTables_wrapper tbody{
+	font-family: var(--body-font);
+}
+.style_form label{
+	font-size: 14px;
+}
+.style_form input{
+	margin-bottom: 5px;
+}
+.style_form input:focus,.style_form select:focus{
+	border-color:#181e248e!important;
+	box-shadow: none!important;
+}
+.btn-info{
+	border: none;
+}
+.box-filtro{
+	padding: 15px;
+	border: solid 1px rgba(0, 0, 0, .1);
+	border-radius: 5px;
+	margin-bottom: 20px;
+	margin-left: 12px;
+	width: 98%;
+}
