@@ -112,7 +112,7 @@ const updateStateTable = async(idstate,idmesa)=>{
   }
 }
 const getOneOrder = async(nanoid)=>{
-  const order=await conn.query("SELECT p.*,u.nom_usu FROM pedido p,usuario u WHERE p.id_usu=u.id_usu AND p.cod_ped=?",[nanoid])
+  const order=await conn.query("SELECT p.*,u.nom_usu,(SELECT group_concat(numero_mesa separator ', ') from mesa_pedido mp JOIN mesa m ON mp.id_mesa=m.id_mesa WHERE mp.id_ped=p.id_ped) as mesas FROM pedido p INNER JOIN usuario u ON p.id_usu=u.id_usu WHERE p.cod_ped=?",[nanoid])
   return order[0];
 }
 
@@ -125,10 +125,62 @@ const getTableOrder=async(idpedido)=>{
   const tableOrder=await conn.query("SELECT mp.*,m.numero_mesa FROM mesa_pedido mp,mesa m WHERE mp.id_mesa=m.id_mesa AND mp.id_ped=?",[idpedido]);
   return tableOrder;
 }
-const updateStateOrder=async(idorder,idstate)=>{
-  const upOrder=await conn.query("UPDATE pedido SET id_epedido=? WHERE id_ped=?",[idorder,idstate])
+const updateStateOrder=async(codeOrder,infoOrder)=>{
+  const upOrder=await conn.query("UPDATE pedido SET ? WHERE cod_ped=?",[infoOrder,codeOrder])
+
 }
 
+//obtienes las ordenes pedidas por un usuario y que estan preparadas 
+const getPreparedOrdersByMode=async(idusu,idmod)=>{
+  try {
+    const orders=await conn.query("SELECT p.* FROM pedido p WHERE p.id_epedido=2 AND date(p.fecha_ped)= curdate() AND p.id_usu=? AND p.id_mod=?",[idusu,idmod]);
+    return orders;
+  } catch (error) {
+    console.log(error)
+    throw Error;
+  }
+}
+
+// const getPreparedOrdersTodayToCarryOut=async()=>{
+//   try {
+//     const orders=await conn.query("SELECT p.id_ped,p.cod_ped FROM pedido p WHERE p.id_epedido=2 AND date(p.fecha_ped)= curdate() AND p.id_mod=1");
+//     return orders;
+//   } catch (error) {
+//     console.log(error)
+//     throw Error;
+//   }
+// }
+
+const getPreAccountOrdersToday=async()=>{
+  try {
+    const orders=await conn.query("SELECT p.id_ped,p.cod_ped,(SELECT group_concat(numero_mesa separator ', ') from mesa_pedido mp JOIN mesa m ON mp.id_mesa=m.id_mesa WHERE mp.id_ped=p.id_ped) as mesas FROM pedido p WHERE p.id_epedido=3 AND date(p.fecha_ped)= curdate()");
+    return orders;
+  } catch (error) {
+    console.log(error)
+    throw Error;
+  }
+}
+//Obtiene las consultas de la fecha actual, info del usuario y mesas
+const getInfoOrdersTodayByState=async(idestado)=>{
+  try {
+    const orders=await conn.query("SELECT p.*,u.nom_usu,(SELECT group_concat(numero_mesa separator ', ') from mesa_pedido mp JOIN mesa m ON mp.id_mesa=m.id_mesa WHERE mp.id_ped=p.id_ped) as mesas FROM pedido p INNER JOIN usuario u ON p.id_usu=u.id_usu WHERE p.id_epedido=? AND date_format(p.fecha_ped,'%Y-%m-%d')= DATE(NOW())",[idestado]);
+    return orders;
+  } catch (error) {
+    console.log(error)
+    throw Error;
+  }
+}
+
+/* Obtiene los detalles de pedido del dia actual y el nombre de producto */
+const getDetailsOrdersTodayByState=async(idestado)=>{
+  try {
+    const detailOrders=await conn.query("SELECT dp.*,prod.nom_prod FROM (SELECT * FROM pedido WHERE pedido.id_epedido=? AND date_format(pedido.fecha_ped,'%Y-%m-%d')= DATE(NOW())) AS p INNER JOIN detalle_pedido dp ON p.id_ped=dp.id_ped INNER JOIN producto prod ON dp.id_prod=prod.id_prod GROUP BY p.id_ped,dp.id_prod",[idestado]);
+    return detailOrders;
+  } catch (error) {
+    console.log(error);
+    throw Error;
+  }
+}
 module.exports = {
   getAll,
   getCountOrders,
@@ -150,6 +202,9 @@ module.exports = {
   getTableOrder,
   updateStateTable,
   updateStateOrder,
-  getfechaAll
+  getfechaAll,
+  getPreparedOrdersByMode,
+  getInfoOrdersTodayByState,
+  getDetailsOrdersTodayByState
 };
 

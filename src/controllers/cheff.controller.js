@@ -7,7 +7,7 @@ const {
   const getIdPedidoAll = async (req, res) => {
     try {
       const pedidos = await ChefServices.getPedidoIdAll();
-      return res.status(201).send(pedidos);
+      return res.status(200).send(pedidos);
     } catch (error) {
       console.log(error);
       return res.status(401);

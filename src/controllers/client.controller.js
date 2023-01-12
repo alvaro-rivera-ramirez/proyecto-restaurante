@@ -11,9 +11,9 @@ const createClient=async(req,res)=>{
             nom_cli:nombre,
             dni_cli:dni
         }
-        await ClientServices.createClient(client);
-
-        res.status(201).send({ok:true,msg:"CLIENT_CREATED"});
+        const clientQuery=await ClientServices.createClient(client);
+        console.log(clientQuery)
+        res.status(201).send({ok:true,msg:"CLIENT_CREATED",id:clientQuery.insertId});
     } catch (error) {
         console.log(error)
         handleHttpError(res,"Error en la consulta");
