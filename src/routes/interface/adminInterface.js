@@ -12,6 +12,7 @@ router.get("/categorias", isLoggedIn,isAdmin,(req, res) => {
     const nom_tipousu=req.role
     res.render("admin/categorias",{nom_usu,nom_tipousu});
 });
+
 //Interfaz registro usuarios
 router.get('/register-user',isLoggedIn,async(req,res)=>{
   const {nom_usu,nom_tipousu}= await getProfileHeader(req.id);
@@ -52,14 +53,16 @@ router.get("/NuevoProducto", isLoggedIn,(req, res) => {
   const nom_tipousu=req.role
   res.render("admin/newproducto",{nom_usu,nom_tipousu});
 });
-router.get("/estadisticausu", isLoggedIn,(req, res) => {
+router.get("/reporte-mes", isLoggedIn,(req, res) => {
   const nom_usu=req.name
   const nom_tipousu=req.role
   res.render("admin/adminStatsUsu",{nom_usu,nom_tipousu});
 });
-router.get("/estadisticausuDia", isLoggedIn,(req, res) => {
+router.get("/reporte-dia", isLoggedIn,(req, res) => {
   const nom_usu=req.name
   const nom_tipousu=req.role
   res.render("admin/adminStatsUsuDay",{nom_usu,nom_tipousu});
 });
+
+
 module.exports=router
