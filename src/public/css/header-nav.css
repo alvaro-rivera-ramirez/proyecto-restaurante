@@ -81,14 +81,27 @@ a{
   font-size: 1rem;
 }
 
+.header__card-img{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--first-color);
+}
+
+.header__card-img i{
+  font-size: 1.25rem;
+}
+
 .header__card-img img{
-  display: block;
-  height: 24px;
-  margin-right: .5rem;
+  width: 1.75rem;
+  height: 1.75rem;
 }
 
 .header__card-text p{
+  margin-left: .75rem;
   margin-right: .5rem;
+  color: var(--first-color);
+  font-weight: 500;
   font-size: small;
 }
 
@@ -284,5 +297,28 @@ a{
 }
 
 @media screen and (max-width:576px){
+  .header__card-text{
+    display: none;
+  }
+  #header .dropdown-toggle::after{
+    display: none;
+  }
+}
 
+#header .boton-header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: .25rem;
+  background-color: white;
+  border: none;
+}
+
+#header .dropdown-toggle::after{
+  border-top-color: var(--first-color);
+}
+
+#header .dropdown-item:hover, .dropdown-item:focus {
+  color: white;
+  background-color: var(--first-color) !important;
 }

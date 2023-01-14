@@ -101,16 +101,16 @@ const addDetail = (idprod, nomprod, price) => {
   const containerDetails = document.querySelector(
     ".container__order__details__info"
   );
-  containerDetails.innerHTML += `<div class="row d-flex align-items-center">
-    <div class="col-md-1" onclick="deleteDetail(this)">
+  containerDetails.innerHTML += `<div class="row d-flex align-items-center box-producto-one">
+    <div class="col-1" onclick="deleteDetail(this)">
         <button class="btn-delete">
             <i class="fa-solid fa-xmark"></i>
         </button>
     </div>
     <input type="hidden" value="${idprod}" class="id_products">
     <input type="hidden" value="${price}">
-    <div class="col-md-4">${nomprod}</div>
-    <div class="col-md-4 d-flex justify-content-center align-items-center">
+    <div class="col-4">${nomprod}</div>
+    <div class="col-3 d-flex justify-content-center align-items-center">
         <button class="btn btn-decrement me-3" onclick="quantityProd(this)">
             <i class="fa-solid fa-angle-left"></i>
         </button>
@@ -119,10 +119,10 @@ const addDetail = (idprod, nomprod, price) => {
             <i class="fa-solid fa-angle-right"></i>
         </button>
     </div>
-    <div class="col-md-3">
+    <div class="col-3">
         S/. ${priceLabel}
         </div>
-        <div class="col-md-11 offset-md-1 d-flex mt-2">
+        <div class="col-md-11 offset-md-1 d-flex mt-2 box-obs ">
         <label>
         Observacion:
         </label>

@@ -1,21 +1,16 @@
 const { Router } = require("express");
 const { isLoggedIn, verifyLoggedIn } = require("../../middleware/authentication");
-const { getOrderByTable, getOrderDetailsByOrder } = require("../../services/orderServices");
+const { getTotalPayToday } = require("../../services/payServices");
 
 const router = Router();
 
-router.get('/realizar-pago', isLoggedIn, async (req,res) => {
+router.get('/pago', isLoggedIn, async (req,res) => {
     const nom_usu=req.name;
     const nom_tipousu=req.role;
-    
-    id_mesa = req.query.mesa;
-    ped = await getOrderByTable(id_mesa);
-    det = await getOrderDetailsByOrder(ped[0].id_ped);
-    
-    total = 0;
-    for (let i = 0; i < det.length; i++) { total = total + det[i].subtotal; }
+    const {total_pay}=await getTotalPayToday();
+    console.log(total_pay);
 
-    res.render('cajero/realizarPago', { nom_usu, nom_tipousu, id_mesa, ped, det, total });
+    res.render('cajero/realizarPago', { nom_usu, nom_tipousu, total_pay });
 })
 router.get('/reportes',isLoggedIn,(req,res)=>{
     const nom_usu=req.name

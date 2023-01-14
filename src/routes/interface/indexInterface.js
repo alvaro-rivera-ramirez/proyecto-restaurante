@@ -8,6 +8,7 @@ const {
   getCountOrderWait,
   getCountOrderPrepared,
 } = require("../../services/orderServices");
+const { getTotalPayToday } = require("../../services/payServices");
 const { getPisos } = require("../../services/pisosServices");
 const {
   isLoggedIn,
@@ -42,8 +43,9 @@ router.get("/home", isLoggedIn, async (req, res) => {
       res.render("mesero/home", { nom_usu, nom_tipousu, count_orders_day});
       break;
     case "Cajero":
-      pisos = await getPisos();
-      res.render("cajero/home", { nom_usu, nom_tipousu, pisos });
+      const {total_pay}=await getTotalPayToday();
+      console.log(total_pay);
+      res.render("cajero/home", { nom_usu, nom_tipousu, total_pay });
       break;
     case "Cocinero":
       const {count_orders_wait} = await getCountOrderWait();
