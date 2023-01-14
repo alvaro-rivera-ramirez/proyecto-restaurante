@@ -111,8 +111,20 @@ const updateStateTable = async(idstate,idmesa)=>{
     throw new Error();
   }
 }
+
+// Nuevo codigo
+const updateStateTableByNumber = async(idstate,nummesa)=>{
+  try {
+    await conn.query("UPDATE mesa SET id_emesa=? WHERE numero_mesa=?",[idstate,nummesa]);
+  } catch (error) {
+    console.log(error);
+    throw new Error();
+  }
+}
+
 const getOneOrder = async(nanoid)=>{
-  const order=await conn.query("SELECT p.*,u.nom_usu,(SELECT group_concat(numero_mesa separator ', ') from mesa_pedido mp JOIN mesa m ON mp.id_mesa=m.id_mesa WHERE mp.id_ped=p.id_ped) as mesas FROM pedido p INNER JOIN usuario u ON p.id_usu=u.id_usu WHERE p.cod_ped=?",[nanoid])
+  // const order=await conn.query("SELECT p.*,u.nom_usu,(SELECT group_concat(numero_mesa separator ', ') from mesa_pedido mp JOIN mesa m ON mp.id_mesa=m.id_mesa WHERE mp.id_ped=p.id_ped) as mesas FROM pedido p INNER JOIN usuario u ON p.id_usu=u.id_usu WHERE p.cod_ped=?",[nanoid])
+  const order=await conn.query("SELECT p.*,u.nom_usu,(SELECT group_concat(numero_mesa separator ', ') from mesa_pedido mp JOIN mesa m ON mp.id_mesa=m.id_mesa WHERE mp.id_ped=p.id_ped) as mesas, c.nom_cli FROM pedido p INNER JOIN usuario u ON p.id_usu=u.id_usu LEFT JOIN cliente c ON p.id_cli=c.id_cli WHERE p.cod_ped=?",[nanoid])
   return order[0];
 }
 
@@ -181,6 +193,17 @@ const getDetailsOrdersTodayByState=async(idestado)=>{
     throw Error;
   }
 }
+
+const deleteTableOrderByOrder = async (id) => {
+  try {
+    const orderTable = await conn.query("DELETE FROM mesa_pedido WHERE id_ped=?", [id]);
+    return orderTable;
+  } catch (error) {
+    console.log(error);
+    throw new Error();
+  }
+};
+
 module.exports = {
   getAll,
   getCountOrders,
@@ -201,10 +224,11 @@ module.exports = {
   getDetailsByOrder,
   getTableOrder,
   updateStateTable,
+  updateStateTableByNumber,
   updateStateOrder,
   getfechaAll,
   getPreparedOrdersByMode,
   getInfoOrdersTodayByState,
-  getDetailsOrdersTodayByState
+  getDetailsOrdersTodayByState,
+  deleteTableOrderByOrder
 };
-

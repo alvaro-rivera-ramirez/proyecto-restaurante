@@ -1,4 +1,7 @@
 const { getProductByCategory } = require("../services/productoServices");
+
+const { createPay } = require("../services/payServices");
+
 const OrderServices=require("../services/orderServices");
 const {
   handleErrorResponse,
@@ -23,6 +26,11 @@ const getOrders=async(req,res)=>{
   try {
     const roleUser=req.role;
     let orders={};
+    if(roleUser=="Cajero"){
+      const idusu=req.id;
+      orders.takeaway=await OrderServices.getPreparedOrdersByMode(idusu,1);
+      orders.fortable=await OrderServices.getPreparedOrdersByMode(idusu,2);
+    }
     if(roleUser=="Cocinero"){
       orders.order=await OrderServices.getInfoOrdersTodayByState(1);
       orders.details=await OrderServices.getDetailsOrdersTodayByState(1);
@@ -157,7 +165,11 @@ const updateStateOrder =async(req,res)=>{
   try {
     const {stateOrder}=req.body;
     const {codeOrder}=req.params;
-    console.log(req)
+
+    console.log("updateOrder");
+    console.log(req.body);
+    console.log(req.params);
+
     let infoOrderUpdate={
       id_epedido:stateOrder
     }
@@ -166,8 +178,26 @@ const updateStateOrder =async(req,res)=>{
       console.log('agrgeando id cliente')
       infoOrderUpdate.id_cli=req.body.idClient;
     }
-    if(req.role=="Cajero"){
+    if(req.role=="Cajero" && stateOrder==4){
+      const {medioPago}=req.body;
+      const {idPed}=req.body;
+      const {mesas}=req.body;
+      const {totalPago}=req.body;
+      const date=getDateTime();
       
+      var arrayMesas = mesas.split(", ");
+      console.log(arrayMesas);
+
+      // En adicion se crea el pago
+      await createPay(idPed,medioPago,date,totalPago);
+      
+      // Actualizar estado mesa a disponible
+      for (var i = 0; i < arrayMesas.length; i++) {
+        await OrderServices.updateStateTableByNumber(1,arrayMesas[i]);
+      }
+
+      // Borrar registro en estado_mesa
+      await OrderServices.deleteTableOrderByOrder(idPed);
     }
 
     msg=(req.role=="Cajero")?'Orden Pagada':'Orden Actualizada';
@@ -187,6 +217,6 @@ module.exports = {
   createOrder,
   updateOrder,
   getPedidos,
-  getPedidosFiltro
+  getPedidosFiltro,
   updateStateOrder
 };
