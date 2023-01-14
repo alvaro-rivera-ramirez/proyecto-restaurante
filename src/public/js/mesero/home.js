@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const result = await fetch("/api/table/?piso=" + id_piso);
     if (result.ok) {
       const tables = await result.json();
+      console.log(tables)
       return tables;
     }
     return null;

@@ -30,7 +30,7 @@ const conn = require("../config/bd");
     return countOrders[0];
   };
   const getPedidoIdAll = async () =>{
-    const pedido = await conn.query("SELECT id_ped FROM pedido WHERE id_epedido=2 and date(fecha_ped)=curdate()");
+    const pedido = await conn.query("SELECT id_ped,cod_ped FROM pedido WHERE id_epedido=2 and date(fecha_ped)=curdate()");
     return pedido;
   }
   const getPedido = async(id_ped) =>{
@@ -153,15 +153,15 @@ const getPreparedOrdersByMode=async(idusu,idmod)=>{
   }
 }
 
-// const getPreparedOrdersTodayToCarryOut=async()=>{
-//   try {
-//     const orders=await conn.query("SELECT p.id_ped,p.cod_ped FROM pedido p WHERE p.id_epedido=2 AND date(p.fecha_ped)= curdate() AND p.id_mod=1");
-//     return orders;
-//   } catch (error) {
-//     console.log(error)
-//     throw Error;
-//   }
-// }
+const getPreparedOrdersToCarryOut=async()=>{
+  try {
+    const orders=await conn.query("SELECT p.id_ped,p.cod_ped FROM pedido p WHERE p.id_epedido=2 AND date(p.fecha_ped)= curdate() AND p.id_mod=1");
+    return orders;
+  } catch (error) {
+    console.log(error)
+    throw Error;
+  }
+}
 
 const getPreAccountOrdersToday=async()=>{
   try {
@@ -227,6 +227,18 @@ const getReportAll=async(idPago)=>{
   }
 }
 
+//Obtienes el mode de orden y el id de pedido por codigo de orden
+const getModeToOrder=async(code)=>{
+  try {
+    const order=await conn.query("SELECT p.id_ped as id,p.id_mod as mode,p.id_usu as user,(SELECT COUNT(*) as cant FROM pedido p2 WHERE p2.id_mod=p.id_mod AND date(p2.fecha_ped)= curdate() AND p2.id_epedido=2 AND p2.id_usu=p.id_usu) as cant FROM pedido p WHERE p.cod_ped=?",[code]);
+
+    return order[0];
+  }catch(error) {
+    console.log(error)
+    throw Error;
+  }
+}
+
 const deleteTableOrderByOrder = async (id) => {
   try {
     const orderTable = await conn.query("DELETE FROM mesa_pedido WHERE id_ped=?", [id]);
@@ -261,8 +273,10 @@ module.exports = {
   updateStateOrder,
   getfechaAll,
   getPreparedOrdersByMode,
+  getPreparedOrdersToCarryOut,
   getInfoOrdersTodayByState,
   getDetailsOrdersTodayByState,
+  getModeToOrder,
   getOrderReport,
   getOrderPago,
   getReportAll,
