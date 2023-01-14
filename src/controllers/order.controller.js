@@ -187,6 +187,6 @@ module.exports = {
   createOrder,
   updateOrder,
   getPedidos,
-  getPedidosFiltro
+  getPedidosFiltro,
   updateStateOrder
 };

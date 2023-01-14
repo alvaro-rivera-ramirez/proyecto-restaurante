@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
     containerDetails.innerHTML += `<div class="row d-flex align-items-center">
     <input type="hidden" value="${idprod}" class="id_products"">
-    <div class="col-md-4">${nomprod}</div>
-    <div class="col-md-4 d-flex justify-content-center align-items-center">
+    <div class="col-4">${nomprod}</div>
+    <div class="col-4 d-flex justify-content-center align-items-center">
     <button class="btn btn-decrement me-3" onclick="quantityProd(this)">
             <i class="fa-solid fa-angle-left"></i>
         </button>
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <i class="fa-solid fa-angle-right"></i>
         </button>
         </div>
-        <div class="col-md-3">
+        <div class="col-3">
         ${subtotal.toLocaleString("es-PE", {
           style: "currency",
           currency: "PEN",
