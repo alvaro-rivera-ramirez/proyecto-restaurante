@@ -1,0 +1,122 @@
+<div id="contenido">
+    <div id="formUser" class="shadow p-3 mb-5 bg-body rounded">
+          
+    <nav aria-label="breadcrumb" class="link_nav">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/home">Inicio</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
+        </ol>
+      </nav>
+      <h2 class="mb-2 title_registro "><i class="fa-solid fa-address-card"></i> REPORTES</h2>
+      <div class="col" style="height: 100%;">
+        </div>   
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered mb-3 pt-2" style="max-width:100%;" id="datatable">
+            <thead>
+                </a>
+                <tr >
+                    <th scope="col">Nro pago</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">fecha</th>
+                    <th scope="col" class="text-center"><i class="fa-solid fa-gears"></i></th>
+                      
+                </tr>
+                  
+            </thead>
+            <tbody id="data" >
+
+                <thead>
+                    <tr >
+                        <th scope="col" id="id_nropago">0001</th>
+                        <th scope="col" id="id_cliente">Johan Marcos Condori Orellana</th>
+                        <th scope="col" id="id_fecha">2021-11-11</th>
+                        <th scope="col" class="text-center"><a type="button" class='btn btn-warning btnEdit me-3' 
+                             data-bs-toggle="modal" data-bs-target="#modalUser" onclick="detallado(1)"><i class="fa-sharp fa-solid fa-file-pdf"></i></a></th>
+                    </tr>
+                      
+                </thead>
+            </tbody>
+              
+        </table>
+    </div>
+          <!--modal -->
+          <div class="modal" tabindex="-1" role="modal1" id="modalUser">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">DATOS DEL USUARIO</h5>
+                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-0">
+                        <div class="row">
+                            <div class="col">
+                                <label class="form-label">Nro</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col">
+                                <input  id="Nro_pago"name="nombre" type="text" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-0">
+                        <div class="row">
+                            <div class="col">
+                                <label class="form-label">Apellido paterno</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col">
+                                <input id="Cliente" name="apellido1" type="text" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-0">
+                        <div class="row">
+                            <div class="col-12 col-lg-12">
+                                <label class="form-label">N° Documento de identidad</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="col">
+                            <div class="col-12 col-lg-12">
+                                <input id="fecha" name="nro_ddi" type="text" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class='btn btn-warning me-3' href='/api/order/report/1' id="imprimir_ped"><i class="fa-sharp fa-solid fa-file-pdf"></i></a>
+                    <button type="button" class="btn btn-dark btn-primary mx-2" onclick="generatePdf()"><i class="fa-solid"></i> generar pdf</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+           
+          </div>
+    
+          <!--termina modal-->
+    </div>
+</div>  
+<script>
+    function detallado(id){
+        document.getElementById('Nro_pago').value=document.getElementById('id_nropago').innerHTML;
+        document.getElementById('Cliente').value=document.getElementById('id_cliente').innerHTML;
+        document.getElementById('fecha').value=document.getElementById('id_fecha').innerHTML;
+        document.getElementById('imprimir_ped').href='/api/order/report/1';
+    }
+    function generatePdf(){
+        fetch('/api/order/report/1');
+    }
+</script>
