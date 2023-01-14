@@ -12,5 +12,9 @@ router.get('/pago', isLoggedIn, async (req,res) => {
 
     res.render('cajero/realizarPago', { nom_usu, nom_tipousu, total_pay });
 })
-
+router.get('/reportes',isLoggedIn,(req,res)=>{
+    const nom_usu=req.name
+    const nom_tipousu=req.role
+    res.render('cajero/reportes',{nom_usu,nom_tipousu});
+  })
 module.exports = router;
