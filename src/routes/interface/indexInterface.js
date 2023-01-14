@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const jwt=require('jsonwebtoken');
 const { getProfileHeader } = require("../../services/profileServices");
 const { getCountUsers } = require("../../services/userServices");
 const {
@@ -7,6 +8,7 @@ const {
   getCountOrderWait,
   getCountOrderPrepared,
 } = require("../../services/orderServices");
+const { getTotalPayToday } = require("../../services/payServices");
 const { getPisos } = require("../../services/pisosServices");
 const {
   isLoggedIn,
@@ -41,8 +43,9 @@ router.get("/home", isLoggedIn, async (req, res) => {
       res.render("mesero/home", { nom_usu, nom_tipousu, count_orders_day});
       break;
     case "Cajero":
-      pisos = await getPisos();
-      res.render("cajero/home", { nom_usu, nom_tipousu, pisos });
+      const {total_pay}=await getTotalPayToday();
+      console.log(total_pay);
+      res.render("cajero/home", { nom_usu, nom_tipousu, total_pay });
       break;
     case "Cocinero":
       const {count_orders_wait} = await getCountOrderWait();
@@ -67,4 +70,22 @@ router.get("/change-password", isLoggedIn, async (req, res) => {
   res.render("change-password", { nom_usu, nom_tipousu });
 });
 
+
+//nose donde poner
+router.get("/forgot-psw", verifyLoggedIn,(req, res) => {
+  res.render("forgotPws",{layout: false});
+});
+router.get("/reset-psw/:email/:token", verifyLoggedIn,(req, res) => {
+  console.log("en reset")
+  const{email,token}=req.params;
+  try{
+    console.log(process.env.JWT_SECRET)
+    const payload=jwt.verify(token,process.env.JWT_SECRET);
+    console.log(payload)
+    console.log(email,token)
+    res.render("reset-password",{layout: false,email:email,token:token});
+} catch(error){
+  return res.status(401);
+}
+});
 module.exports = router;

@@ -6,23 +6,20 @@
     </div>
     <div class="header__end">
         <div class="header__list">
-            <a href="#" class="header__link">
-                <i class='fa-solid fa-bell header__icon'></i>
-            </a>
         </div>
-        <div class="header__card desplegable">
-            <div class="header__card-content desplegable-toggle">
+        <div class="d-flex align-items-center">
+            <button type="button" class="dropdown-toggle boton-header" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="header__card-img">
+                    <!-- <i class='fa-solid fa-user'></i> -->
                     <img src="/public/img/icon-user.png">
                 </div>
                 <div class="header__card-text">
                     <p style="user-select: none"><%= nom_usu %></p>
                 </div>
-                <div class="caret"></div>
-            </div>
-            <ul class="desplegable-menu">
-                <li><a class="desplegable-item" href="/change-password"><i class="fa-solid fa-key"></i> Cambiar contraseña</a></li>
-                <li><a class="desplegable-item" href="/logOut"><i class="fa-solid fa-arrow-right-from-bracket"></i> Salir</a></li>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" type="button" href="/change-password"><i class="fa-solid fa-key"></i> Cambiar contraseña</a></li>
+                <li><a class="dropdown-item" type="button" href="/logOut"><i class="fa-solid fa-arrow-right-from-bracket"></i> Salir</a></li>
             </ul>
         </div>
     </div>

@@ -48,6 +48,21 @@ const { encrypt, compare } = require("../utils/handlePass");
   
     return countUsers[0];
   };
+  const getEmail = async (email) => {
+    const regUsu = await conn.query("select * from usuario where email_usu=?",email);
+  
+    return regUsu[0];
+  };
+  const confirmEmail = async (token) => {
+    const confirmEmail = await conn.query("select email_usu from usuario where psw_usu=?",token);
+  
+    return confirmEmail[0];
+  };
+  const resetPwsPut = async (datos) => {
+    const reset = await conn.query("UPDATE usuario SET psw_usu=? WHERE email_usu=?; ",[datos.psw,datos.email]);
+  
+    return reset;
+  };
 
 module.exports={
     getUsers,
@@ -55,5 +70,8 @@ module.exports={
     updateUser,
     deleteUser,
     changePassword,
-    getCountUsers
+    getCountUsers,
+    getEmail,
+    confirmEmail,
+    resetPwsPut
 }

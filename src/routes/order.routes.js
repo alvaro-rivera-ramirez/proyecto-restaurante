@@ -7,6 +7,6 @@ OrderRouter.get("/products/:idcategory",OrderController.getProductsByCategory);
 OrderRouter.get("/",validationToken,OrderController.getOrders);
 OrderRouter.get("/:codeOrder",OrderController.getOneOrder);
 OrderRouter.post("/",validationToken,OrderController.createOrder);
-// OrderRouter.put("/:codeOrder",validationToken,OrderController.updateOrder);
+OrderRouter.post("/filtro",OrderController.getPedidosFiltro);
 OrderRouter.patch("/:codeOrder",validationToken,OrderController.updateStateOrder);
 module.exports=OrderRouter;

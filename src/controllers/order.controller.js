@@ -1,4 +1,7 @@
 const { getProductByCategory } = require("../services/productoServices");
+
+const { createPay } = require("../services/payServices");
+
 const OrderServices=require("../services/orderServices");
 const {
   handleErrorResponse,
@@ -23,7 +26,6 @@ const getOrders=async(req,res)=>{
   try {
     const roleUser=req.role;
     let orders={};
-    
     switch (roleUser) {
       case "Cocinero":
         orders.order=await OrderServices.getInfoOrdersTodayByState(1);
@@ -149,10 +151,39 @@ const updateOrder = (req, res) => {
 
 };
 
+
+const getPedidos = async (req, res) => {
+  try {
+      const pedidos=await OrderServices.getAll();
+      return res.status(201).send(pedidos);
+  } catch (error) {
+      return res.status(401);
+  }
+};
+
+const getPedidosFiltro = async (req, res) => {
+  try {
+      const {start_date,end_date} = req.body;
+      if(!start_date && !end_date){
+        handleErrorResponse(res,"CAMPOS VACIOS",401);
+        return;
+      }
+      console.log(start_date,end_date);
+      const pedidos=await OrderServices.getfechaAll(start_date,end_date);
+      console.log(pedidos);
+      return res.status(201).send(pedidos);
+  } catch (error) {
+      return res.status(401);
+  }
+};
+
 const updateStateOrder =async(req,res)=>{
   try {
     const {stateOrder}=req.body;
     const {codeOrder}=req.params;
+    console.log("updateOrder");
+    console.log(req.body);
+    console.log(req.params);
     let infoOrderUpdate={
       id_epedido:stateOrder
     }
@@ -161,8 +192,26 @@ const updateStateOrder =async(req,res)=>{
       console.log('agrgeando id cliente')
       infoOrderUpdate.id_cli=req.body.idClient;
     }
-    if(req.role=="Cajero"){
+    if(req.role=="Cajero" && stateOrder==4){
+      const {medioPago}=req.body;
+      const {idPed}=req.body;
+      const {mesas}=req.body;
+      const {totalPago}=req.body;
+      const date=getDateTime();
       
+      var arrayMesas = mesas.split(", ");
+      console.log(arrayMesas);
+
+      // En adicion se crea el pago
+      await createPay(idPed,medioPago,date,totalPago);
+      
+      // Actualizar estado mesa a disponible
+      for (var i = 0; i < arrayMesas.length; i++) {
+        await OrderServices.updateStateTableByNumber(1,arrayMesas[i]);
+      }
+
+      // Borrar registro en estado_mesa
+      await OrderServices.deleteTableOrderByOrder(idPed);
     }
 
     msg=(req.role=="Cajero")?'Orden Pagada':'Orden Actualizada';
@@ -174,11 +223,14 @@ const updateStateOrder =async(req,res)=>{
     handleHttpError(res,"ERROR EN LA CONSULTA");
   }
 }
+
 module.exports = {
   getProductsByCategory,
   getOrders,
   getOneOrder,
   createOrder,
   updateOrder,
+  getPedidos,
+  getPedidosFiltro,
   updateStateOrder
 };

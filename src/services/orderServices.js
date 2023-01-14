@@ -1,5 +1,15 @@
 const conn = require("../config/bd");
 
+  const getAll =async()=>{
+    const order=await conn.query("SELECT pe.id_ped, u.nom_usu, ep.id_epedido, mo.nom_mod,DATE_FORMAT(pe.fecha_ped, '%d-%m-%Y') as fecha,time(pe.fecha_ped) as hora, SUM(dt.cantidad_det*pro.precio_u_prod) as precioT  FROM pedido pe, usuario u, estado_pedido ep, modalidad mo, detalle_pedido dt, producto pro WHERE pe.id_usu=u.id_usu and pe.id_epedido=ep.id_epedido and pe.id_mod=mo.id_mod and pe.id_ped=dt.id_ped and dt.id_prod=pro.id_prod GROUP BY pe.id_ped;");
+    return order;
+  }
+
+  const getfechaAll =async(date_start,date_end)=>{
+    const order=await conn.query("SELECT pe.id_ped, u.nom_usu, ep.id_epedido, mo.nom_mod,DATE_FORMAT(pe.fecha_ped, '%d-%m-%Y') as fecha,time(pe.fecha_ped) as hora, SUM(dt.cantidad_det*pro.precio_u_prod) as precioT  FROM pedido pe, usuario u, estado_pedido ep, modalidad mo, detalle_pedido dt, producto pro WHERE pe.id_usu=u.id_usu and pe.id_epedido=ep.id_epedido and pe.id_mod=mo.id_mod and pe.id_ped=dt.id_ped and dt.id_prod=pro.id_prod and pe.fecha_ped  BETWEEN ? and ? GROUP BY pe.id_ped;",[date_start,date_end]);
+    return order;
+  }
+
   const getCountOrders = async () => {
     const countOrders = await conn.query("SELECT COUNT(*) AS count_orders FROM pedido");
   
@@ -101,8 +111,20 @@ const updateStateTable = async(idstate,idmesa)=>{
     throw new Error();
   }
 }
+
+// Nuevo codigo
+const updateStateTableByNumber = async(idstate,nummesa)=>{
+  try {
+    await conn.query("UPDATE mesa SET id_emesa=? WHERE numero_mesa=?",[idstate,nummesa]);
+  } catch (error) {
+    console.log(error);
+    throw new Error();
+  }
+}
+
 const getOneOrder = async(nanoid)=>{
-  const order=await conn.query("SELECT p.*,u.nom_usu,(SELECT group_concat(numero_mesa separator ', ') from mesa_pedido mp JOIN mesa m ON mp.id_mesa=m.id_mesa WHERE mp.id_ped=p.id_ped) as mesas FROM pedido p INNER JOIN usuario u ON p.id_usu=u.id_usu WHERE p.cod_ped=?",[nanoid])
+  // const order=await conn.query("SELECT p.*,u.nom_usu,(SELECT group_concat(numero_mesa separator ', ') from mesa_pedido mp JOIN mesa m ON mp.id_mesa=m.id_mesa WHERE mp.id_ped=p.id_ped) as mesas FROM pedido p INNER JOIN usuario u ON p.id_usu=u.id_usu WHERE p.cod_ped=?",[nanoid])
+  const order=await conn.query("SELECT p.*,u.nom_usu,(SELECT group_concat(numero_mesa separator ', ') from mesa_pedido mp JOIN mesa m ON mp.id_mesa=m.id_mesa WHERE mp.id_ped=p.id_ped) as mesas, c.nom_cli FROM pedido p INNER JOIN usuario u ON p.id_usu=u.id_usu LEFT JOIN cliente c ON p.id_cli=c.id_cli WHERE p.cod_ped=?",[nanoid])
   return order[0];
 }
 
@@ -183,7 +205,19 @@ const getModeToOrder=async(code)=>{
     throw Error;
   }
 }
+
+const deleteTableOrderByOrder = async (id) => {
+  try {
+    const orderTable = await conn.query("DELETE FROM mesa_pedido WHERE id_ped=?", [id]);
+    return orderTable;
+  } catch (error) {
+    console.log(error);
+    throw new Error();
+  }
+};
+
 module.exports = {
+  getAll,
   getCountOrders,
   getCountOrdersByWaiter,
   getCountOrderWait,
@@ -202,11 +236,13 @@ module.exports = {
   getDetailsByOrder,
   getTableOrder,
   updateStateTable,
+  updateStateTableByNumber,
   updateStateOrder,
+  getfechaAll,
   getPreparedOrdersByMode,
   getPreparedOrdersToCarryOut,
   getInfoOrdersTodayByState,
   getDetailsOrdersTodayByState,
   getModeToOrder,
+  deleteTableOrderByOrder
 };
-
