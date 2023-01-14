@@ -97,8 +97,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a type="button" class='btn btn-warning me-3' href='/api/order/report/1' id="imprimir_ped"><i class="fa-sharp fa-solid fa-file-pdf"></i></a>
-                    <button type="button" class="btn btn-dark btn-primary mx-2" onclick="generatePdf()"><i class="fa-solid"></i> generar pdf</button>
+                    <a type="button" class='btn btn-warning me-3' href='/api/order/report/1' id="imprimir_ped">generar reporte</a>
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
               </div>
@@ -110,6 +109,7 @@
     </div>
 </div>  
 <script>
+    getReportes();
     function detallado(id){
         document.getElementById('Nro_pago').value=document.getElementById('id_nropago').innerHTML;
         document.getElementById('Cliente').value=document.getElementById('id_cliente').innerHTML;
@@ -118,5 +118,14 @@
     }
     function generatePdf(){
         fetch('/api/order/report/1');
+    }
+    function getReportes(){
+        fetch('api/order/report')
+      .then( response => response.json() )
+      .then( data =>{
+          report=data;
+          console.log(data);
+          
+      })
     }
 </script>

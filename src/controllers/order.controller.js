@@ -190,7 +190,7 @@ const getReport = async (req, res) => {
       const doc=new PDF({bufferPage:true});
       const filename=`Boleta${Date.now()}.pdf`;
       //doc.pipe(fs.createWriteStream(`${filename}`));
-      const stream =res.writeHead(200,{
+      const stream =res.writeHead(201,{
         'Content-Type':'application/pdf',
         'Content-disposition':`attachment;filename=${filename}`
       });
@@ -247,9 +247,20 @@ const getReport = async (req, res) => {
       
   } catch (error) {
     return res.status(401);
+  };
+
+};
+const getReportAll = async (req, res) => {
+  
+  try {
+    const getReportAll_=await OrderServices.getReportAll();
+
+    return res.status(201).send(getReportAll_);
+  } catch (error) {
+    
+    return res.status(401);
   }
 };
-
 module.exports = {
   getProductsByCategory,
   getOrders,
@@ -260,4 +271,5 @@ module.exports = {
   getPedidosFiltro,
   updateStateOrder,
   getReport,
+  getReportAll
 };

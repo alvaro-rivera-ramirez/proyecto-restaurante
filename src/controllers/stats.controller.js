@@ -19,22 +19,47 @@ const pedBimes=async(req,res)=>{
     const { params: {dato},}=req;
     var fecha = new Date("'"+req.params.dato+"'");
     var mes=fecha.getMonth()+1;
+    var dia;
     var anio=fecha.getFullYear();
+    var prefecha;
+    let stats_=[];
+    var consulta;
+    var respuesta;
     
-    if(mes-3<1){
-      var preanio=anio-1;
-      var premes=12+mes-3;
+    for(let item=0;item<5;item++){
+      if(mes-1<1 & item!=0){
+        premes=12;
+        preanio=anio-1;
+        
+      }
+      else if(item==0){
+        var preanio=anio;
+        var premes=mes;
+        console.log("en item 0: ",preanio,premes)
+      }
+      else{
+        premes=mes-1;
+      }
+      dia=new Date(anio,mes,0);
+      fecha=new Date("'"+anio+"-"+premes+"-"+dia.getDate()+"'");
+      prefecha=new Date("'"+preanio+"-"+premes+"-"+1+"'");
+      let arrayfecha=[prefecha,fecha];
+      console.log(arrayfecha)
+      consulta=await statsServices.pedBimes(arrayfecha);
+      if(consulta==null){
+        consulta.push(0);
+      }
+      respuesta={
+        cantPed:consulta[0].cantPed,
+        mes:premes,
+        anio:preanio
+      }
+      stats_.push(respuesta);
+      mes=premes;
+      anio=preanio;
     }
-    else{
-      var preanio=anio;
-      var premes=mes-3;
-    }
-    
-    let dia=new Date(anio,mes,0);
-    fecha=new Date("'"+anio+"-"+mes+"-"+dia.getDate()+"'");
-    var prefecha=new Date("'"+preanio+"-"+premes+"-"+1+"'")
-    arrayfecha=[prefecha,fecha];
-    const stats_=await statsServices.pedBimes(arrayfecha);
+    console.log("stats: ",stats_)
+    //const statsarray=await statsServices.pedBimes(arrayfecha);
     return res.status(201).send(stats_);
   } catch (error) {
     return res.status(401);

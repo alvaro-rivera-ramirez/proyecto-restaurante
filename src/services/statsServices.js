@@ -9,8 +9,8 @@ const conn = require("../config/bd");
     return users;
   };
   const pedBimes = async (arrayfecha) => {
-    const users = await conn.query(`select count(id_ped) as cantPed, month(fecha_ped) as mes,year(fecha_ped) as anio  
-    from pedido where fecha_ped>=? and fecha_ped<=? group by month(fecha_ped),year(fecha_ped);`,arrayfecha);
+    const users = await conn.query(`select count(id_ped) as cantPed
+    from pedido where fecha_ped>=? and fecha_ped<=? ;`,arrayfecha);
     if (!users) throw new Error();
     return users;
   };

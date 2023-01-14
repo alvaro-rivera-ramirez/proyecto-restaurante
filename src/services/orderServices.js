@@ -202,6 +202,18 @@ const getOrderPago=async(idPago)=>{
     throw Error;
   }
 }
+const getReportAll=async(idPago)=>{
+  try {
+    const pago=await conn.query(`select pag.id_pago,cli.nom_cli,prod.nom_prod,det.cantidad_det,prod.precio_u_prod,cat.nom_categoria, pag.total_pago, (prod.precio_u_prod*det.cantidad_det) as subTotal
+    from pago as pag inner join pedido as ped on ped.id_ped=pag.id_ped inner join cliente as cli on cli.id_cli=ped.id_cli 
+    inner join detalle_pedido as det on det.id_ped=ped.id_ped inner join producto as prod on prod.id_prod=det.id_prod inner join categoria as cat
+     on cat.id_categoria=prod.id_categoria;`,[idPago]);
+    return pago;
+  } catch (error) {
+    console.log(error);der
+    throw Error;
+  }
+}
 module.exports = {
   getAll,
   getCountOrders,
@@ -228,6 +240,7 @@ module.exports = {
   getInfoOrdersTodayByState,
   getDetailsOrdersTodayByState,
   getOrderReport,
-  getOrderPago
+  getOrderPago,
+  getReportAll
 };
 
