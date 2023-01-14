@@ -22,5 +22,15 @@ socket.on('mesero-recibe-pedido',(infoOrder)=>{
 })
 
 socket.on("mesero-pedido-preparado",(infoOrder)=>{
-    console.log(infoOrder);
+    const {id,code,mode,cant}=infoOrder;
+    let tagTitle;
+    if(mode=="1"){
+        tagTitle=document.querySelector('#ordersToTakeAway');
+    }else{
+        tagTitle=document.querySelector('#ordersForTable');
+    }
+    const listOrder=tagTitle.parentNode.querySelector('.card-body');
+    console.log(listOrder);
+    listOrder.innerHTML+=`<a class="dropdown-item" href="/comanda?cod=${code}">N° ${id.toString().padStart(6, 0)}</a>`
+    tagTitle.innerHTML=`Listos para la mesa (${cant}) <div class="caret"></div>`;
 })

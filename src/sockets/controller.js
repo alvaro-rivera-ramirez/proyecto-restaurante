@@ -37,11 +37,12 @@ const socketController = async(socket) => {
 
   socket.on("pedido-preparado",async(payload)=>{
     const {code}=payload;
-    const {id,mode,user}=await getModeToOrder(code);
+    console.log(code)
+    const {id,mode,user,cant}=await getModeToOrder(code);
     const orderPrepared={
-      id,mode
+      id,code,mode,cant
     }
-    console.log("user",user);
+    console.log(orderPrepared);
     socket.to(user).emit("mesero-pedido-preparado",orderPrepared);
   })
 };

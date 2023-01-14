@@ -175,9 +175,9 @@ const getDetailsOrdersTodayByState=async(idestado)=>{
 //Obtienes el mode de orden y el id de pedido por codigo de orden
 const getModeToOrder=async(code)=>{
   try {
-    const order=await conn.query("SELECT p.id_ped as id,p.id_mod as mode,p.id_usu as user FROM pedido p WHERE p.cod_ped=?",[code]);
+    const order=await conn.query("SELECT p.id_ped as id,p.id_mod as mode,p.id_usu as user,(SELECT COUNT(*) as cant FROM pedido p2 WHERE p2.id_mod=p.id_mod AND date(p2.fecha_ped)= curdate() AND p2.id_epedido=2 AND p2.id_usu=p.id_usu) as cant FROM pedido p WHERE p.cod_ped=?",[code]);
 
-    return order;
+    return order[0];
   }catch(error) {
     console.log(error)
     throw Error;
@@ -206,7 +206,7 @@ module.exports = {
   getPreparedOrdersByMode,
   getPreparedOrdersToCarryOut,
   getInfoOrdersTodayByState,
-  getModeToOrder,
   getDetailsOrdersTodayByState,
+  getModeToOrder,
 };
 
