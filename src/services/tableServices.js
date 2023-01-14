@@ -48,7 +48,8 @@ const deleteTable = async (id) => {
 
 const getTablesByFloor=async (id_piso)=>{
   try {
-    const mesas = await con.query("select m.*,(null) as cod_ped from mesa m where m.id_piso=? and m.id_emesa!=2 union select m.*,p.cod_ped from mesa m cross join (select ped.cod_ped,dt.id_mesa from pedido ped,mesa_pedido dt where ped.id_ped=dt.id_ped and ped.id_epedido not in (4,5) and ped.id_mod=2) as p where p.id_mesa=m.id_mesa and m.id_piso=? order by id_mesa;",[id_piso,id_piso]);
+    // const mesas = await con.query("select m.*,(null) as cod_ped from mesa m where m.id_piso=? and m.id_emesa!=2 union select m.*,p.cod_ped from mesa m cross join (select ped.cod_ped,dt.id_mesa from pedido ped,mesa_pedido dt where ped.id_ped=dt.id_ped and ped.id_epedido not in (4,5) and ped.id_mod=2) as p where p.id_mesa=m.id_mesa and m.id_piso=? order by id_mesa;",[id_piso,id_piso]);
+    const mesas = await con.query("(select m.*, (null) as cod_ped, case m.id_emesa when 1 then 1 else 5 end as epanel from mesa m where m.id_piso=? and m.id_emesa!=2) union (select m.*, p.cod_ped, (p.id_epedido + 1) as epanel from mesa m cross join (select ped.cod_ped, ped.id_epedido, dt.id_mesa from pedido ped, mesa_pedido dt where ped.id_ped=dt.id_ped and ped.id_epedido not in (4,5) and ped.id_mod=2) as p where p.id_mesa=m.id_mesa and m.id_piso=?) order by id_mesa;",[id_piso,id_piso]);
     return mesas;
   } catch (error) {
     throw new Error();
