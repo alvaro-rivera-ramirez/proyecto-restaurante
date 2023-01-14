@@ -8,6 +8,7 @@ socket.on('mesero-recibe-pedido',(infoOrder)=>{
     const {order}=infoOrder;
     if(order.id_mod=="2"){
         const {mesas}=infoOrder;
+        const panelMesas = document.querySelector("#tablero-mesa");
         let indiceMesa;
         for (const mesa of panelMesas.children) {
             indiceMesa=mesas.indexOf(mesa.innerText);
@@ -18,4 +19,8 @@ socket.on('mesero-recibe-pedido',(infoOrder)=>{
             }
         }
     }
+})
+
+socket.on("mesero-pedido-preparado",(infoOrder)=>{
+    console.log(infoOrder);
 })

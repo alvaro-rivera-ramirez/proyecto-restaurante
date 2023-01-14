@@ -20,7 +20,7 @@ const conn = require("../config/bd");
     return countOrders[0];
   };
   const getPedidoIdAll = async () =>{
-    const pedido = await conn.query("SELECT id_ped FROM pedido WHERE id_epedido=2 and date(fecha_ped)=curdate()");
+    const pedido = await conn.query("SELECT id_ped,cod_ped FROM pedido WHERE id_epedido=2 and date(fecha_ped)=curdate()");
     return pedido;
   }
   const getPedido = async(id_ped) =>{
@@ -131,15 +131,15 @@ const getPreparedOrdersByMode=async(idusu,idmod)=>{
   }
 }
 
-// const getPreparedOrdersTodayToCarryOut=async()=>{
-//   try {
-//     const orders=await conn.query("SELECT p.id_ped,p.cod_ped FROM pedido p WHERE p.id_epedido=2 AND date(p.fecha_ped)= curdate() AND p.id_mod=1");
-//     return orders;
-//   } catch (error) {
-//     console.log(error)
-//     throw Error;
-//   }
-// }
+const getPreparedOrdersToCarryOut=async()=>{
+  try {
+    const orders=await conn.query("SELECT p.id_ped,p.cod_ped FROM pedido p WHERE p.id_epedido=2 AND date(p.fecha_ped)= curdate() AND p.id_mod=1");
+    return orders;
+  } catch (error) {
+    console.log(error)
+    throw Error;
+  }
+}
 
 const getPreAccountOrdersToday=async()=>{
   try {
@@ -171,6 +171,18 @@ const getDetailsOrdersTodayByState=async(idestado)=>{
     throw Error;
   }
 }
+
+//Obtienes el mode de orden y el id de pedido por codigo de orden
+const getModeToOrder=async(code)=>{
+  try {
+    const order=await conn.query("SELECT p.id_ped as id,p.id_mod as mode,p.id_usu as user FROM pedido p WHERE p.cod_ped=?",[code]);
+
+    return order;
+  }catch(error) {
+    console.log(error)
+    throw Error;
+  }
+}
 module.exports = {
   getCountOrders,
   getCountOrdersByWaiter,
@@ -192,7 +204,9 @@ module.exports = {
   updateStateTable,
   updateStateOrder,
   getPreparedOrdersByMode,
+  getPreparedOrdersToCarryOut,
   getInfoOrdersTodayByState,
-  getDetailsOrdersTodayByState
+  getModeToOrder,
+  getDetailsOrdersTodayByState,
 };
 

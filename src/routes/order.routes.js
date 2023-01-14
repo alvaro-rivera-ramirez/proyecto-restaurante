@@ -9,5 +9,4 @@ OrderRouter.get("/:codeOrder",OrderController.getOneOrder);
 OrderRouter.post("/",validationToken,OrderController.createOrder);
 // OrderRouter.put("/:codeOrder",validationToken,OrderController.updateOrder);
 OrderRouter.patch("/:codeOrder",validationToken,OrderController.updateStateOrder);
-
 module.exports=OrderRouter;

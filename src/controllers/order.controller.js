@@ -23,16 +23,33 @@ const getOrders=async(req,res)=>{
   try {
     const roleUser=req.role;
     let orders={};
-    if(roleUser=="Cocinero"){
-      orders.order=await OrderServices.getInfoOrdersTodayByState(1);
-      orders.details=await OrderServices.getDetailsOrdersTodayByState(1);
+    
+    switch (roleUser) {
+      case "Cocinero":
+        orders.order=await OrderServices.getInfoOrdersTodayByState(1);
+        orders.details=await OrderServices.getDetailsOrdersTodayByState(1);
+        break;
+      case "Mesero":
+        const idusu=req.id;
+        orders.takeaway=await OrderServices.getPreparedOrdersByMode(idusu,1);
+        orders.fortable=await OrderServices.getPreparedOrdersByMode(idusu,2);
+        break;
+      case "Cajero":
+        orders.takeaway=await OrderServices.getPreparedOrdersToCarryOut();
+        break;
+      default:
+        break;
     }
+    // if(roleUser=="Cocinero"){
+    //   orders.order=await OrderServices.getInfoOrdersTodayByState(1);
+    //   orders.details=await OrderServices.getDetailsOrdersTodayByState(1);
+    // }
 
-    if(roleUser=="Mesero"){
-      const idusu=req.id;
-      orders.takeaway=await OrderServices.getPreparedOrdersByMode(idusu,1);
-      orders.fortable=await OrderServices.getPreparedOrdersByMode(idusu,2);
-    }
+    // if(roleUser=="Mesero"){
+    //   const idusu=req.id;
+    //   orders.takeaway=await OrderServices.getPreparedOrdersByMode(idusu,1);
+    //   orders.fortable=await OrderServices.getPreparedOrdersByMode(idusu,2);
+    // }
     res.status(200).send(orders);
     return;
   } catch (error) {
@@ -78,7 +95,9 @@ const createOrder = async (req, res) => {
         detail.id_ped=idOrder;
         await OrderServices.createDetailOrder(detail);
     }
-
+    order.nom_usu=req.usu;
+    order.id_ped=idOrder;
+    const detail =await OrderServices.getOrderDetailsByOrder(idOrder);
     if(mod=='2' && mesas.length>0){
         let idTable;
         for (const numMesa of mesas) {
@@ -89,16 +108,19 @@ const createOrder = async (req, res) => {
 
         res.status(201).send({
           order,
-          mesas
+          mesas,
+          detail
       });
       return;
     }
     res.status(201).send({
         order,
-        detalle
+        mesas:null,
+        detail
     });
   } catch (error) {
     console.log(error);
+    handleHttpError(res,"Error en la consulta");
   }
 };
 
@@ -131,7 +153,6 @@ const updateStateOrder =async(req,res)=>{
   try {
     const {stateOrder}=req.body;
     const {codeOrder}=req.params;
-    console.log(req)
     let infoOrderUpdate={
       id_epedido:stateOrder
     }
