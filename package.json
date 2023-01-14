@@ -39,6 +39,8 @@
     "mysql2": "^2.3.3",
     "nanoid": "^3.3.1",
     "nodemailer": "^6.8.0",
+    "pdfkit": "^0.13.0",
+    "pdfkit-construct": "^1.2.3",
     "socket.io": "^4.5.4"
   },
   "devDependencies": {

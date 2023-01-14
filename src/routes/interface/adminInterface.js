@@ -63,6 +63,11 @@ router.get("/reporte-dia", isLoggedIn,(req, res) => {
   const nom_tipousu=req.role
   res.render("admin/adminStatsUsuDay",{nom_usu,nom_tipousu});
 });
+router.get("/reporte", isLoggedIn,(req, res) => {
+  const nom_usu=req.name
+  const nom_tipousu=req.role
+  res.render("admin/reportStats",{nom_usu,nom_tipousu});
+});
 
 
 module.exports=router

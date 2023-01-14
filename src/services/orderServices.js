@@ -189,7 +189,40 @@ const getDetailsOrdersTodayByState=async(idestado)=>{
     const detailOrders=await conn.query("SELECT dp.*,prod.nom_prod FROM (SELECT * FROM pedido WHERE pedido.id_epedido=? AND date_format(pedido.fecha_ped,'%Y-%m-%d')= DATE(NOW())) AS p INNER JOIN detalle_pedido dp ON p.id_ped=dp.id_ped INNER JOIN producto prod ON dp.id_prod=prod.id_prod GROUP BY p.id_ped,dp.id_prod",[idestado]);
     return detailOrders;
   } catch (error) {
-    console.log(error);
+    console.log(error);der
+    throw Error;
+  }
+}
+const getOrderReport=async(idPago)=>{
+  try {
+    const platos=await conn.query(`select pag.id_pago,cli.nom_cli,prod.nom_prod,det.cantidad_det,prod.precio_u_prod,cat.nom_categoria, pag.total_pago, (prod.precio_u_prod*det.cantidad_det) as subTotal
+    from pago as pag inner join pedido as ped on ped.id_ped=pag.id_ped inner join cliente as cli on cli.id_cli=ped.id_cli 
+    inner join detalle_pedido as det on det.id_ped=ped.id_ped inner join producto as prod on prod.id_prod=det.id_prod inner join categoria as cat
+     on cat.id_categoria=prod.id_categoria where pag.id_pago=?;`,[idPago]);
+    return platos;
+  } catch (error) {
+    console.log(error);der
+    throw Error;
+  }
+}
+const getOrderPago=async(idPago)=>{
+  try {
+    const pago=await conn.query(`select * from pago as pag inner join pedido as ped on pag.id_ped=ped.id_ped inner join cliente as cli on cli.id_cli=ped.id_cli where pag.id_pago=?;`,[idPago]);
+    return pago;
+  } catch (error) {
+    console.log(error);der
+    throw Error;
+  }
+}
+const getReportAll=async(idPago)=>{
+  try {
+    const pago=await conn.query(`select pag.id_pago,cli.nom_cli,prod.nom_prod,det.cantidad_det,prod.precio_u_prod,cat.nom_categoria, pag.total_pago, (prod.precio_u_prod*det.cantidad_det) as subTotal
+    from pago as pag inner join pedido as ped on ped.id_ped=pag.id_ped inner join cliente as cli on cli.id_cli=ped.id_cli 
+    inner join detalle_pedido as det on det.id_ped=ped.id_ped inner join producto as prod on prod.id_prod=det.id_prod inner join categoria as cat
+     on cat.id_categoria=prod.id_categoria;`,[idPago]);
+    return pago;
+  } catch (error) {
+    console.log(error);der
     throw Error;
   }
 }
@@ -244,5 +277,8 @@ module.exports = {
   getInfoOrdersTodayByState,
   getDetailsOrdersTodayByState,
   getModeToOrder,
+  getOrderReport,
+  getOrderPago,
+  getReportAll,
   deleteTableOrderByOrder
 };
