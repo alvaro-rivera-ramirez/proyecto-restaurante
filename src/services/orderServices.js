@@ -207,7 +207,8 @@ const getOrderReport=async(idPago)=>{
 }
 const getOrderPago=async(idPago)=>{
   try {
-    const pago=await conn.query(`select * from pago as pag inner join pedido as ped on pag.id_ped=ped.id_ped inner join cliente as cli on cli.id_cli=ped.id_cli where pag.id_pago=?;`,[idPago]);
+    const pago=await conn.query(`select (pag.total_pago*0.08+pag.total_pago) as sub_total, (pag.total_pago*0.08) as igv_pago, pag.total_pago, ped.id_ped, cli.nom_cli,DATE_FORMAT(fecha_pago,'%d/%m/%Y') as fecha_pago  
+    from pago as pag inner join pedido as ped on pag.id_ped=ped.id_ped inner join cliente as cli on cli.id_cli=ped.id_cli where pag.id_pago=?;`,[idPago]);
     return pago;
   } catch (error) {
     console.log(error);der
@@ -216,10 +217,20 @@ const getOrderPago=async(idPago)=>{
 }
 const getReportAll=async(idPago)=>{
   try {
-    const pago=await conn.query(`select pag.id_pago,cli.nom_cli,prod.nom_prod,det.cantidad_det,prod.precio_u_prod,cat.nom_categoria, pag.total_pago, (prod.precio_u_prod*det.cantidad_det) as subTotal
+    const pago=await conn.query(`select pag.id_pago,cli.nom_cli, DATE_FORMAT(fecha_pago,'%d/%m/%Y') as fecha_pago,ped.id_ped
+    from pago as pag inner join pedido as ped on ped.id_ped=pag.id_ped inner join cliente as cli on cli.id_cli=ped.id_cli;`,[idPago]);
+    return pago;
+  } catch (error) {
+    console.log(error);der
+    throw Error;
+  }
+}
+const getReportOne=async(idPago)=>{
+  try {
+    const pago=await conn.query(`select DATE_FORMAT(fecha_pago,'%d/%m/%Y') as fecha_pago,ped.id_ped, pag.id_pago,cli.nom_cli,prod.nom_prod,det.cantidad_det,prod.precio_u_prod,cat.nom_categoria, pag.total_pago, (prod.precio_u_prod*det.cantidad_det) as subTotal
     from pago as pag inner join pedido as ped on ped.id_ped=pag.id_ped inner join cliente as cli on cli.id_cli=ped.id_cli 
     inner join detalle_pedido as det on det.id_ped=ped.id_ped inner join producto as prod on prod.id_prod=det.id_prod inner join categoria as cat
-     on cat.id_categoria=prod.id_categoria;`,[idPago]);
+     on cat.id_categoria=prod.id_categoria where pag.id_pago=?;`,[idPago]);
     return pago;
   } catch (error) {
     console.log(error);der
@@ -280,5 +291,6 @@ module.exports = {
   getOrderReport,
   getOrderPago,
   getReportAll,
-  deleteTableOrderByOrder
+  deleteTableOrderByOrder,
+  getReportOne
 };
