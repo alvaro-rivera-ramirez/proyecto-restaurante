@@ -16,7 +16,7 @@
 
 #container-cajero-home .mesas__filter select, 
 #container-cajero-home .mesas__filter option{
-    width: 20rem;
+    width: 18rem;
     height: 2rem;
     background-color: white;
     border: none;
@@ -168,6 +168,11 @@
         width: 7.5rem;
         height: 7.5rem;
     }
+
+    #container-cajero-home .mesas__filter select, 
+    #container-cajero-home .mesas__filter option{
+        width: 13.5rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -186,5 +191,10 @@
     #container-cajero-home .col-mesa{
         width: 6.5rem;
         height: 6.5rem;
+    }
+
+    #container-cajero-home .mesas__filter select, 
+    #container-cajero-home .mesas__filter option{
+        width: 9rem;
     }
 }

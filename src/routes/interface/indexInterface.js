@@ -31,6 +31,7 @@ router.get("/home", isLoggedIn, async (req, res) => {
       const { count_orders} = await getCountOrders();
       const { count_pays }=await getTotalPay();
       let countPays=(parseFloat(count_pays)).toFixed(2);
+      if (countPays=='NaN') {countPays='0.00'}
 
       res.render("admin/home", {
         nom_usu,
@@ -48,6 +49,7 @@ router.get("/home", isLoggedIn, async (req, res) => {
     case "Cajero":
       const {total_pay}=await getTotalPayToday();
       let totalPay=(parseFloat(total_pay)).toFixed(2);
+      if (totalPay=='NaN') {totalPay='0.00'}
       res.render("cajero/home", { nom_usu, nom_tipousu, totalPay });
       break;
     case "Cocinero":

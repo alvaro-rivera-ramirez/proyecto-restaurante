@@ -9,6 +9,7 @@ router.get('/pago', isLoggedIn, async (req,res) => {
     const nom_tipousu=req.role;
     const {total_pay}=await getTotalPayToday();
     let totalPay=(parseFloat(total_pay)).toFixed(2);
+    if (totalPay=='NaN') {totalPay='0.00'}
     res.render('cajero/realizarPago', { nom_usu, nom_tipousu, totalPay });
 })
 router.get('/reportes',isLoggedIn,(req,res)=>{
