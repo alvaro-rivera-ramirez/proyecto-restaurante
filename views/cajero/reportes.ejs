@@ -24,108 +24,170 @@
                   
             </thead>
             <tbody id="data" >
-
-                <thead>
-                    <tr >
-                        <th scope="col" id="id_nropago">0001</th>
-                        <th scope="col" id="id_cliente">Johan Marcos Condori Orellana</th>
-                        <th scope="col" id="id_fecha">2021-11-11</th>
-                        <th scope="col" class="text-center"><a type="button" class='btn btn-warning btnEdit me-3' 
-                             data-bs-toggle="modal" data-bs-target="#modalUser" onclick="detallado(1)"><i class="fa-sharp fa-solid fa-file-pdf"></i></a></th>
-                    </tr>
-                      
-                </thead>
             </tbody>
               
         </table>
     </div>
-          <!--modal -->
-          <div class="modal" tabindex="-1" role="modal1" id="modalUser">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">DATOS DEL USUARIO</h5>
-                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-0">
-                        <div class="row">
-                            <div class="col">
-                                <label class="form-label">Nro</label>
-                            </div>
-                        </div>
+    <!--Modal-->
+    <div class="modal fade" id="modalUser"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" >
+                <table class="table table-striped table-bordered mb-3 pt-2" style="max-width:100%;" id="datatable">
+                    <div>
+                        <center><h2>Boleta</h2></center>
+                        <label for="">Nro boleta: </label><label for="" id="nroBoletaM">1</label><br>
+                        <label for="">Cliente: </label><label for="" id="clienteM">1</label><br>
+                        <label for="">Fecha: </label><label for="" id="fechaM">1</label><br>
                     </div>
-                    <div class="mb-3">
-                        <div class="row">
-                            <div class="col">
-                                <input  id="Nro_pago"name="nombre" type="text" class="form-control" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-0">
-                        <div class="row">
-                            <div class="col">
-                                <label class="form-label">Apellido paterno</label>
-                            </div>
-                        </div>
-                    </div>
+                    <thead>
+                        </a>
+                        <tr style="background-color: #0d94b4;">
+                            <th scope="col">Producto</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">precio_u_prod</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                          
+                    </thead>
+                    <tbody id="dataOne">
+                    </tbody>
                     
-                    <div class="mb-3">
-                        <div class="row">
-                            <div class="col">
-                                <input id="Cliente" name="apellido1" type="text" class="form-control" required>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-0">
-                        <div class="row">
-                            <div class="col-12 col-lg-12">
-                                <label class="form-label">N° Documento de identidad</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <div class="col">
-                            <div class="col-12 col-lg-12">
-                                <input id="fecha" name="nro_ddi" type="text" class="form-control" required>
-                            </div>
-                        </div>
-                    </div>
+                </table>
+                <div class="row border-1 m-1 mb-3 pt-2"  style="max-width:100%; background-color: #0d94b4; color:white;">
+                    <div class="col-9 text-end">Sub Total: </div>
+                    <div class="col-3  text-end" id="sut_tot"></div>
                 </div>
-                <div class="modal-footer">
-                    <a type="button" class='btn btn-warning me-3' href='/api/order/report/1' id="imprimir_ped">generar reporte</a>
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <div class="row border-1 m-1 mb-3 pt-2"  style="max-width:100%; background-color: #0d94b4;color:white;">
+                    <div class="col-9 text-end">IGV: </div>
+                    <div class="col-3  text-end" id="igv_"></div>
                 </div>
+                <div class="row border-1 m-1 mb-3 pt-2"  style="max-width:100%; background-color: #0d94b4;color:white;">
+                    <div class="col-9 text-end">Total: </div>
+                    <div class="col-3  text-end" id="tot_"></div>
+                </div>
+            </div>
+              <div class="modal-footer">
+                <a type="button" class='btn btn-warning me-3' href='#' id="imprimir_ped">Generar Reporte</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
               </div>
             </div>
-           
-          </div>
-    
+        </div>
+    </div>
           <!--termina modal-->
     </div>
 </div>  
 <script>
     getReportes();
     function detallado(id){
-        document.getElementById('Nro_pago').value=document.getElementById('id_nropago').innerHTML;
-        document.getElementById('Cliente').value=document.getElementById('id_cliente').innerHTML;
-        document.getElementById('fecha').value=document.getElementById('id_fecha').innerHTML;
-        document.getElementById('imprimir_ped').href='/api/order/report/1';
-    }
-    function generatePdf(){
-        fetch('/api/order/report/1');
+        fetch(`api/order/reportOne/${id}`)
+        .then( response => response.json() )
+        .then( data =>{
+          report=data;
+          console.log(data);
+          renderResult(report);
+      })
+      const renderResult=(report)=>{
+        const tablaList=document.querySelector('#dataOne');
+        var sum__=0;
+        document.getElementById('clienteM').innerHTML=report[0].nom_cli;
+        document.getElementById('nroBoletaM').innerHTML='2023-'+(report[0].id_ped).toString().padStart(5,0);
+        document.getElementById('fechaM').innerHTML=report[0].fecha_pago;
+        document.getElementById('imprimir_ped').href=`/api/order/report/${id}`;
+        let listHTML="";
+              
+              report.forEach(report => {
+                sum__=sum__+report.precio_u_prod*report.cantidad_det;
+                  listHTML+=`<tr><td>${report.nom_prod}</td><td>${report.cantidad_det}</td><td> ${report.precio_u_prod}</td><td> ${report.precio_u_prod*report.cantidad_det}</td>
+                    </tr>`;
+              });
+              tablaList.innerHTML=listHTML;
+              document.getElementById('sut_tot').innerHTML='S/.'+(sum__-sum__*0.08);
+              document.getElementById('igv_').innerHTML='S/.'+sum__*0.08;
+              document.getElementById('tot_').innerHTML='S/.'+sum__;
+      }
     }
     function getReportes(){
-        fetch('api/order/report')
+        fetch('api/order/reportAll')
       .then( response => response.json() )
       .then( data =>{
           report=data;
           console.log(data);
-          
+          renderResult(report);
       })
+      const tablaList=document.querySelector('#data');
+          const renderResult=(report)=>{
+              $(report).ready( function () {
+                  $('#datatable').DataTable(
+                      {
+                          lengthMenu: [[5, 15, 50, 100, 200], [5, 15, 50, 100, 200],],
+                          language: {
+                      "processing": '<div class="d-flex align-items-center"><div class="spinner-border" role="status" aria-hidden="true"></div>&nbsp;&nbsp;<strong>Procesando...</strong></div>',
+                      "lengthMenu": "",
+                      "zeroRecords": '<div id="default-selector" class="py-5 text-center" style="width: 100%; color: #91949E;"><i style="font-size: 80pt" class="fa-solid fa-gears mb-3"></i><br><h3><b>No se encontró coincidencia con un producto registrado</b></h3></div>',
+                      "emptyTable": '<div id="default-selector" class="py-5 text-center" style="width: 100%; color: #91949E;"><i style="font-size: 80pt" class="fa-solid fa-gears mb-3"></i><br><h3><b>No se encontró ningun producto registrado</b></h3></div>',
+                      "info": " _START_ al _END_ de _TOTAL_ registros",
+                      "infoEmpty": " 0 al 0 de 0 registros",
+                      "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                      "search": "Buscar: ",
+                      "infoThousands": ",",
+                      "datatable_filter:":"<br>",
+                      "loadingRecords": '<div class="d-flex align-items-center"><div class="spinner-border" role="status" aria-hidden="true"></div>&nbsp;&nbsp;<strong>Cargando registros, espero por favor...</strong></div>',
+                      "paginate": {
+                          "first": "Primero",
+                          "last": "Último",
+                          "next": " siguiente",
+                          "previous": " atras"
+                      },
+                      "aria": {
+                          "sortAscending": ": Activar para ordenar la columna de manera ascendente",
+                          "sortDescending": ": Activar para ordenar la columna de manera descendente"
+                      },
+                      "buttons": {
+                          "copy": "Copiar",
+                          "colvis": "Visibilidad",
+                          "collection": "Colección",
+                          "colvisRestore": "Restaurar visibilidad",
+                          "copyKeys": "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                          "copySuccess": {
+                              "1": "Copiada 1 fila al portapapeles",
+                              "_": "Copiadas %ds fila al portapapeles"
+                          },
+                          "copyTitle": "Copiar al portapapeles",
+                          "csv": "CSV",
+                          "excel": "Excel",
+                          "pageLength": {
+                              "-1": "Mostrar todas las filas",
+                              "_": "Mostrar %d filas"
+                          },
+                          "pdf": "PDF",
+                          "print": "Imprimir",
+                          "renameState": "Cambiar nombre",
+                          "updateState": "Actualizar",
+                          "createState": "Crear Estado",
+                          "removeAllStates": "Remover Estados",
+                          "removeState": "Remover",
+                          "savedStates": "Estados Guardados",
+                          "stateRestore": "Estado %d"
+                      }
+                  }
+                      }
+                  );
+                  });
+              let listHTML="";
+              
+              report.forEach(report => {
+                  
+                  listHTML+=`<tr><td>${report.id_pago}</td><td>${report.nom_cli}</td><td> ${report.fecha_pago}</td>
+                            <td data-bs-toggle="modal" data-bs-target="#modalUser" onclick="detallado(${report.id_pago})"> <center><i class="fa-sharp fa-solid fa-file-pdf"></i></center>
+                  </td></tr>`;
+              });
+              tablaList.innerHTML=listHTML;
+              
+          }
     }
+
 </script>

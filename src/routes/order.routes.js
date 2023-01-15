@@ -1,7 +1,10 @@
 const { Router } = require("express");
-const {validationToken}=require("../middleware/validationToken")
+const {validationToken}=require("../middleware/validationToken");
 const OrderController=require("../controllers/order.controller");
 const OrderRouter=Router();
+
+OrderRouter.get("/reportAll",OrderController.getReportAll);
+OrderRouter.get("/reportOne/:id",OrderController.getReportOne);
 OrderRouter.get("/report/:id",OrderController.getReport);
 OrderRouter.get("/products/:idcategory",OrderController.getProductsByCategory);
 OrderRouter.get("/",validationToken,OrderController.getOrders);
