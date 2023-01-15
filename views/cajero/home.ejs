@@ -3,7 +3,7 @@
 <main>
     <div id="container-cajero-home" class="d-flex justify-content-between">
         <div class="section-mesas">
-            <p class="fw-bold fs-4 mb-3">Mesas</p>
+            <p class="fw-bold fs-4 mb-3">Panel de mesas</p>
             <div class="mesas__filter d-flex align-items-center mb-3">
                 <div class="mesas__filter-title me-3">
                     Piso:
@@ -38,15 +38,15 @@
         <div class="section-operaciones">
             <p class="fw-bold fs-4 mb-3">Operaciones</p>
             <div class="operaciones__card-alterno mb-3">
-                <div class="d-flex justify-content-center" style="width: 30%"><i class="fa-solid fa-money-bill operaciones__card-img"></i></div>
+                <div class="d-flex justify-content-center container-img" style="width: 30%"><i class="fa-solid fa-money-bill operaciones__card-img"></i></div>
                 <div class="operaciones__card-body" style="width: 70%">
                     <p class="operaciones__card-title">Total efectivo</p>
-                    <p class="operaciones__card-text fw-bold">S/. <%= total_pay %>.00</p>
+                    <p class="operaciones__card-text fw-bold">S/. <%= totalPay %></p>
                 </div>
             </div>
             
             <div class="operaciones__card mb-3" id="btn-llevar">
-                <div class="d-flex justify-content-center" style="width: 30%"><i class="fa-solid fa-bag-shopping operaciones__card-img"></i></div>
+                <div class="d-flex justify-content-center container-img" style="width: 30%"><i class="fa-solid fa-bag-shopping operaciones__card-img"></i></div>
                 <div class="operaciones__card-body" style="width: 70%">
                     <p>Para llevar</p>
                 </div>
