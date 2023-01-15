@@ -1,58 +1,80 @@
+<link rel="stylesheet" href="/public/css/reporte.css">
 <main>
-    <h2>Reportes/Dia</h2>
-        <div class="row text-center">
-            <div class="col-3">
-                <div class="m-1 border">
-                    <br>
-                    <span id="cantVentas"></span><br>
-                    <span>ventas</span>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="m-1 border">
-                    <br>
-                    <span id="cantPedidos"></span><br>
-                    <span>pedidos</span>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="m-1 border">
-                    <br>
-                    <span id="cantPlatos"></span><br>
-                    <span>platos</span>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="m-1 p-2 border">
-                    <label for="fecha">Filtros:</label>
-                    <center>
-                        <input type="date" name="fecha" id="fecha" class="form-control" style="width: 200px; height: 33px;">
-                    </center>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-                <div class="col-9">
-                    <div class="m-1 col">
-                        <canvas id="graficaUsu"></canvas>
-                    </div>
+    <div class="container-fluid p-0" style="background-color: white;">
+        <div class="row shadow-lg p-3 mb-5">
+            <nav aria-label="breadcrumb" class="link_nav">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/home">Inicio</a></li>
+                  <li class="breadcrumb-item"><a href="/reporte">Reporte</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Día</li>
+                </ol>
+            </nav>
+
+            <h2 class="mb-2 title_registro "><i class="fa-solid fa-file me-2"></i>Reporte del Día</h2>
+            
+            <div class="box-reporte">
                 
-                <div class="col">
-                    <canvas id="graficaPedMes"></canvas>
-                </div>
-            </div>
-                <div class="col-3">
-                    <div class=" text-sm-start">
-                        <div class="border m-1">
-                        <P class="m-3">Categorias mas pedidas:</P>
-                        <div class="row m-2" id="rank_cat">
-                        
+                <div class="row">
+                    <div class="col-lg-9 row">
+                        <div class="row box-etiqueta">
+
+                            <div class="col-md-3">
+                                <div class=" border">
+                                    <span class="nro_span" id="cantVentas">0</span><br>
+                                    <span class="eti">Ventas</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class=" border">
+                                    <span class="nro_span" id="cantPedidos">0</span><br>
+                                    <span class="eti">Pedidos</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class=" border">
+                                    <span class="nro_span" id="cantPlatos">0</span><br>
+                                    <span class="eti">Platos</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="border btn-filtro">
+                                    <label for="fecha">Filtros:</label>
+                                    <center>
+                                        <input type="date" name="fecha" id="fecha" class="" style="width: 100%;">
+                                    </center>
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-12 row">
+                                <div class="col-md-12 ">
+                                    <canvas id="graficaUsu"></canvas>
+                                </div>
+                            
+                                <div class="col-md-12">
+                                    <canvas id="graficaPedMes"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 box-categoria">
+                        <div class="border m-1">
+                            <P>Categorias mas pedidas:</P>
+                            <div class="row m-2" id="rank_cat">
+                            
+                            </div>
                         </div>
                         <canvas id="grafica_cat"></canvas>
                     </div>
                 </div>
+
+            </div>
         </div>
+    </div>
+
+        
             
         
     </main>

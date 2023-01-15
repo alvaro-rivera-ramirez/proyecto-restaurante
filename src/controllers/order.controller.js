@@ -130,7 +130,9 @@ const getOneOrder = async (req, res) => {
     try {
         const {codeOrder}=req.params;
         let total=0;
+        console.log(codeOrder);
         let order=await OrderServices.getOneOrder(codeOrder);
+        console.log(order);
         const detailsOrder=await OrderServices.getDetailsByOrder(order.id_ped);
         for (const detail of detailsOrder) {
             total+=detail.subtotal;
@@ -152,9 +154,10 @@ const updateOrder = (req, res) => {
 };
 
 
-const getPedidos = async (req, res) => {
+const getPedidosAll = async (req, res) => {
   try {
       const pedidos=await OrderServices.getAll();
+      console.log(pedidos);
       return res.status(201).send(pedidos);
   } catch (error) {
       return res.status(401);
@@ -311,7 +314,7 @@ module.exports = {
   getOneOrder,
   createOrder,
   updateOrder,
-  getPedidos,
+  getPedidosAll,
   getPedidosFiltro,
   updateStateOrder,
   getReport,

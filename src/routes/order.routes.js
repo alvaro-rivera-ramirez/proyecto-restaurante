@@ -3,6 +3,7 @@ const {validationToken}=require("../middleware/validationToken")
 const OrderController=require("../controllers/order.controller");
 const OrderRouter=Router();
 OrderRouter.get("/report/:id",OrderController.getReport);
+OrderRouter.get("/todo",OrderController.getPedidosAll);
 OrderRouter.get("/products/:idcategory",OrderController.getProductsByCategory);
 OrderRouter.get("/",validationToken,OrderController.getOrders);
 OrderRouter.get("/:codeOrder",OrderController.getOneOrder);
