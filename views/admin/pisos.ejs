@@ -43,7 +43,7 @@
                 <div class="modal-body"> 
                     <input id="id" hidden>               
                         <label for="" class="col-form-label">Nombre Piso:</label>
-                        <input type="text" class="form-control" id="pisos" name="name">                              
+                        <input type="text" class="form-control" id="pisos" name="name" required pattern="[a-zA-Z ]{2,254}">                              
                 </div>
                 <div class="modal-footer">
                     <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
@@ -101,7 +101,8 @@
         Swal.fire({
             title: '¿Confirma eliminar el registro?',                
             showCancelButton: true,
-            confirmButtonText: `Confirmar`,                
+            confirmButtonText: `Confirmar`,    
+            confirmButtonColor: "#162D3D",            
             }).then((result) => {               
             if (result.isConfirmed) {
                 $.ajax({
@@ -112,7 +113,13 @@
                         tablaPisos.row(fila.parents('tr')).remove().draw();                  
                     }
                 });
-                Swal.fire('¡Registro Eliminado!', '', 'success')
+                Swal.fire({
+                    title: "Eliminado!",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 800,
+                }).then(() => {
+                });
             } 
             })
     });     

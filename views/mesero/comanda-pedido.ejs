@@ -1,23 +1,26 @@
 <link rel="stylesheet" href="/public/css/mesero-comanda.css" />
-
+<main>
 <div class="conteiner-fluid p-2 " >
   <div class="row shadow" style="background-color: white;">
 
       <div class="col-lg-7 p-0">
-          <div class="container__client  p-3">
-            <h3>Registrar Cliente</h3>
+          <div class="container__client ">
+            <h3><i class="fa-solid fa-address-book me-2"></i>Registrar Cliente</h3>
             <div class="container__client__info">
               <div class="container__client__info_row">
                 <label for="" class="form-label">Dni:</label>
-                <input type="text" name="" id="input-dni-search" />
-                <button id="btn-searchClient" class="btn btn-dark">
-                  <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
+                <div class="d-flex box-search">
+                  <input type="text" name="" id="input-dni-search" />
+                  <button id="btn-searchClient" class="btn btn-dark">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  </button>
+                </div>
               </div>
             </div>
+            
             <div class="container__client__buttons">
               <button id="btn-addClient">
-                <i class="fa-regular fa-plus"></i>&nbsp;Agregar
+                <i class="fa-regular fa-plus"></i>&nbsp;Agregar Nuevo Cliente
               </button>
             </div>
           </div>
@@ -60,10 +63,6 @@
   </div>
 
 </div>
-
-<main>
-  <div class="container__main">
-  </div>
 
   <!-- Modal -->
   <div

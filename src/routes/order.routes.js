@@ -6,6 +6,7 @@ const OrderRouter=Router();
 OrderRouter.get("/reportAll",OrderController.getReportAll);
 OrderRouter.get("/reportOne/:id",OrderController.getReportOne);
 OrderRouter.get("/report/:id",OrderController.getReport);
+OrderRouter.get("/todo",OrderController.getPedidosAll);
 OrderRouter.get("/products/:idcategory",OrderController.getProductsByCategory);
 OrderRouter.get("/",validationToken,OrderController.getOrders);
 OrderRouter.get("/:codeOrder",OrderController.getOneOrder);

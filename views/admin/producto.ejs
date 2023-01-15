@@ -45,11 +45,17 @@
                 <div class="modal-body">                
                         <input id="id" hidden>
                         <label for="" class="col-form-label">Nombre:</label>
-                        <input type="text" class="form-control" id="nombre">  
+                        <input type="text" class="form-control" id="nombre" required>  
                         <label for="" class="col-form-label">Descripción:</label>
-                        <input type="text" class="form-control" id="descripcion"> 
+                        <input type="text" class="form-control" id="descripcion" required> 
                         <label for="" class="col-form-label">Precio:</label>
-                        <input type="text" class="form-control" id="precio">                               
+                        <input type="text" class="form-control" id="precio" required pattern="[0-9]+\.?[0-9]{0,2}">   
+                        
+                        <div class="form-group col-md-12">
+                            <label for="inputState" class="form-label">Categoria</label>
+                            <select id="categoria" class="form-control" required>
+                            </select>
+                        </div>                            
                 </div>
                 <div class="modal-footer">
                     <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
@@ -103,14 +109,69 @@
             url_img = fila.find('td:eq(1)').text(); 
             name = fila.find('td:eq(2)').text();
             descripcion = fila.find('td:eq(3)').text();
-            precio = fila.find('td:eq(4)').text();          
+            precio = fila.find('td:eq(4)').text(); 
+            categoria = fila.find('td:eq(5)').text();        
             $("#id").val(id);
             $("#nombre").val(name);
             $("#descripcion").val(descripcion); 
-            $("#precio").val(precio);             
-            $(".modal-title").text("Editar Artículo");		
-            $('#exampleModal').modal('show');		   
+            $("#precio").val(precio); 
+            $("#categoria option").val(categoria);            
+            $(".modal-title").text("Editar Producto");		
+            $('#exampleModal').modal('show');
+            getUsuarios(categoria);	
+        }); 
+        const tablaList=document.querySelector('#categoria'); 
+        function getUsuarios(categoria){
+                fetch('/api/category')
+        .then( response => response.json() )
+        .then( data =>{
+            cat=data;
+            console.log(data);
+            renderResult(cat);
+        })
+        const renderResult=(cat)=>{
+            let listHTML="";
+                        
+            cat.forEach(cat => {
+                if(cat.nom_categoria==categoria){
+                    listHTML+=`<option selected value="${cat.id_categoria}">${cat.nom_categoria}</option>`;
+                }else{
+                    listHTML+=`<option value="${cat.id_categoria}">${cat.nom_categoria}</option>`;
+                }
+            });
+            tablaList.innerHTML=listHTML;
+        }
+        }
+
+        $('#formArticulos').submit(function(e){                                     
+            e.preventDefault();
+            id = $.trim($('#id').val());    
+            nombre = $.trim($('#nombre').val());
+            descripcion = $.trim($('#descripcion').val());
+            precio = $.trim($('#precio').val());
+            categoria = $.trim($('#categoria').val());
+            if(opcion=='editar'){
+                console.log(id);
+                $.ajax({                    
+                    url: url+id,
+                    method: 'put',                                        
+                    contentType: 'application/json',  
+                    data:  JSON.stringify({id:id,idCat:categoria, nomProd:nombre, descripcionProd:descripcion,precio_uProd:precio}),                       
+                    success: function(data) {                       
+                        tablaProducto.ajax.reload(null, false);        
+                        Swal.fire({
+                            title: "Producto Actualizado",
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 800,
+                        });                          
+                    }
+                });	
+            }
+                      		        
+            $('#exampleModal').modal('hide');											     			
         });
+
         //BORRAR
         $(document).on("click", ".btnBorrar", function(){
             fila = $(this);           
@@ -118,7 +179,8 @@
             Swal.fire({
                 title: '¿Confirma eliminar el registro?',                
                 showCancelButton: true,
-                confirmButtonText: `Confirmar`,                
+                confirmButtonText: `Confirmar`,   
+                confirmButtonColor: "#162D3D",                 
                 }).then((result) => {               
                 if (result.isConfirmed) {
                     $.ajax({
@@ -129,7 +191,13 @@
                             tablaProducto.row(fila.parents('tr')).remove().draw();                  
                         }
                     });
-                    Swal.fire('¡Registro Eliminado!', '', 'success')
+                    Swal.fire({
+                        title: "Eliminado!",
+                        icon: "success",
+                        showConfirmButton: false,
+                        timer: 800,
+                    }).then(() => {
+                    });
                 } 
                 })
         });

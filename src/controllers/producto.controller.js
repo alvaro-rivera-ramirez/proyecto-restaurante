@@ -67,7 +67,7 @@ const updateProducto = async (req, res) => {
         nom_prod: nomProd,
         descripcion_prod: descripcionProd,
         precio_u_prod: precio_uProd,
-        imagen_prod: req.file.filename,
+        //imagen_prod: req.file.filename,
     };
     if (!id){
         handleErrorResponse(res,"CAMPOS VACIOS",401);
