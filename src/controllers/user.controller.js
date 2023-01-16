@@ -1,9 +1,9 @@
 const userServices = require("../services/userServices");
 const { verifyToken } = require("../utils/handleToken");
-const jwt=require('jsonwebtoken');
+// const jwt=require('jsonwebtoken');
 const { compare, encrypt } = require("../utils/handlePass");
 const transporter = require ('../config/nodemailer');
-
+const {tokenSignResetPass}=require("../utils/handleToken")
 const getUsers = async (req, res) => {
   try {
     const users=await userServices.getUsers();
@@ -83,7 +83,8 @@ const forgotPswPost = async (req, res) => {
     const payload ={
       email: getEmail.email_usu
     }
-    const token=jwt.sign(payload,secret,{expiresIn:'5m'});
+    // const token=jwt.sign(payload,secret,{expiresIn:'5m'});
+    const token=await tokenSignResetPass(payload);
     const link=`http://localhost:3000/reset-psw/${getEmail.email_usu}/${token}`;
     let contentHTML;
     contentHTML = `<div style="padding: 7px 0 2px 0;"><b>Reestablecer contraseña:</b>`+link+`</div>

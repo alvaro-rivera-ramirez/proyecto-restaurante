@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const jwt=require('jsonwebtoken');
+// const jwt=require('jsonwebtoken');
 const { getProfileHeader } = require("../../services/profileServices");
 const { getCountUsers } = require("../../services/userServices");
 const {
@@ -9,7 +9,7 @@ const {
   getCountOrderPrepared,
 } = require("../../services/orderServices");
 const { getTotalPay, getTotalPayToday } = require("../../services/payServices");
-const { getPisos } = require("../../services/pisosServices");
+const {verifyTokenResetPass}=require("../../utils/handleToken")
 const {
   isLoggedIn,
   verifyLoggedIn,
@@ -80,12 +80,13 @@ router.get("/change-password", isLoggedIn, async (req, res) => {
 router.get("/forgot-psw", verifyLoggedIn,(req, res) => {
   res.render("forgotPws",{layout: false});
 });
-router.get("/reset-psw/:email/:token", verifyLoggedIn,(req, res) => {
+router.get("/reset-psw/:email/:token", verifyLoggedIn,async(req, res) => {
   console.log("en reset")
   const{email,token}=req.params;
   try{
-    console.log(process.env.JWT_SECRET)
-    const payload=jwt.verify(token,process.env.JWT_SECRET);
+    // console.log(process.env.JWT_SECRET)
+    // const payload=jwt.verify(token,process.env.JWT_SECRET);
+    const payload=await verifyTokenResetPass(token);
     console.log(payload)
     console.log(email,token)
     res.render("reset-password",{layout: false,email:email,token:token});
