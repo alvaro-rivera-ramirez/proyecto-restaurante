@@ -80,10 +80,9 @@ const register = async (req, res) => {
 
   try {
     const result = await conn.query("INSERT INTO usuario SET ?", [newUser])
-    return res.status(201).send("USUARIO CREADO")
+    return res.status(201).send(result)
   } catch (error) {
-    console.log(error)
-    return res.status(500)
+    return res.status(401)
   }
 };
 
