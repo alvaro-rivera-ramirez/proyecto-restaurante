@@ -124,6 +124,13 @@ main{
 	display: block;
 	opacity: 1;
 } */
+.input-error{
+	border-color: #CF3030!important;
+}
+.input-error:focus,.input-error:valid{
+	border-color:#CF3030!important;
+	box-shadow: none!important;
+}
 .breadcrumb-item a{
 	color: #181E24;
 }
@@ -179,7 +186,7 @@ main{
 	margin-bottom: 5px;
 }
 .style_form input:focus,.style_form select:focus{
-	border-color:#181e248e!important;
+	border-color:#181e248e;
 	box-shadow: none!important;
 }
 .btn-info{
@@ -227,11 +234,4 @@ main{
 }
 .box-filtro h5{
 	margin-bottom: 5px;
-}
-.input-error{
-	border-color: #CF3030!important;
-}
-.input-error:focus,.input-error:valid{
-	border-color:#CF3030!important;
-	box-shadow: none!important;
 }

@@ -39,9 +39,56 @@
     //MOSTRAR
     //submit para el CREAR
     const btnSubmit = document.getElementById("btn-submit");
-    btnSubmit.addEventListener("click",async(e)=>{
+    const formulario = document.getElementById("formProducto");
+    const inputs = document.querySelectorAll("#formProducto input");
 
+    const expresiones ={
+        texto: /^[A-Za-zÀ-ÿ\u00f1\u00d1 ]+$/,
+        decimal:/^([0-9]+\.?[0-9]{0,2})$/,
+    };
+    const validar=(e)=>{
+        switch(e.target.name){
+          case "nombre":
+              if(expresiones.texto.test(e.target.value)){
+                  document.getElementById("nombre").classList.remove("input-error");
+              }else{
+                  document.getElementById("nombre").classList.add("input-error");
+              };
+          break;
+          case "descripcion":
+              if(expresiones.texto.test(e.target.value)){
+                  document.getElementById("descripcion").classList.remove("input-error");
+              }else{
+                  document.getElementById("descripcion").classList.add("input-error");
+              };
+          break;
+          case "precio":
+              if(expresiones.decimal.test(e.target.value)){
+                  document.getElementById("precio").classList.remove("input-error");
+              }else{
+                  document.getElementById("precio").classList.add("input-error");
+              };
+          break;
+        }
+    };
+
+    inputs.forEach((input) =>{
+        input.addEventListener('keyup',validar);
+        input.addEventListener('blur',validar);
+    });
+    btnSubmit.addEventListener("click",async(e)=>{
       e.preventDefault();
+      const inputimage = document.getElementById("imagen").files[0];
+      const inputprecio= document.getElementById("precio");
+      const inputnom= document.getElementById("nombre");
+      const inputdesc= document.getElementById("descripcion");
+      const vp=expresiones.decimal.test(inputprecio.value);
+      const ip=expresiones.texto.test(inputnom.value);
+      const id=expresiones.texto.test(inputdesc.value)
+      console.log(vp);
+      if(JSON.stringify(inputimage) === '{}' && vp && ip && id){
+
+      
       const product = new FormData();
       product.append('nomProd', (document.getElementById('nombre')).value);
       product.append('idCat', (document.getElementById('categoria')).value);
@@ -52,6 +99,7 @@
       let data = {};
       //product.forEach((value, key) => data[key] = value);
       console.log(data);
+      
       try{
         const response = await fetch('/api/producto',{  
             method: 'POST', 
@@ -84,7 +132,16 @@
           })};  
       }catch(error){
 
-      }
+      };
+
+      }else{
+        Swal.fire({
+          title: "Campos Incorrectos",
+          icon: "warning",
+          showConfirmButton: false,
+          timer: 1000,
+        });      
+      };
     });
     window.onload =getUsuarios;
     const tablaList=document.querySelector('#categoria'); 
