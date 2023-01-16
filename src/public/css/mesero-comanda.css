@@ -29,7 +29,7 @@ h3,h4{
     width: 95%;
     margin: auto;
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(4,1fr);
     gap: 20px;
     padding-bottom: 25px;
     padding-right: 15px;
@@ -54,8 +54,7 @@ justify-content: center;
 }
 .container__carta__products__content img{
     padding-top: 5px;
-    min-width: 125px;
-    max-width: 200px;
+    max-width: 125px;
     height: 80px;
     margin:auto;
 }
@@ -92,7 +91,6 @@ justify-content: center;
 }
 /* Boleta*/
 .container__order{
-    padding-right: 40px!important;
     margin: auto;
 }
 .container__order__info,.container__order__details,.container__order__total,.container__order__buttons{
@@ -179,6 +177,100 @@ justify-content: center;
 }
 .container__order__buttons #btn-cancel{
     background-color: #880000;
+}
+/* comandapedido*/
+.container__order__buttons #btn-preCuenta{
+    color: black;
+    background-color: #FFDB5A;
+}
+.container__client{
+    margin-top: 16px;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+.container__client h3{
+    padding: 16px;
+    color: #181E24;
+    background-color: white;
+    margin-bottom: 10px;
+    width: 100%;
+    font-weight: 900;
+    background-color: #181b1804;
+    border-bottom: solid 1px #181b1820;
+}
+.container__client__info{
+    padding: 16px;
+    background-color: #181b1802;
+}
+.container__client__buttons{
+    margin-left: 5px;
+    padding: 0 16px;
+}
+#btn-addClient{
+	border: solid 1px #181E24;
+	border-radius: 5px;
+	color: #181E24;
+	padding: 5px 15px;
+	font-size: 14px;
+	background-color: white!important;
+}
+#btn-addClient:hover{
+	background-color: #181E24!important;
+	color: white;
+}
+.container__client__info_row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.container__client__info_row label{
+    margin: 0;
+    font-family: var(--font-one);
+    font-size: 18px;
+}
+.container__client__info_row input{
+    padding: 4px 8px;
+    margin-left: 10px;
+    width: 100%;
+    font-family: var(--font-one);
+}
+#btn-searchClient{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.box-search{
+    width: 100%;
+}
+@media (max-width: 520px) {
+    .container__client__info_row label{
+        text-align: center;
+        margin-bottom: 6px;
+        width: 100%;
+    }
+    .box-search{
+        width: 100%;
+    }
+    .box-search input{
+        margin: 0;
+    }
+    .container__client__info_row{
+        display: block!important;
+    }
+    .container__client__buttons{
+        width: 100%;
+        margin: 0;
+    }
+    #btn-addClient{
+        width: 100%;
+    }
+    .container__carta__products{
+        grid-template-columns: repeat(2,1fr)!important;
+        gap: 10px;
+    }
+    .container__carta__category select{
+        width: 100%;
+    }
+}
 
 }
 
@@ -202,4 +294,9 @@ justify-content: center;
     color: white;
     border: none;
     border-radius: 5px;
+@media (max-width: 1124px) {
+    .container__carta__products{
+        grid-template-columns: repeat(3,1fr);
+        gap: 10px;
+    }
 }

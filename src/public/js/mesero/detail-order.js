@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           currency: "PEN",
         })}
         </div>
-        <div class="col-md-11 offset-md-1 d-flex mt-2">
+        <div class="col-md-11 offset-md-1 d-flex mt-2 box-obs">
         <label>
         Observacion:
         </label>

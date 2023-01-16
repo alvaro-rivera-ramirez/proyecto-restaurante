@@ -13,10 +13,10 @@
             <div class="col-md-4">
             <input type="date" name="start_date" id="start_date" class="form-control" />
             </div>
-            <div class="col-md-4 mt-1">
+            <div class="col-md-4">
             <input type="date" name="end_date" id="end_date" class="form-control" />
             </div>  
-            <div class="col-md-4 mt-2">
+            <div class="col-md-4">
              <input type="button" name="search" id="filtrar" value="Filtrar" class="btn btn-dark" />
              <input type="button" name="limpiar" id="limpiar" value="Limpiar" class="btn btn-danger" />
             </div>     
@@ -46,17 +46,17 @@
 </div>
 
 <!--Modal-->
-<div class="modal fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="modalOrder"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog box-detalles">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Orden 00001</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-              <p>Mesa: 15</p>
+              <!-- <p>Mesa: 15</p>
               <p>Mozo: Javier</p>
-              <p class="mb-1">Orden:</p>
+              <p class="mb-1">:</p>
               <div class="m-orden">
                   <div class="m-orden-detalle">
                       <p>Causa rellena (1)</p>
@@ -66,26 +66,27 @@
                       <p>Causa rellena (1)</p>
                       <p class="m-obs">Observación: Picante</p>
                   </div>
-              </div>
+              </div> -->
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
         </div>
-        </div>
-      </div>
-  </div>
+    </div>
+</div>
 <script src="/public/js/configTable.js"></script>
 <script>
     $(document).ready(function(){
         
-        let url = 'http://localhost:3000/api/order/';
+        let url = 'http://localhost:3000/api/order/todo';
         let opcion = null;
         //MOSTRAR
         function tablapedido(){
             let tablaProducto = $('#tablaPedido').DataTable({            
-                ajax:{
+                "ajax":{
                     "url": url,
-                    "dataSrc":""
+                    "dataSrc":"",
+                    "method":"get",
                 },
                 "columns":[
                     {"data":"id_ped"},
@@ -112,7 +113,11 @@
                         },
                     },
                     {"data":"nom_mod"},
-                    {"defaultContent": "<div class='text-center'><button class='btn-info' ><i class='fa-solid fa-circle-info'></i></button></div> "},
+                    {"data": "cod_ped",
+                        render: function(cod_ped){
+                            return "<div class='text-center'><button class='btn-info' value='"+cod_ped+"'>Mostrar Detalle</button></div>";
+                        }
+                    },
                     {"data":"precioT",
                     render: function ( data, type, row ) {
                         return 'S/. '+ Number(data).toFixed(2);
@@ -166,7 +171,11 @@
                         },
                     },
                     {"data":"nom_mod"},
-                    {"defaultContent": "<div class='text-center'><button class='btn-info' ><i class='fa-solid fa-circle-info'></i></button></div> "},
+                    {"data": "cod_ped",
+                        render: function(cod_ped){
+                            return "<div class='text-center'><button class='btn-info' value='"+cod_ped+"'>Mostrar Detalle</button></div>";
+                        }
+                    },
                     {"data":"precioT",
                     render: function ( data, type, row ) {
                         return 'S/. '+ Number(data).toFixed(2);
@@ -189,22 +198,8 @@
                 tablapedidoF(start_date, end_date);
             };
         }); 
+        //
         
-        //Mostrar       
-        $(document).on("click", ".btn-info", function(){		            
-            opcion='editar';
-            fila = $(this).closest("tr");	        
-            id = parseInt(fila.find('td:eq(0)').text());
-            url_img = fila.find('td:eq(1)').text(); 
-            name = fila.find('td:eq(2)').text();
-            descripcion = fila.find('td:eq(3)').text();
-            precio = fila.find('td:eq(4)').text();          
-            $("#id").val(id);
-            $("#nombre").val(name);
-            $("#descripcion").val(descripcion); 
-            $("#precio").val(precio);	
-            $('#exampleModal').modal('show');		   
-        });
         //btn limpiar
         $('#limpiar').click(function(){
             $('#tablaPedido').DataTable().destroy();
@@ -213,5 +208,62 @@
             document.getElementById('end_date').value = "";
         }); 
         tablapedido();
+
+    });
+    document.addEventListener("DOMContentLoaded", async () => { const renderInfoModal=async(order,details)=>{
+            try {
+            const titleModal=document.querySelector('.modal-title');
+            const bodyModal=document.querySelector('.modal-body');
+            const nodeDetails=document.createElement('div');
+            titleModal.innerText=`Orden ${order.id_ped.toString().padStart(6, 0)}`
+            nodeDetails.className="m-orden";
+
+            bodyModal.innerHTML=`<p>Mesa: ${(!order.mesas)?'Vacío':order.mesas}</p>
+            <p>Mozo: ${order.nom_usu}</p>
+            <p class="mb-1 orden-head">Orden:</p>`;
+            let listDetail='';
+            details.forEach(detail=>{
+                listDetail+=`<div class="m-orden-detalle">
+                    <ul><li>
+                    <p>${detail.nom_prod} (${detail.cantidad_det})</p>
+                    <p class="m-obs">Observación: ${detail.descripcion_det}</p></li></ul>
+                </div>`;
+            })
+            nodeDetails.innerHTML=listDetail;
+            bodyModal.appendChild(nodeDetails);
+            } catch (error) {
+            console.log(error)
+            }
+        }
+        const fetchOneOrder = async (cod) => {
+            try {
+            const response = await fetch(`/api/order/${cod}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const result = await response.json();
+            const { detailsOrder, order} = result;
+            console.log(result);
+            renderInfoModal(order,detailsOrder)
+            const modal = new bootstrap.Modal('#modalOrder', {
+                keyboard: false
+            })
+            modal.show();
+            } catch (error) {
+            console.log(error);
+            }
+        };
+        
+        const containerOrders = document.querySelector("#tablaPedido");
+        containerOrders?.addEventListener('click',async(e)=>{
+            try {
+            const tag=e.target;
+            const codeOrder=tag.value;
+            await fetchOneOrder(codeOrder);
+
+            } catch (error) {
+            console.log(error)
+            }
+        });
     });
 </script>

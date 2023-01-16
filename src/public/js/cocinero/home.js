@@ -177,8 +177,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       let listDetail='';
       details.forEach(detail=>{
         listDetail+=`<div class="m-orden-detalle">
+        <ul><li>
             <p>${detail.nom_prod} (${detail.cantidad_det})</p>
-            <p class="m-obs">Observación: ${detail.descripcion_det}</p>
+            <p class="m-obs">Observación: ${detail.descripcion_det}</p></ul></li>
           </div>`;
       })
       nodeDetails.innerHTML=listDetail;

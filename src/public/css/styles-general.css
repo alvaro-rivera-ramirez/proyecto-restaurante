@@ -160,12 +160,10 @@ main{
 }
 .dataTables_filter input[type="search"]{
 	border: none!important;
-	border-bottom: solid 1px #a0a0a0!important;
+    border-bottom: solid 1px #162D3D!important;
 	margin-bottom: 25px!important;
-}
-.dataTables_filter input[type="search"]:focus{
-	border:none!important;
-	border-bottom: solid 1px #181e248e!important;
+    transition: 0.5s!important;
+    outline: none;
 }
 .table thead{
 	background-color: #181E24!important;
@@ -185,7 +183,39 @@ main{
 	box-shadow: none!important;
 }
 .btn-info{
-	border: none;
+	border: solid 1px #d3d3d3;
+	padding: 3px 15px;
+	border-radius: 5px;
+	background-color: #e2e2e2;
+}
+.btn-info:hover{
+	background-color: #d3d3d3;
+	text-decoration: underline;
+}
+/* modal pedido*/
+.box-detalles{
+	font-family: var(--font-one);
+}
+.box-detalles .modal-title{
+	font-weight: 600;
+}
+.m-orden-detalle ul{
+	padding-left: 25px;
+}
+.modal-body .mb-1{
+    border-top: #070f0f dashed 1px!important;
+	margin-top: 8px;
+	font-weight: 600;
+	padding-top: 4px;
+}
+.m-orden{
+    border-top: #070f0f dashed 1px;
+    border-bottom: #070f0f dashed 1px;
+    padding: 10px 00px;
+}
+.m-obs{
+    font-style: italic;
+    margin-left: 5px;
 }
 .box-filtro{
 	padding: 15px;
@@ -197,4 +227,11 @@ main{
 }
 .box-filtro h5{
 	margin-bottom: 5px;
+}
+.input-error{
+	border-color: #CF3030!important;
+}
+.input-error:focus,.input-error:valid{
+	border-color:#CF3030!important;
+	box-shadow: none!important;
 }

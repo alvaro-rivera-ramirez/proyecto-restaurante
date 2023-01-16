@@ -26,8 +26,9 @@ router.get('/pago', isLoggedIn,isCashier, async (req,res) => {
       return;
     }
     const {total_pay}=await getTotalPayToday();
-    console.log(total_pay);
-    res.render('cajero/realizarPago', { nom_usu, nom_tipousu, total_pay });
+    let totalPay=(parseFloat(total_pay)).toFixed(2);
+    if (totalPay=='NaN') {totalPay='0.00'}
+    res.render('cajero/realizarPago', { nom_usu, nom_tipousu, totalPay });
 })
 router.get('/reportes',isLoggedIn,(req,res)=>{
     const nom_usu=req.name

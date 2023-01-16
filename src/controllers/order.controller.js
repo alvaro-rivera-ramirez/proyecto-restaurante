@@ -129,6 +129,7 @@ const createOrder = async (req, res) => {
 };
 
 const getOneOrder = async (req, res) => {
+
   try {
     const { codeOrder } = req.params;
     let total = 0;
@@ -151,7 +152,7 @@ const getOneOrder = async (req, res) => {
 
 const updateOrder = (req, res) => {};
 
-const getPedidos = async (req, res) => {
+const getPedidosAll = async (req, res) => {
   try {
     const pedidos = await OrderServices.getAll();
     return res.status(201).send(pedidos);
@@ -239,86 +240,126 @@ const getReport = async (req, res) => {
   const { id } = req.params;
   console.log("idpago en controler:", id);
   try {
-    const platos = await OrderServices.getOrderReport(id);
-    const pago_ = await OrderServices.getOrderPago(id);
-    console.log(platos);
-    console.log(pago_);
-    const doc = new PDF({ bufferPage: true });
-    const filename = `Boleta${Date.now()}.pdf`;
-    //doc.pipe(fs.createWriteStream(`${filename}`));
-    const stream = res.writeHead(201, {
-      "Content-Type": "application/pdf",
-      "Content-disposition": `attachment;filename=${filename}`,
-    });
+      const platos=await OrderServices.getOrderReport(id);
+      const pago_=await OrderServices.getOrderPago(id);
+      console.log(platos)
+      console.log(pago_)
+      const doc=new PDF({bufferPage:true});
+      const filename=`Boleta${Date.now()}.pdf`;
+      //doc.pipe(fs.createWriteStream(`${filename}`));
+      const stream =res.writeHead(201,{
+        'Content-Type':'application/pdf',
+        'Content-disposition':`attachment;filename=${filename}`
+      });
+      
+      doc.on('data',(data)=>{stream.write(data)});
+      doc.on('end',()=>{stream.end()});
 
-    doc.on("data", (data) => {
-      stream.write(data);
-    });
-    doc.on("end", () => {
-      stream.end();
-    });
-
-    //doc.text("hola mundo",30,30);
-    doc.setDocumentHeader(
-      {
-        height: "16",
-      },
-      () => {
-        doc.fontSize(15).text("Boleta", {
+      //doc.text("hola mundo",30,30);
+      doc.setDocumentHeader({
+        height:'16'
+      },()=>{
+        doc.fontSize(15).text('Boleta',{
           width: 500,
           align: "center",
         });
         doc.fontSize(12);
-        doc.text(`nrumo de boleta: ${pago_[0].id_ped}`, {
-          width: 500,
-          align: "left",
+        doc.text(`Nro de Boleta: 2023-${pago_[0].id_ped.toString().padStart(5,0)}`,{
+          width: 420,
+          align: 'left'
         });
-        doc.text(`cliente: ${pago_[0].nom_cli}`, {
-          width: 500,
-          align: "left",
+        doc.text(`Cliente: ${pago_[0].nom_cli}`,{
+          width: 420,
+          align: 'left'
         });
-        doc.text(`fecha: ${pago_[0].fecha_pago}`, {
-          width: 500,
-          align: "left",
+        doc.text(`Fecha: ${pago_[0].fecha_pago}`,{
+          width: 420,
+          align: 'left'
         });
-      }
-    );
-
-    doc.addTable(
-      [
-        { key: "nom_prod", label: "producto", align: "left" },
-        { key: "precio_u_prod", label: "precio unit", align: "left" },
-        { key: "cantidad_det", label: "cantidad", align: "left" },
-        { key: "subTotal", label: "sub total", align: "left" },
-      ],
-      platos,
-      {
+      });
+      
+      doc.addTable([
+        {key:'nom_prod',label:'Producto',align:'left'},
+        {key:'precio_u_prod',label:'Precio Unit en S/.',align:'left'},
+        {key:'cantidad_det',label:'Cantidad',align:'left'},
+        {key:'subTotal',label:'Total en S/.',align:'left'},
+      ],platos,{
         border: null,
         width: "fill_body",
         striped: true,
-        stripedColors: ["#f6f6f6", "#d6c4dd"],
+        stripedColors: ["#e7e9eb","#e7e9eb"],
+        headBackground : '#0d94b4',
+        headColor : '#e7e9eb',
         cellsPadding: 10,
         marginLeft: 45,
         marginRight: 45,
-        headAlign: "left",
-      }
-    );
-    doc.setDocumentFooter(
-      {
-        height: "70%",
-      },
-      () => {
-        doc
-          .fontSize(15)
-          .text(
-            `TOTAL: S/. ${pago_[0].total_pago}`,
-            doc.footer.x + 50,
-            doc.footer.y
-          );
-      }
-    );
-    doc.render();
-    doc.end();
+        marginTop : 0,
+        headAlign: 'left'
+    });
+    let arrayZero=[{
+      nom_prod:' ',
+      precio_u_prod:' ',
+      cantidad_det:' ',
+      sub_total: ' '
+    }];
+    doc.addTable([
+      {key:'nom_prod',label:'                                          ',align:'left'},
+      {key:'precio_u_prod',label:'                                     ',align:'left'},
+      {key:'cantidad_det',label:'Sub Total',align:'left'},
+      {key:'sub_total',label:`S/.${pago_[0].sub_total}`,align:'right'},
+    ],arrayZero,{
+      border: null,
+      width: "fill_body",
+      striped: true,
+      stripedColors: ["#e7e9eb","#e7e9eb"],
+      headBackground : '#0d94b4',
+      headColor : '#e7e9eb',
+      headHeight : 30,
+      cellsPadding: null,
+      marginLeft: 45,
+      marginRight: 45,
+      headAlign: 'left'
+  });
+  doc.addTable([
+    {key:'nom_prod',label:'                                     ',align:'left'},
+    {key:'precio_u_prod',label:'                                ',align:'left'},
+    {key:'cantidad_det',label:'IGV',align:'left'},
+    {key:'sub_total',label:`S/.${pago_[0].igv_pago}`,align:'left'},
+  ],arrayZero,{
+    border: null,
+    width: "fill_body",
+    striped: true,
+    stripedColors: ["#e7e9eb","#e7e9eb"],
+    headBackground : '#0d94b4',
+    headColor : '#e7e9eb',
+    headHeight : 30,
+    cellsPadding: null,
+    marginLeft: 45,
+    marginRight: 45,
+    marginBotom: 2,
+    headAlign: 'left'
+});
+doc.addTable([
+  {key:'nom_prod',label:'                                ',align:'left'},
+  {key:'precio_u_prod',label:'                          ',align:'left'},
+  {key:'cantidad_det',label:'Total',align:'left'},
+  {key:'sub_total',label:`S/.${pago_[0].total_pago}`,align:'right'},
+],arrayZero,{
+  border: null,
+  width: "fill_body",
+  striped: true,
+  stripedColors: ["#e7e9eb","#e7e9eb"],
+  headBackground : '#0d94b4',
+  headColor : '#e7e9eb',
+  headHeight : 30,
+  cellsPadding: null,
+  marginLeft: 45,
+  marginRight: 45,
+  headAlign: 'left'
+});
+      doc.render();
+      doc.end();
+  
   } catch (error) {
     return res.status(401);
   }
@@ -332,15 +373,28 @@ const getReportAll = async (req, res) => {
     return res.status(401);
   }
 };
+const getReportOne = async (req, res) => {
+  
+  try {
+    const {id}=req.params;
+    const getReportAll_=await OrderServices.getReportOne(id);
+
+    return res.status(201).send(getReportAll_);
+  } catch (error) {
+    
+    return res.status(401);
+  }
+};
 module.exports = {
   getProductsByCategory,
   getOrders,
   getOneOrder,
   createOrder,
   updateOrder,
-  getPedidos,
+  getPedidosAll,
   getPedidosFiltro,
   updateStateOrder,
   getReport,
   getReportAll,
+  getReportOne
 };
