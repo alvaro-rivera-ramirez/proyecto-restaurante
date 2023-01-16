@@ -33,9 +33,8 @@ const { encrypt, compare } = require("../utils/handlePass");
 
       if (await compare(old_password, pass[0].psw_usu)) {
         const new_psdEncrypt = await encrypt(new_password);
-        const new_psd = new_psdEncrypt;
 
-        const change = await conn.query("UPDATE usuario SET psw_usu = ? WHERE id_usu = ?", [new_psd, id_usu]);
+        const change = await conn.query("UPDATE usuario SET psw_usu = ? WHERE id_usu = ?", [new_psdEncrypt, id_usu]);
         return change;
       }
     } catch (error) {

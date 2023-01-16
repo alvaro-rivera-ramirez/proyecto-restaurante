@@ -65,20 +65,30 @@
     width: 2.5rem;
 }
 
+@media (max-width: 992px) {
+    #container-cajero-createPago .section-resumen i, #container-cajero-createPago .section-resumen img{
+        display: none;
+    }
+}
+
 @media (max-width: 768px) {
-    #container-cajero-home{
+    #container-cajero-createPago{
         display: block !important;
     }
 
-    #container-cajero-home .section-mesas{
+    #container-cajero-createPago .section-mesas{
         width: 100%;
     }
     
-    #container-cajero-home .section-resumen{
+    #container-cajero-createPago .section-resumen{
         width: 100%;
     }
 
     #container-cajero-createPago *{
         font-size: 1rem;
+    }
+
+    #container-cajero-createPago .section-resumen i, #container-cajero-createPago .section-resumen img{
+        display: block;
     }
 }

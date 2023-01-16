@@ -20,7 +20,7 @@ btn_changePassword.addEventListener('click', async(e) => {
         // Si el res. status es 200 o 201
         if (response.ok) {
             Swal.fire({
-                title: 'Cambio Exitoso',
+                title: res.msg,
                 icon: 'success',
                 showConfirmButton: false,
                 timer: 800,
@@ -30,7 +30,7 @@ btn_changePassword.addEventListener('click', async(e) => {
         } else {
             Swal.fire({
                 title: 'Error',
-                text: 'Credenciales Incorrectas',
+                text: res.msg,
                 icon: 'error',
                 showConfirmButton: false,
                 timer: 1000,

@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         const containerDetails = document.querySelector(".container__order__details__info");
         containerDetails.innerHTML += `<div class="row d-flex align-items-center">
         <input type="hidden" value="${idprod}" class="id_products">
-        <div class="col-md-6">${nomprod}</div>
-        <div class="col-md-3"><p class="count_products">${countProd}</p></div>
-        <div class="col-md-3">
+        <div class="col-6">${nomprod}</div>
+        <div class="col-3"><p class="count_products">${countProd}</p></div>
+        <div class="col-3">
             ${subtotal.toLocaleString("es-PE", {
             style: "currency",
             currency: "PEN",
