@@ -3,6 +3,9 @@ const { verifyToken } = require("../utils/handleToken");
 const jwt=require('jsonwebtoken');
 const { compare, encrypt } = require("../utils/handlePass");
 const transporter = require ('../config/nodemailer');
+
+
+
 const getUsers = async (req, res) => {
   try {
     const users=await userServices.getUsers();
@@ -101,7 +104,7 @@ const resetPwsPut = async (req, res) => {
   const passEncrypt = await encrypt(psw1);
   editusu.psw= passEncrypt;
   const reset= await userServices.resetPwsPut(editusu);
-  res.render("login", { layout: false });
+  res.render("loguin");
 }
 module.exports = {
   getUsers,
