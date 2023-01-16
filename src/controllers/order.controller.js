@@ -149,9 +149,6 @@ const updateStateOrder = async (req, res) => {
   try {
     const { stateOrder } = req.body;
     const { codeOrder } = req.params;
-    console.log("updateOrder");
-    console.log(req.body);
-    console.log(req.params);
     let infoOrderUpdate = {
       id_epedido: stateOrder,
     };
