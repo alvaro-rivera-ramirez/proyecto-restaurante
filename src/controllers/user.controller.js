@@ -3,6 +3,7 @@ const { verifyToken } = require("../utils/handleToken");
 const jwt=require('jsonwebtoken');
 const { compare, encrypt } = require("../utils/handlePass");
 const transporter = require ('../config/nodemailer');
+
 const getUsers = async (req, res) => {
   try {
     const users=await userServices.getUsers();
@@ -98,7 +99,6 @@ transporter.sendMail({
 
 const resetPwsPut = async (req, res) => {
   const { psw1, confirmpsw,email} = req.body;
-  //const confEmail= await userServices.confirmEmail(token);
   if (psw1!==confirmpsw || !email) {
     handleErrorResponse(res, "error datos corruptos", 401);
     return;
@@ -110,8 +110,8 @@ const resetPwsPut = async (req, res) => {
   }
   const passEncrypt = await encrypt(psw1);
   editusu.psw= passEncrypt;
-  const reset= await userServices.resetPwsPut(editusu);
-  return res.status(201).send(reset);
+  await userServices.resetPwsPut(editusu);
+  res.render("http://localhost:3000/api/auth/");
 }
 module.exports = {
   getUsers,

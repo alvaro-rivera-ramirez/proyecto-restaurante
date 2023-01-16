@@ -1,7 +1,7 @@
-const{validateForgot,}=require('express-validator');
+const{validationResult}=require('express-validator');
 const validateResultForgot=(req,res,next)=>{
     try{
-        validateForgot(req).throw()
+        validationResult(req).throw()
         return next()
     }
     catch(err){
@@ -11,7 +11,17 @@ const validateResultForgot=(req,res,next)=>{
 }
 const validateResultReset=(req,res,next)=>{
     try{
-        validateReset(req).throw()
+        validationResult(req).throw()
+        return next()
+    }
+    catch(err){
+        res.status(500)
+        res.send({error: err.array()})
+    }
+}
+const validateResultUpdateUser=(req,res,next)=>{
+    try{
+        validationResult(req).throw()
         return next()
     }
     catch(err){
@@ -21,5 +31,6 @@ const validateResultReset=(req,res,next)=>{
 }
 module.exports={
     validateResultForgot,
-    validateResultReset
+    validateResultReset,
+    validateResultUpdateUser
 }

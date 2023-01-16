@@ -30,6 +30,12 @@
                     'Content-Type': 'application/json'
                 }
             })
+            .then(res=>res.json())
+              .catch(error=>{
+              })
+              .then(response=>{
+                alert("se envio un el mensaje a su correo");
+              });
     }
     
 </script>
