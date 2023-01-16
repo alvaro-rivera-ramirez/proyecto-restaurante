@@ -76,7 +76,6 @@ class Server {
     this.app.use(this.paths.client, require("./routes/client.routes"));
     this.app.use(require("./routes/interface/indexInterface"));
     this.app.use(require("./routes/interface/adminInterface"));
-    this.app.use(require("./routes/interface/meseroInterface"));
     this.app.use(require("./routes/interface/waiterInterface"));
     this.app.use(require("./routes/interface/chefInterface"));
     this.app.use(require("./routes/interface/cashInterface"));

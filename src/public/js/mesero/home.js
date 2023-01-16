@@ -99,7 +99,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const mesaEtiqueta = e.target;
     if (mesaEtiqueta.classList.value === "col-mesa mesa-disponible") {
       window.location.href = "/comanda/?mesa=" + mesaEtiqueta.innerHTML;
-    }
+    }else if(mesaEtiqueta.classList.value==="col-mesa mesa-ocupada"){
+      window.location.href=mesaEtiqueta.querySelector('a').href;
+    } 
   });
 
   /* Modal Unir Mesas */

@@ -1,11 +1,12 @@
 <link rel="stylesheet" href="/public/css/mesero-comanda.css" />
+
 <main>
 <div class="conteiner-fluid p-2 " >
   <div class="row shadow" style="background-color: white;">
-
-      <div class="col-lg-7 p-0">
-          <div class="container__client ">
-            <h3><i class="fa-solid fa-address-book me-2"></i>Registrar Cliente</h3>
+      <% if(state=="2"){%>
+        <div class="col-lg-7 p-0">
+          <div class="container__client  p-3">
+            <h3>Registrar Cliente</h3>
             <div class="container__client__info">
               <div class="container__client__info_row">
                 <label for="" class="form-label">Dni:</label>
@@ -24,9 +25,13 @@
               </button>
             </div>
           </div>
-      </div>
-
-      <div class="col-lg-5 p-0">
+        </div>
+        <% }%>
+        <% if(state=="2"){%>
+          <div class="col-lg-5 p-0">
+        <% }else{%>
+          <div class="col-lg-8 p-0">
+            <% }%>
             
         <div class="container__order p-3">
           <div class="container__order__info">
@@ -48,6 +53,7 @@
               <strong id="priceTotalOrder"></strong>
             </p>
           </div>
+          <% if(state=="2"){%>
           <div class="container__order__buttons">
             <button id="btn-preCuenta">
               <i class="fa-solid fa-file-invoice-dollar"></i>
@@ -55,9 +61,10 @@
             </button>
             <button id="btn-cancel">
               <i class="far fa-window-close"></i>
-              &nbsp;Cancelar
+              &nbsp;Regresar
             </button>
           </div>
+          <% }%>
         </div>
       </div>
   </div>
@@ -125,4 +132,5 @@
     </div>
   </div>
 </main>
+<script src="/socket.io/socket.io.js"></script>
 <script src="/public/js/mesero/detail-order.js"></script>

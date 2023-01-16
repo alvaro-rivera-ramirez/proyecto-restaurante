@@ -73,6 +73,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         icon: "success",
         showConfirmButton: false,
         timer: 800,
+      }).then(()=>{
+        if(codeState=="2"){
+          socket.emit("pedido-preparado",{code:codeOrder})
+        }else if(codeState=="5"){
+          socket.emit("liberar-mesa",{mesas:result.numMesas})
+        }
       });
       console.log(result);
     } catch (error) {
@@ -115,7 +121,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           tagOrder.remove(); //Elimina el pedido de la lista del cocinero
           await fetchOrdersPrepared();
           await fetchSummaryOrders();
-          socket.emit("pedido-preparado",{code:codeOrder})
         }
       });
     }
@@ -134,9 +139,9 @@ document.addEventListener("DOMContentLoaded", async () => {
           const codeOrder = tagOrder.querySelector(".codeOrder").value;
           await sendOrderReady(codeOrder, 5);
           tagOrder.remove();
+          await fetchSummaryOrders({code:codeOrder});
         }
       });
-      await fetchSummaryOrders();
     }
   });
 

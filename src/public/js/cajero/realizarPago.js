@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
+    const socket = io();
     var total, mesas, idPed;
 
     const addDetail = (idprod, nomprod, countProd, subtotal, observation) => {
@@ -116,6 +117,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 showConfirmButton: false,
                 timer: 800,
             }).then(()=>{
+                socket.emit("liberar-mesa",{mesas:result.numMesas})
                 window.location='/home';
             });
             console.log(result);
