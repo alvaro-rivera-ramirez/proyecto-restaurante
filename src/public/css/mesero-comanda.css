@@ -97,6 +97,7 @@ justify-content: center;
 }
 .container__order__info,.container__order__details,.container__order__total,.container__order__buttons{
     background-color: #f3f3f3;
+    padding-bottom: 10px;
 }
 .container__order__info h3{
     margin-bottom: 10px;
@@ -127,6 +128,7 @@ justify-content: center;
 }
 .container__order__details__info{
     font-family: var(--font-one);
+    text-align: center;
 }
 .container__order__details__info .row{
     margin-right: 0px!important;
@@ -154,7 +156,9 @@ justify-content: center;
 }
 .container__order__total{
     padding-left: 13px;
-    padding-top: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: solid 1px #000;
     display: flex;
     justify-content: flex-end;
     padding-right: 50px;
@@ -176,4 +180,26 @@ justify-content: center;
 .container__order__buttons #btn-cancel{
     background-color: #880000;
 
+}
+
+.container__order__buttons #btn-preCuenta{
+    background-color: #FFDB5A;
+    color: var(--font-one);
+}
+
+
+.container__client__info{
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+
+.container__client__buttons{
+    margin-top: 8px;
+}
+.container__client__buttons #btn-addClient {
+    background-color: black;
+    padding: 5px 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
 }

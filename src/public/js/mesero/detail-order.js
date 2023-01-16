@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  const socket = io();
   const addDetail = (idprod, nomprod, countProd, subtotal, observation) => {
     const containerDetails = document.querySelector(
       ".container__order__details__info"
@@ -25,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <label>
         Observacion:
         </label>
-        <input type="text" class="obs_products" value="${observation}" disabel readonly>
+        <input type="text" class="obs_products" value="${observation}" disabled readonly>
         </div>
         </div>`;
   };
@@ -126,6 +127,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
 
       if (!response.ok) {
+        Swal.fire({
+          title: "Error",
+          text: "Vuelva a intentarlo",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 800,
+        });
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const result = await response.json();
@@ -139,7 +147,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       return result;
     } catch (error) {
       console.log(error);
-      throw new Error();
     }
   };
 
@@ -196,10 +203,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         showConfirmButton: false,
         timer: 800,
       }).then(()=>{
+        socket.emit("pedido-precuenta",{code:cod})
         window.location='/home';
       });
       console.log(result);
     } catch (error) {
+      Swal.fire({
+        title: "Error",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 800,
+      });
       console.log(error);
     }
   };
@@ -207,10 +221,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   const btnSearchClient = document.querySelector("#btn-searchClient");
   const btnAddClient = document.querySelector("#btn-addClient");
   const btnPreOrder = document.querySelector("#btn-preCuenta");
+  const backOrder = document.querySelector("#btn-cancel");
   let idClient;
   await fetchOrder();
 
   btnSearchClient.onclick = searchClient;
   btnAddClient.onclick = openModalClient;
   btnPreOrder.onclick = sendPreCuenta;
+  backOrder.onclick=()=>{
+    window.location="/home";
+  }
 });

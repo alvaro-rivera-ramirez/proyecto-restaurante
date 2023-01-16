@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       console.log(result);
       renderOrderToTakeAway(result.takeaway);
-      renderOrderForTable(result.fortable);
+      renderPreAccountOrder(result.preAccount);
     } catch (error) {
       console.log(error);
     }
@@ -45,18 +45,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     tagTitle.innerHTML=`Listos para llevar (${orders.length}) <div class="caret"></div>`;
   }
 
-  const renderOrderForTable=(orders)=>{
-    const tagTitle=document.querySelector('#ordersForTable');
-    const tagOrders=document.querySelector('#collapseOrdersPrepared2');
+  const renderPreAccountOrder=(orders)=>{
+    const tagTitle=document.querySelector('#preAccountorders');
+    const tagOrders=document.querySelector('#collapsePreAccountOrders');
     const node=document.createElement("div")
     node.className="card card-body";
     let listHTML='';
     orders.forEach((order)=>{
-      listHTML+=`<a class="dropdown-item" href="/comanda?cod=${order.cod_ped}">N° ${order.id_ped.toString().padStart(6, 0)}</a>`
+      listHTML+=`<a class="dropdown-item" href="/pago?cod=${order.cod_ped}">N° ${order.id_ped.toString().padStart(6, 0)+ ((order.mesas)?' Mesa:'+order.mesas:'')}</a>`
     })
     node.innerHTML=listHTML;
     tagOrders.appendChild(node);
-    tagTitle.innerHTML=`Listos para la mesa (${orders.length}) <div class="caret"></div>`;
+    tagTitle.innerHTML=`Listos para pagar (${orders.length}) <div class="caret"></div>`;
   }
 
   const renderTables = (tables, panelMesas) => {

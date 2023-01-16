@@ -139,7 +139,7 @@ const getTableOrder=async(idpedido)=>{
 }
 const updateStateOrder=async(codeOrder,infoOrder)=>{
   const upOrder=await conn.query("UPDATE pedido SET ? WHERE cod_ped=?",[infoOrder,codeOrder])
-
+  return upOrder;
 }
 
 //obtienes las ordenes pedidas por un usuario y que estan preparadas 
@@ -228,7 +228,7 @@ const getReportAll=async(idPago)=>{
 }
 
 //Obtienes el mode de orden y el id de pedido por codigo de orden
-const getModeToOrder=async(code)=>{
+const getModeToPreparedOrder=async(code)=>{
   try {
     const order=await conn.query("SELECT p.id_ped as id,p.id_mod as mode,p.id_usu as user,(SELECT COUNT(*) as cant FROM pedido p2 WHERE p2.id_mod=p.id_mod AND date(p2.fecha_ped)= curdate() AND p2.id_epedido=2 AND p2.id_usu=p.id_usu) as cant FROM pedido p WHERE p.cod_ped=?",[code]);
 
@@ -249,6 +249,66 @@ const deleteTableOrderByOrder = async (id) => {
   }
 };
 
+//Obtiene el numero de ordenes para llevar preparadas
+const getCountOrderPreparedToCarryOut=async()=>{
+  const countOrders = await conn.query("SELECT count(*) AS count_orders_prepared FROM pedido WHERE id_epedido=2 and date(fecha_ped)=curdate() and id_mod=1");
+  return countOrders[0];
+}
+
+
+const getModeToPreAccountOrder=async(code)=>{
+  try {
+    const order=await conn.query("SELECT p.id_ped as id,(SELECT group_concat(numero_mesa separator ', ') from mesa_pedido mp JOIN mesa m ON mp.id_mesa=m.id_mesa WHERE mp.id_ped=p.id_ped) as mesas,(SELECT COUNT(*) as cant FROM pedido p2 WHERE date(p2.fecha_ped)= curdate() AND p2.id_epedido=3) as cant FROM pedido p WHERE p.cod_ped=?",[code]);
+    return order[0];
+  }catch(error) {
+    console.log(error)
+    throw Error;
+  }
+}
+
+const getStateOrder=async(code)=>{
+  try {
+    const order=await conn.query("SELECT id_epedido as state FROM pedido WHERE cod_ped=?",[code]);
+    return order;
+  } catch (error) {
+    console.log(error)
+    throw new Error("Error de consulta");
+  }
+}
+
+const getIdTableByCodeOrder=async(code)=>{
+  try {
+    const tables=await conn.query("SELECT group_concat(mp.id_mesa separator ', ') as mesas,group_concat(numero_mesa separator ', ') as numMesas from pedido p LEFT JOIN  mesa_pedido mp ON p.id_ped=mp.id_ped JOIN mesa m ON mp.id_mesa=m.id_mesa WHERE p.cod_ped=?",[code])
+    
+    if(!tables.length){
+      return null;
+    }
+    return tables[0];
+  } catch (error) {
+    console.log(error)
+    throw new Error;
+  }
+}
+
+const updateStateGroupTables=async(tables)=>{
+  try {
+    const update=await conn.query("UPDATE mesa SET id_emesa=1 WHERE id_mesa IN(?)",[tables]);
+    return update;
+  } catch (error) {
+    console.log(error)
+    throw new Error;
+  }
+}
+
+const deleteTableOrderByIdTable=async(table)=>{
+  try {
+    const orderTable = await conn.query("DELETE FROM mesa_pedido WHERE id_mesa IN(?)", [table]);
+    return orderTable;
+  } catch (error) {
+    console.log(error);
+    throw new Error();
+  }
+}
 module.exports = {
   getAll,
   getCountOrders,
@@ -276,9 +336,16 @@ module.exports = {
   getPreparedOrdersToCarryOut,
   getInfoOrdersTodayByState,
   getDetailsOrdersTodayByState,
-  getModeToOrder,
+  getModeToPreparedOrder,
   getOrderReport,
   getOrderPago,
   getReportAll,
-  deleteTableOrderByOrder
+  deleteTableOrderByOrder,
+  getPreAccountOrdersToday,
+  getCountOrderPreparedToCarryOut,
+  getModeToPreAccountOrder,
+  getStateOrder,
+  getIdTableByCodeOrder,
+  updateStateGroupTables,
+  deleteTableOrderByIdTable
 };

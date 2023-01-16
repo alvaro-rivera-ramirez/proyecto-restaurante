@@ -2,6 +2,7 @@ const socket = io();
 const selectCategory = document.querySelector("#selectCategory");
 const containerProducts = document.querySelector(".container__carta__products");
 const saveOrder = document.querySelector("#btn-save");
+const backOrder = document.querySelector("#btn-cancel");
 const typeOrder = document.querySelector("#modalidad");
 let mesas = [];
 fetch("/api/category")
@@ -59,6 +60,10 @@ const renderProducts = (products) => {
 };
 selectCategory.addEventListener("change", async (e) => {
   const products = await fetchProduct(e.target.value);
+  if(!products){
+    containerProducts.innerHTML = `<h3>No se han encontrado productos en esta categoría</h3>`;
+    return;
+  }
   renderProducts(products);
 });
 
@@ -187,6 +192,7 @@ saveOrder.onclick = async () => {
       body: JSON.stringify(order),
     });
 
+    const result = await response.json();
     if (!response.ok) {
       Swal.fire({
         title: "Error",
@@ -195,17 +201,24 @@ saveOrder.onclick = async () => {
         showConfirmButton: false,
         timer: 800,
       });
+      console.log(result)
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const result = await response.json();
     Swal.fire({
       title: "Pedido Registrado",
       icon: "success",
       showConfirmButton: false,
       timer: 800,
+    }).then(()=>{
+      window.location.href = "/home";
     });
+    console.log(result)
     socket.emit("confirmar-pedido", result);
   } catch (error) {
     console.log(error);
   }
 };
+
+backOrder.onclick=()=>{
+  window.location="/home";
+}

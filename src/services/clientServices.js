@@ -5,6 +5,7 @@ const createClient= async(dataClient)=>{
         const newClient=await con.query("INSERT INTO cliente SET ?",[dataClient]);
         return newClient;
     } catch (error) {
+        console.log("Consulta:",error)
         throw new Error("Error en la consulta");
     }
 }
