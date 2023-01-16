@@ -55,6 +55,7 @@ const getTablesByFloor=async (id_piso)=>{
   }
 }
 
+
 const getTablesByState = async(piso,estado)=>{
   try {
     const mesas = await con.query("SELECT m.* FROM mesa m INNER JOIN piso p ON m.id_piso=p.id_piso WHERE m.id_piso=? AND m.id_emesa=?",[piso,estado]);

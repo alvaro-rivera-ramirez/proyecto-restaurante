@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 require("ejs");
 const Server = require('./server');
 
