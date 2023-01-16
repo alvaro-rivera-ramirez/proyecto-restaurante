@@ -25,7 +25,31 @@ const verifyToken = async (token) => {
   }
 };
 
+const tokenSignResetPass=async(payload)=>{
+  const jwtConstructor = new SignJWT(payload);
+  const encoder = new TextEncoder();
+  const jwt = await jwtConstructor
+    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+    .setIssuedAt()
+    .setExpirationTime("5m")
+    .sign(encoder.encode(process.env.JWT_SECRET)); //Firma de token
+  return jwt;
+}
+
+const verifyTokenResetPass=async(token)=>{
+  try {
+    const encoder = new TextEncoder();
+    return jwtVerify(
+      token,
+      encoder.encode(process.env.JWT_SECRET)
+    );
+  } catch (e) {
+    return null;
+  }
+}
 module.exports={
   tokenSign,
-  verifyToken
+  verifyToken,
+  tokenSignResetPass,
+  verifyTokenResetPass
 }

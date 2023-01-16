@@ -96,6 +96,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       const response = await fetch("/api/client/" + dni);
 
       if (!response.ok) {
+        Swal.fire({
+          title: "Error",
+          text: "Vuelva a intentarlo",
+          icon: "error",
+          showConfirmButton: false,
+          timer: 800,
+        });
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const result = await response.json();
@@ -144,7 +151,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         timer: 800,
       });
       console.log(result);
-      return result;
+      const nameClient = document.querySelector("#nameClient");
+      nameClient.innerText = data.nombre;
+      idClient = result.id;
     } catch (error) {
       console.log(error);
     }
@@ -152,30 +161,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const openModalClient = () => {
     formClient.reset();
-    let modalNew = new bootstrap.Modal("#modalNewClient", {
-      keyboard: false,
-      backdrop: true,
-    });
     modalNew.show();
-
-    const btnSave = document.querySelector("#btnSaveClient");
-    btnSave.addEventListener("click", async (e) => {
-      e.preventDefault();
-      try {
-        const form = new FormData(formClient);
-        let data = {};
-        form.forEach((value, key) => (data[key] = value));
-        const infoClient = await createClient(data);
-        modalNew.hide();
-        const nameClient = document.querySelector("#nameClient");
-        nameClient.innerText = data.nombre;
-        idClient = infoClient.id;
-      } catch (error) {
-        console.log(error);
-      }
-    });
+    
   };
-
+  const btnSave = document.querySelector("#btnSaveClient");
+  btnSave.addEventListener("click", async (e) => {
+    e.preventDefault();
+    try {
+      const form = new FormData(formClient);
+      let data = {};
+      form.forEach((value, key) => (data[key] = value));
+      await createClient(data);
+      modalNew.hide();
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  
   const sendPreCuenta = async() => {
     try {
       const searchParams = new URLSearchParams(window.location.search);
@@ -192,7 +194,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           idClient
         }),
       });
-
+      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -223,8 +225,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const btnPreOrder = document.querySelector("#btn-preCuenta");
   const backOrder = document.querySelector("#btn-cancel");
   let idClient;
+  let modalNew = new bootstrap.Modal("#modalNewClient", {
+    keyboard: false,
+    backdrop: true,
+  });
   await fetchOrder();
-
+  
   btnSearchClient.onclick = searchClient;
   btnAddClient.onclick = openModalClient;
   btnPreOrder.onclick = sendPreCuenta;
