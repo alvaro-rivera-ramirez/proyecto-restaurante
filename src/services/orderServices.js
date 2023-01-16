@@ -149,7 +149,6 @@ const getPreparedOrdersByMode=async(idusu,idmod)=>{
     return orders;
   } catch (error) {
     console.log(error)
-    throw Error;
   }
 }
 
