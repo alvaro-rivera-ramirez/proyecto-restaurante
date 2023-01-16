@@ -89,7 +89,6 @@ transporter.sendMail({
 
 const resetPwsPut = async (req, res) => {
   const { psw1, confirmpsw,email} = req.body;
-  //const confEmail= await userServices.confirmEmail(token);
   if (psw1!==confirmpsw || !email) {
     handleErrorResponse(res, "error datos corruptos", 401);
     return;
@@ -102,7 +101,7 @@ const resetPwsPut = async (req, res) => {
   const passEncrypt = await encrypt(psw1);
   editusu.psw= passEncrypt;
   const reset= await userServices.resetPwsPut(editusu);
-  return res.status(201).send(reset);
+  res.render("login", { layout: false });
 }
 module.exports = {
   getUsers,

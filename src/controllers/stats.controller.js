@@ -30,18 +30,17 @@ const pedBimes=async(req,res)=>{
       if(mes-1<1 & item!=0){
         premes=12;
         preanio=anio-1;
-        
+        console.log("en item 0: ",preanio,premes)
       }
       else if(item==0){
         var preanio=anio;
         var premes=mes;
-        console.log("en item 0: ",preanio,premes)
       }
       else{
         premes=mes-1;
       }
       dia=new Date(anio,mes,0);
-      fecha=new Date("'"+anio+"-"+premes+"-"+dia.getDate()+"'");
+      fecha=new Date("'"+preanio+"-"+premes+"-"+dia.getDate()+"'");
       prefecha=new Date("'"+preanio+"-"+premes+"-"+1+"'");
       let arrayfecha=[prefecha,fecha];
       console.log(arrayfecha)
