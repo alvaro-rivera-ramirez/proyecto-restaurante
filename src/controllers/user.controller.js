@@ -50,8 +50,8 @@ const changePassword = async (req, res) => {
   const { old_password, new_password } = req.body;
 
   if (!old_password || !new_password) {
-    handleErrorResponse(res, "EMPTY FIELDS", 401);
-    return;
+    msg="Campos Vacíos";
+    return res.status(400).send({ok:false, msg});
   }
 
   // Obtener id de usuario
@@ -60,8 +60,17 @@ const changePassword = async (req, res) => {
   id_usu = payload.user.id_usu;
 
   const change = await userServices.changePassword(id_usu, old_password, new_password);
-  return res.status(201).send(change);
+
+  if (change == undefined) {
+    msg="Contraseña Anterior Incorrecta";
+    return res.status(401).send({ok:false, msg});
+  }
+  else {
+    msg="Cambio Exitoso";
+    return res.status(200).send({ok:true, msg});
+  }
 }
+
 const forgotPswPost = async (req, res) => {
     const{email}=req.body;
     const getEmail=await userServices.getEmail(req.body.email);
