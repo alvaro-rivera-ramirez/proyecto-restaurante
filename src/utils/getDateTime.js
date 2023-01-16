@@ -6,7 +6,7 @@ const toJSONLocal=(date)=> {
 const getDateTime=()=>{
     const d=new Date();
     const date=toJSONLocal(d);
-    const hour=d.toLocaleTimeString();
+    const hour=d.toLocaleTimeString('es-PE');
     return date+' '+hour;
 }
 
