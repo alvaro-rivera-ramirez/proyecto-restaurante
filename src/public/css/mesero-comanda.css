@@ -272,8 +272,6 @@ justify-content: center;
     }
 }
 
-}
-
 .container__order__buttons #btn-preCuenta{
     background-color: #FFDB5A;
     color: var(--font-one);
@@ -288,12 +286,13 @@ justify-content: center;
 .container__client__buttons{
     margin-top: 8px;
 }
-.container__client__buttons #btn-addClient {
+/* .container__client__buttons #btn-addClient {
     background-color: black;
     padding: 5px 10px;
     color: white;
     border: none;
     border-radius: 5px;
+} */
 @media (max-width: 1124px) {
     .container__carta__products{
         grid-template-columns: repeat(3,1fr);

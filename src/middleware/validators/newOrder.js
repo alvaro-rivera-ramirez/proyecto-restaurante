@@ -8,7 +8,9 @@ const validateCreateOrder = [
   check("detalle.*").exists().isObject(),
   check("detalle.*.id_prod").exists().notEmpty().isNumeric(),
   check("detalle.*.cantidad_det").exists().notEmpty().isNumeric(),
-  check("detalle.*.descripcion_det").exists().optional({checkFalsy: true}).isAlphanumeric(),
+  check("detalle.*.descripcion_det").exists().optional({checkFalsy: true}).custom((value) => {
+    return value.match(/^[A-Za-zÀ-ÿ\u00f1\u00d1 ]+$/);
+  }),
   (req, res, next) => {
     validateResult(req, res, next);
   },
