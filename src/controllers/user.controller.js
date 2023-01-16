@@ -4,8 +4,6 @@ const jwt=require('jsonwebtoken');
 const { compare, encrypt } = require("../utils/handlePass");
 const transporter = require ('../config/nodemailer');
 
-
-
 const getUsers = async (req, res) => {
   try {
     const users=await userServices.getUsers();
@@ -103,8 +101,8 @@ const resetPwsPut = async (req, res) => {
   }
   const passEncrypt = await encrypt(psw1);
   editusu.psw= passEncrypt;
-  const reset= await userServices.resetPwsPut(editusu);
-  res.render("loguin");
+  await userServices.resetPwsPut(editusu);
+  res.render("http://localhost:3000/api/auth/");
 }
 module.exports = {
   getUsers,
