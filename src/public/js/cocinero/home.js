@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
       }
       const { details } = result;
-      console.log(result)
+      console.log(result);
       for (const order of result.order) {
         let detailsOfOneOrder = filterById(details, order.id_ped);
         renderOrders(order, detailsOfOneOrder);
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     listaPedidos.innerHTML += orderHTML;
   };
 
-  const sendOrderReady = async (codeOrder,codeState) => {
+  const sendOrderReady = async (codeOrder, codeState) => {
     try {
       const cod = codeOrder;
       const response = await fetch(`/api/order/${cod}`, {
@@ -80,9 +80,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   };
 
-  const cancelOrder=()=>{
-
-  }
+  const fetchSummaryOrders = async() => {
+    try {
+      const response=await fetch("/api/cocina/summary");
+      const result=await response.json();
+      if(!response.ok){
+        throw new Error(`HTTP error! status: ${response.status} message: ${result.error}`);
+      }
+      console.log(result)
+      document.querySelector('#countOrdersWait').innerText=result.ordersWait;
+      document.querySelector('#countOrdersPrepared').innerText=result.ordersPrepared;
+    } catch (error) {
+      console.log(error)
+    }
+  };
 
   const listaPedidos = document.querySelector("#tableroPedidos");
   await fetchOrders();
@@ -100,12 +111,16 @@ document.addEventListener("DOMContentLoaded", async () => {
           const tagButton = e.target;
           const tagOrder = tagButton.parentNode.parentNode;
           const codeOrder = tagOrder.querySelector(".codeOrder").value;
-          await sendOrderReady(codeOrder,2);
+          await sendOrderReady(codeOrder, 2);
+          tagOrder.remove(); //Elimina el pedido de la lista del cocinero
+          await fetchOrdersPrepared();
+          await fetchSummaryOrders();
+          socket.emit("pedido-preparado",{code:codeOrder})
         }
       });
     }
-
-    if(e.target.classList.contains("btn-cancelar")){
+    
+    if (e.target.classList.contains("btn-cancelar")) {
       Swal.fire({
         title: "¿Estas seguro de cancelar el pedido?",
         showDenyButton: true,
@@ -117,27 +132,102 @@ document.addEventListener("DOMContentLoaded", async () => {
           const tagButton = e.target;
           const tagOrder = tagButton.parentNode.parentNode;
           const codeOrder = tagOrder.querySelector(".codeOrder").value;
-          await sendOrderReady(codeOrder,5);
+          await sendOrderReady(codeOrder, 5);
+          tagOrder.remove();
         }
       });
+      await fetchSummaryOrders();
     }
   });
 
-  const Ordenes = document.querySelector("#box-realizados");
-   const Modal = document.querySelector(".modal");
+  const fetchOrdersPrepared=async()=>{
+    try {
+      const response = await fetch("/api/cocina");
+      const result=await response.json();
+      if(!response.ok){
+        throw new Error(`HTTP error! status: ${response.status} message: ${result.error}`);
+      }
+      let listHTML = "";
+      result.forEach((cocina) => {
+        let nropedido = cocina.id_ped.toString().padStart(6, 0);
+        listHTML += `<button type="button" class="btn i" value="${cocina.cod_ped}">${nropedido}</button>`;
+      });
+      containerOrders.innerHTML = listHTML;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
+  const renderInfoModal=async(order,details)=>{
+    try {
+      const titleModal=document.querySelector('.modal-title');
+      const bodyModal=document.querySelector('.modal-body');
+      const nodeDetails=document.createElement('div');
+      titleModal.innerText=`Orden ${order.id_ped.toString().padStart(6, 0)}`
+      nodeDetails.className="m-orden";
 
-    fetch("/api/cocina")
-    .then((res) => res.json())
-    .then((res) => {
-        console.log(res)
-        let listHTML = "";
-        res.forEach((cocina) => {
-            let nropedido=cocina.id_ped.toString().padStart(6, 0);
-            listHTML += `<button type="button" class="btn i"  data-bs-toggle="modal" data-bs-target="#exampleModal" value="${cocina.id_ped}">${nropedido}</button>`;              
-        });
-        Ordenes.innerHTML = listHTML;
-    }).catch((error) => console.log(error));
-    const btnOpenModal = document.querySelectorAll(".i");
-    
-    console.log(btnOpenModal);
+      bodyModal.innerHTML=`<p>Mesa: ${(!order.mesas)?'Vacío':order.mesas}</p>
+      <p>Mozo: ${order.nom_usu}</p>
+      <p class="mb-1">Orden:</p>`;
+      let listDetail='';
+      details.forEach(detail=>{
+        listDetail+=`<div class="m-orden-detalle">
+        <ul><li>
+            <p>${detail.nom_prod} (${detail.cantidad_det})</p>
+            <p class="m-obs">Observación: ${detail.descripcion_det}</p></ul></li>
+          </div>`;
+      })
+      nodeDetails.innerHTML=listDetail;
+      bodyModal.appendChild(nodeDetails);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const fetchOneOrder = async (cod) => {
+    try {
+      const response = await fetch(`/api/order/${cod}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const result = await response.json();
+      const { detailsOrder, order} = result;
+      console.log(result);
+      renderInfoModal(order,detailsOrder)
+      const modal = new bootstrap.Modal('#modalOrder', {
+        keyboard: false
+      })
+      modal.show();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const containerOrders = document.querySelector("#box-realizados");
+  await fetchOrdersPrepared();
+  
+  const socket = io();
+  
+  containerOrders.addEventListener('click',async(e)=>{
+    try {
+      const tag=e.target;
+      if(tag.classList=="btn i"){
+        const codeOrder=tag.value;
+        await fetchOneOrder(codeOrder);
+      }
+      
+    } catch (error) {
+      console.log(error)
+    }
+  })
+  socket.on("connect", () => {
+    console.log("conectado");
+  });
+
+  socket.on("cocinero-recibe-pedido", (infoOrder) => {
+    const { order,detail,countOrderWait} = infoOrder;
+    console.log(infoOrder);
+    order.mesas=infoOrder.mesas;
+    renderOrders(order,detail);
+    document.querySelector('#countOrdersWait').innerText=countOrderWait;
+  });
 });

@@ -1,5 +1,8 @@
 const ChefServices = require("../services/orderServices");
 const {
+  getCountOrderWait,
+  getCountOrderPrepared}=require("../services/orderServices")
+const {
     handleErrorResponse,
     handleHttpError,
   } = require("../utils/handleError");
@@ -13,6 +16,21 @@ const {
       return res.status(401);
     }
   };
+
+  const getSummaryOrders=async(req,res)=>{
+    try {
+      const {count_orders_wait} = await getCountOrderWait();
+      const {count_orders_prepared} = await getCountOrderPrepared();
+      const resume={
+        ordersWait:count_orders_wait,
+        ordersPrepared:count_orders_prepared
+      }
+      res.status(200).send(resume);
+    } catch (error) {
+      console.log(error)
+      handleHttpError(res,"Error en la consulta");
+    }
+  }
   const getPedido = async (req, res) => {
     try {
       const pedidos = await ChefServices.getPedido();
@@ -34,6 +52,7 @@ const {
   };
   module.exports = {
     getIdPedidoAll,
+    getSummaryOrders,
     updateEstadoPed,
     getPedido,
     updateEstadoPed

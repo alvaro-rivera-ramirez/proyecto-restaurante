@@ -26,21 +26,32 @@ const getOrders=async(req,res)=>{
   try {
     const roleUser=req.role;
     let orders={};
-    if(roleUser=="Cajero"){
-      const idusu=req.id;
-      orders.takeaway=await OrderServices.getPreparedOrdersByMode(idusu,1);
-      orders.fortable=await OrderServices.getPreparedOrdersByMode(idusu,2);
+    switch (roleUser) {
+      case "Cocinero":
+        orders.order=await OrderServices.getInfoOrdersTodayByState(1);
+        orders.details=await OrderServices.getDetailsOrdersTodayByState(1);
+        break;
+      case "Mesero":
+        const idusu=req.id;
+        orders.takeaway=await OrderServices.getPreparedOrdersByMode(idusu,1);
+        orders.fortable=await OrderServices.getPreparedOrdersByMode(idusu,2);
+        break;
+      case "Cajero":
+        orders.takeaway=await OrderServices.getPreparedOrdersToCarryOut();
+        break;
+      default:
+        break;
     }
-    if(roleUser=="Cocinero"){
-      orders.order=await OrderServices.getInfoOrdersTodayByState(1);
-      orders.details=await OrderServices.getDetailsOrdersTodayByState(1);
-    }
+    // if(roleUser=="Cocinero"){
+    //   orders.order=await OrderServices.getInfoOrdersTodayByState(1);
+    //   orders.details=await OrderServices.getDetailsOrdersTodayByState(1);
+    // }
 
-    if(roleUser=="Mesero"){
-      const idusu=req.id;
-      orders.takeaway=await OrderServices.getPreparedOrdersByMode(idusu,1);
-      orders.fortable=await OrderServices.getPreparedOrdersByMode(idusu,2);
-    }
+    // if(roleUser=="Mesero"){
+    //   const idusu=req.id;
+    //   orders.takeaway=await OrderServices.getPreparedOrdersByMode(idusu,1);
+    //   orders.fortable=await OrderServices.getPreparedOrdersByMode(idusu,2);
+    // }
     res.status(200).send(orders);
     return;
   } catch (error) {
@@ -86,7 +97,9 @@ const createOrder = async (req, res) => {
         detail.id_ped=idOrder;
         await OrderServices.createDetailOrder(detail);
     }
-
+    order.nom_usu=req.usu;
+    order.id_ped=idOrder;
+    const detail =await OrderServices.getOrderDetailsByOrder(idOrder);
     if(mod=='2' && mesas.length>0){
         let idTable;
         for (const numMesa of mesas) {
@@ -97,16 +110,19 @@ const createOrder = async (req, res) => {
 
         res.status(201).send({
           order,
-          mesas
+          mesas,
+          detail
       });
       return;
     }
     res.status(201).send({
         order,
-        detalle
+        mesas:null,
+        detail
     });
   } catch (error) {
     console.log(error);
+    handleHttpError(res,"Error en la consulta");
   }
 };
 
@@ -114,7 +130,9 @@ const getOneOrder = async (req, res) => {
     try {
         const {codeOrder}=req.params;
         let total=0;
+        console.log(codeOrder);
         let order=await OrderServices.getOneOrder(codeOrder);
+        console.log(order);
         const detailsOrder=await OrderServices.getDetailsByOrder(order.id_ped);
         for (const detail of detailsOrder) {
             total+=detail.subtotal;
@@ -136,9 +154,10 @@ const updateOrder = (req, res) => {
 };
 
 
-const getPedidos = async (req, res) => {
+const getPedidosAll = async (req, res) => {
   try {
       const pedidos=await OrderServices.getAll();
+      console.log(pedidos);
       return res.status(201).send(pedidos);
   } catch (error) {
       return res.status(401);
@@ -165,11 +184,9 @@ const updateStateOrder =async(req,res)=>{
   try {
     const {stateOrder}=req.body;
     const {codeOrder}=req.params;
-
     console.log("updateOrder");
     console.log(req.body);
     console.log(req.params);
-
     let infoOrderUpdate={
       id_epedido:stateOrder
     }
@@ -368,7 +385,7 @@ module.exports = {
   getOneOrder,
   createOrder,
   updateOrder,
-  getPedidos,
+  getPedidosAll,
   getPedidosFiltro,
   updateStateOrder,
   getReport,

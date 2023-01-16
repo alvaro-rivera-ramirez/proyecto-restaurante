@@ -8,7 +8,7 @@ const {
   getCountOrderWait,
   getCountOrderPrepared,
 } = require("../../services/orderServices");
-const { getTotalPayToday } = require("../../services/payServices");
+const { getTotalPay, getTotalPayToday } = require("../../services/payServices");
 const { getPisos } = require("../../services/pisosServices");
 const {
   isLoggedIn,
@@ -29,23 +29,28 @@ router.get("/home", isLoggedIn, async (req, res) => {
     case "Administrador":
       const { count_users } = await getCountUsers();
       const { count_orders} = await getCountOrders();
+      const { count_pays }=await getTotalPay();
+      let countPays=(parseFloat(count_pays)).toFixed(2);
+      if (countPays=='NaN') {countPays='0.00'}
 
       res.render("admin/home", {
         nom_usu,
         nom_tipousu,
         count_users,
-        count_orders
+        count_orders,
+        countPays
       });
 
       break;
     case "Mesero":
       const {count_orders_day} = await getCountOrdersByWaiter(req.id);
-      res.render("mesero/home", { nom_usu, nom_tipousu, count_orders_day});
+      res.render("mesero/home", { nom_usu, nom_tipousu, count_orders_day });
       break;
     case "Cajero":
       const {total_pay}=await getTotalPayToday();
-      console.log(total_pay);
-      res.render("cajero/home", { nom_usu, nom_tipousu, total_pay });
+      let totalPay=(parseFloat(total_pay)).toFixed(2);
+      if (totalPay=='NaN') {totalPay='0.00'}
+      res.render("cajero/home", { nom_usu, nom_tipousu, totalPay });
       break;
     case "Cocinero":
       const {count_orders_wait} = await getCountOrderWait();

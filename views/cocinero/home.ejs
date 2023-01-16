@@ -1,11 +1,11 @@
-<link rel="stylesheet" href="/public/css/home-cocinero.css">
-<div class="conteiner-fluid  p-2">
-    <div class="row">
-        <div class="col-md-8 p-0">
-            <div class="shadow p-3 box-pedido">
-                <h3>Pedidos</h3>
-                <div class="scroll-div" id="tableroPedidos">
-                    <!-- <div class="box-orden ms-3">
+<link rel="stylesheet" href="/public/css/home-cocinero.css" />
+<div class="conteiner-fluid p-2">
+  <div class="row">
+    <div class="col-md-8 p-0">
+      <div class="shadow p-3 box-pedido">
+        <h3>Pedidos</h3>
+        <div class="scroll-div" id="tableroPedidos">
+          <!-- <div class="box-orden ms-3">
                         <h5 class="mb-2">N° Orden: 00001</h5>
                         <div class="d-flex justify-content">
                             <p>Mesa: 15</p>
@@ -125,60 +125,72 @@
                             <button class="btn btn-realizar">Realizado</button>
                         </div>
                     </div> -->
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 p-0">
-            <div class="col-md-12 shadow p-3 box-resumen">
-                <h3>Resumen</h3>
-                <div class="box-info">
-                    <div class="d-flex justify-content-between">
-                        <p>En preparación:</p>
-                        <p><%= count_orders_wait %></p>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <p>Realizados:</p>
-                        <p><%= count_orders_prepared %></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12 shadow p-3">
-                <h3>Realizados</h3>
-                <h5>Ordenes</h5>
-                <div class="box-realizados" id="box-realizados">
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Orden 00001</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <p>Mesa: 15</p>
-            <p>Mozo: Javier</p>
-            <p class="mb-1">Orden:</p>
-            <div class="m-orden">
-                <div class="m-orden-detalle">
-                    <p>Causa rellena (1)</p>
-                    <p class="m-obs">Observación: Picante</p>
-                </div>
-                <div class="m-orden-detalle">
-                    <p>Causa rellena (1)</p>
-                    <p class="m-obs">Observación: Picante</p>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
+    <div class="col-md-4 p-0">
+      <div class="col-md-12 shadow p-3 box-resumen">
+        <h3>Resumen</h3>
+        <div class="box-info">
+          <div class="d-flex justify-content-between">
+            <p>En preparación:</p>
+            <p id="countOrdersWait"><%= count_orders_wait %></p>
+          </div>
+          <div class="d-flex justify-content-between">
+            <p>Realizados:</p>
+            <p id="countOrdersPrepared"><%= count_orders_prepared %></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 shadow p-3">
+        <h3>Realizados</h3>
+        <h5>Ordenes</h5>
+        <div class="box-realizados" id="box-realizados"></div>
+      </div>
+    </div>
   </div>
+</div>
+
+<div
+  class="modal fade "
+  id="modalOrder"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog box-detalles">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Orden 00001</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- <p>Mesa: 15</p>
+        <p>Mozo: Javier</p>
+        <p class="mb-1">Orden:</p>
+        <div class="m-orden">
+          <div class="m-orden-detalle">
+            <p>Causa rellena (1)</p>
+            <p class="m-obs">Observación: Picante</p>
+          </div>
+          <div class="m-orden-detalle">
+            <p>Causa rellena (1)</p>
+            <p class="m-obs">Observación: Picante</p>
+          </div>
+        </div> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
 <script src="/public/js/cocinero/home.js"></script>

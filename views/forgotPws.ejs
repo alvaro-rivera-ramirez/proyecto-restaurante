@@ -1,9 +1,23 @@
-
+<link rel="stylesheet" href="/public/css/recuperar.css">
 <main>
-    <h2>Recuperar contraseña</h2>
-    <input type="text" id="email">
-    <input type="button" class="btn btn-secondary"  onclick="funcion__()">
+    <div class="form">
+        <div class="form__header">
+            <h1>Recupera tu contraseña</h1>
+            <p>Introduce tu correo electrónico para buscar tu cuenta.</p>
+        </div>
+        <div class="form__container">
+            <div class="input_Box">
+                <input type="text" id="email" required>
+                <span>E-mail</span>
+            </div>
+        </div>
+        <div class="form_foot">
+            <a href="/" class="btn btn-back">Volver</a>
+            <input type="button" class="btn btn-enviar"  onclick="funcion__()" value="Enviar">
+        </div>
+    </div>
 </main>
+
 <script>
     function funcion__(){
         const register_={

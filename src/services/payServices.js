@@ -4,6 +4,11 @@ const con = require("../config/bd");
         return totalPayToday[0];
     };
 
+    const getTotalPay = async () => {
+        const totalPay = await con.query("SELECT SUM(total_pago) as count_pays FROM pago;");
+        return totalPay[0];
+    };
+
     const getCountPays = async () => {
         const countPays = await con.query("SELECT COUNT(*) AS count_pays FROM pago");
         return countPays[0];
@@ -28,6 +33,7 @@ const con = require("../config/bd");
     };
       
 module.exports = {
+    getTotalPay,
     getTotalPayToday,
     getCountPays,
     getPays,

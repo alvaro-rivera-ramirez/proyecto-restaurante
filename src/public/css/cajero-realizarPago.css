@@ -64,3 +64,21 @@
 #container-cajero-createPago .section-resumen img{
     width: 2.5rem;
 }
+
+@media (max-width: 768px) {
+    #container-cajero-home{
+        display: block !important;
+    }
+
+    #container-cajero-home .section-mesas{
+        width: 100%;
+    }
+    
+    #container-cajero-home .section-resumen{
+        width: 100%;
+    }
+
+    #container-cajero-createPago *{
+        font-size: 1rem;
+    }
+}

@@ -16,7 +16,7 @@
 
 #container-cajero-home .mesas__filter select, 
 #container-cajero-home .mesas__filter option{
-    width: 20rem;
+    width: 18rem;
     height: 2rem;
     background-color: white;
     border: none;
@@ -37,8 +37,8 @@
     display: inherit;
     justify-content: center;
     align-items: center;
-    width: 140px;
-    height: 140px;
+    width: 9.5rem;
+    height: 9.5rem;
     margin: .5rem;
     border: 1px solid var(--white-color);
     border-radius: 4px;
@@ -84,6 +84,10 @@
     font-size: 2rem;
     line-height: 140px;
     text-align: center;
+}
+
+#container-cajero-home .mesas__information{
+    flex-wrap: wrap;
 }
 
 #container-cajero-home .section-operaciones{
@@ -150,4 +154,55 @@
     height: .75rem;
     border: 1px solid var(--first-color);
     border-radius: 4px;
+}
+
+@media (max-width: 1200px) {
+    #container-cajero-home .col-mesa{
+        width: 8.5rem;
+        height: 8.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    #container-cajero-home .col-mesa{
+        width: 7.5rem;
+        height: 7.5rem;
+    }
+
+    #container-cajero-home .mesas__filter select, 
+    #container-cajero-home .mesas__filter option{
+        width: 13.5rem;
+    }
+
+    #container-cajero-home .section-operaciones i, #container-cajero-home .section-operaciones img{
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    #container-cajero-home{
+        display: block !important;
+    }
+
+    #container-cajero-home .section-mesas{
+        width: 100%;
+    }
+    
+    #container-cajero-home .section-operaciones{
+        width: 100%;
+    }
+
+    #container-cajero-home .col-mesa{
+        width: 6.5rem;
+        height: 6.5rem;
+    }
+
+    #container-cajero-home .mesas__filter select, 
+    #container-cajero-home .mesas__filter option{
+        width: 9rem;
+    }
+
+    #container-cajero-home .section-operaciones i, #container-cajero-home .section-operaciones img{
+        display: block;
+    }
 }
