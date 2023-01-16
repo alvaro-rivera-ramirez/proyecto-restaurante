@@ -1,6 +1,5 @@
 const {Router}=require("express");
 const nodemailer=require("nodemailer");
-const jwt=require('jsonwebtoken');
 const userController=require('../controllers/user.controller');
 const {validateForgot,validateReset}=require('../middleware/validators/user');
 
