@@ -42,16 +42,6 @@ const getOrders = async (req, res) => {
       default:
         break;
     }
-    // if(roleUser=="Cocinero"){
-    //   orders.order=await OrderServices.getInfoOrdersTodayByState(1);
-    //   orders.details=await OrderServices.getDetailsOrdersTodayByState(1);
-    // }
-
-    // if(roleUser=="Mesero"){
-    //   const idusu=req.id;
-    //   orders.takeaway=await OrderServices.getPreparedOrdersByMode(idusu,1);
-    //   orders.fortable=await OrderServices.getPreparedOrdersByMode(idusu,2);
-    // }
     res.status(200).send(orders);
     return;
   } catch (error) {
@@ -61,26 +51,6 @@ const getOrders = async (req, res) => {
 };
 
 const createOrder = async (req, res) => {
-  /*
-        body Example:
-        pedido={
-            "id_mod",
-            "mesas"=[ 1, 2, 4]
-            "detalle"=[
-                {
-                    "id_pro":1,
-                    "cantidad_det":2
-                    "descripcion":"Algo"
-                },
-                {
-                    "id_pro":1,
-                    "cantidad_det":2
-                    "descripcion_det":"Algo"
-                }
-            ]
-        } 
-    */
-
   try {
     const { mod, mesas, detalle } = req.body;
     const date = getDateTime();
@@ -92,8 +62,6 @@ const createOrder = async (req, res) => {
       id_mod: mod,
       fecha_ped: date,
     };
-    console.log("info json:",req.body)
-    console.log("termina json.")
     const idOrder = await OrderServices.createOrder(order);
     for (const detail of detalle) {
       detail.id_ped = idOrder;
