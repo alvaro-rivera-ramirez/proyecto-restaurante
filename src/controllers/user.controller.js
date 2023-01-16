@@ -74,6 +74,9 @@ const changePassword = async (req, res) => {
 
 const forgotPswPost = async (req, res) => {
     const{email}=req.body;
+    try{
+
+    
     const getEmail=await userServices.getEmail(req.body.email);
     if(!getEmail){
       res.send("usuario no existe");
@@ -96,23 +99,41 @@ transporter.sendMail({
   html: contentHTML
 });
     res.sendStatus(200);
+  }
+    catch (error) {
+    
+      return res.status(401);
+    }
 };
+
 
 const resetPwsPut = async (req, res) => {
   const { psw1, confirmpsw,email} = req.body;
+  console.log(psw1,confirmpsw)
+  try{
+  
   if (psw1!==confirmpsw || !email) {
     handleErrorResponse(res, "error datos corruptos", 401);
     return;
   }
-  const editusu={
+  else{
+    const editusu={
       psw: psw1,
       email: email,
       
   }
   const passEncrypt = await encrypt(psw1);
   editusu.psw= passEncrypt;
-  await userServices.resetPwsPut(editusu);
-  res.render("http://localhost:3000/api/auth/");
+  let status=await userServices.resetPwsPut(editusu);
+  console.log(status)
+  res.status(201).send({ ruta: "/registroUsuarios"});
+  }
+  
+}
+  catch (error) {
+    
+    return res.status(401);
+  }
 }
 module.exports = {
   getUsers,

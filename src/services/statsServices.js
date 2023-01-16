@@ -30,6 +30,7 @@ const conn = require("../config/bd");
     return users;
   };
   const catDia = async (arrayfecha) => {
+    console.log(arrayfecha)
     const users = await conn.query(`select cat.nom_categoria,sum(prod.precio_u_prod*det.cantidad_det) as sumPres from categoria as cat inner join producto as prod on cat.id_categoria=prod.id_categoria 
     inner join detalle_pedido as det on det.id_prod=prod.id_prod inner join pedido as ped on ped.id_ped=det.id_ped where TIMESTAMP(ped.fecha_ped,hour(ped.fecha_ped)) 
     between TIMESTAMP(?,'00:00:00') and TIMESTAMP(?,'23:59:59') group by cat.nom_categoria;`,[arrayfecha,arrayfecha]);
@@ -37,9 +38,10 @@ const conn = require("../config/bd");
     return users;
   };
   const pedBiDia = async (arrayfecha) => {
-    const users = await conn.query(`select count(id_ped) as cantPed, day(fecha_ped) as dia,month(fecha_ped) as mes,year(fecha_ped) as anio
-    from pedido where TIMESTAMP(fecha_ped,hour(fecha_ped)) 
-    between TIMESTAMP(?,'00:00:00') and TIMESTAMP(?,'23:59:59') group by day(fecha_ped),month(fecha_ped),year(fecha_ped);`,[arrayfecha,arrayfecha]);
+    let fecha=arrayfecha.getFullYear()+"-"+(arrayfecha.getMonth()+1).toString().padStart(2,0)+"-"+arrayfecha.getDate();
+    const users = await conn.query(`select count(id_ped) as cantPed
+    from pedido as ped where TIMESTAMP(ped.fecha_ped,hour(ped.fecha_ped)) 
+    between TIMESTAMP(?,'00:00:00') and TIMESTAMP(?,'23:59:59');`,[fecha,fecha]);
     if (!users) throw new Error();
     return users;
   };

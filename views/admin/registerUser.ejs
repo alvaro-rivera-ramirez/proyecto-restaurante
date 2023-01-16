@@ -1,5 +1,5 @@
 
-<div class="container-fluid shadow-lg" style="background-color: white;">
+<div class="container-fluid shadow-lg needs-validation" novalidate style="background-color: white;">
     <div class="row p-3 pb-5" >
       <nav aria-label="breadcrumb" class="link_nav">
           <ol class="breadcrumb">
@@ -23,6 +23,12 @@
                 <div class="col">
                     <div class="col-12 col-lg-12">
                         <input id="nro_ddi" name="nro_ddi" type="text" class="form-control" required>
+                        <div class="valid-feedback">
+                            todo bien
+                        </div>
+                        <div class="invalid-feedback">
+                            todo mal
+                        </div>
                     </div>
                 </div>
             </div>
@@ -141,19 +147,11 @@
             document.querySelector('#form').innerHTML='';
             fetch('/api/auth/register',{
                 method: 'POST',
+                mode: "cors",
                 body:JSON.stringify(register_),
                 headers:{
                     'Content-Type': 'application/json'
                 }
-            })
-            .then(res=>res.json())
-            .catch(error=>{
-            })
-            .then(response=>{
-                location.reload();
-            });     
-    }
-    function validar(){
-        document.getElementById('nombre').requider=true;
+            })   
     }
 </script>
